@@ -1,0 +1,232 @@
+@import '../../../assets/scss/variable';
+
+.add-button {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.sort-display {
+  display: inline-block;
+  background-color: $color_tapa;
+  color: white;
+  padding: 5px 10px;
+  border: 1px solid $color_tapa;
+  border-radius: 0.25rem;
+    margin-right: 15px;
+
+  img {
+    padding-bottom: 5px;
+    margin-left: 5px;
+
+  }
+
+}
+
+.check  {
+  width:24px;
+}
+
+.sort-select  {
+  border: 1px solid #999;
+
+  &:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem rgba(230, 125, 33, 0.25);
+    border-color: $color_basic_orange;
+  }
+}
+.button-icon {
+  display: inline-block;
+
+  input {
+    float: left;
+    width: 100%;
+    background: url("../../../assets/images/listshop/icons/orangeplain/search.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-y: center;
+    background-color: white;
+  }
+
+
+  img {
+    padding-top: 2px;
+    padding-left: 2px;
+  }
+}
+
+.active-filter-container {
+  max-width: 3000px;
+  background-color:white;
+}
+.active-filter-block {
+  display:inline-block;
+  width:100%;
+  text-align: center;
+  border-color: #e67d21;
+  padding: 10px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width:0px;
+  border-style: solid;
+  text-transform: capitalize;
+}
+
+.active-filter-block:first-of-type {
+
+  border-left-width: 1px;
+}
+
+.breadcrumb-for-bar {
+  padding-bottom: 0px;
+}
+
+.dish-toolbar {
+  padding-bottom: 15px;
+}
+:host ::ng-deep input.p-inputtext {
+  background: url("../../../assets/images/listshop/icons/orangeplain/filter.png");
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position-x: 98%;
+  background-position-y: center;
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  font-family: Poppins, sans-serif;
+}
+.autocomplete-override:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem rgba(230, 125, 33, 0.25);
+  border-color: $color_basic_orange;
+}
+
+.selected-dish {
+  margin: 5px;
+  color: white;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.selected-title {
+
+  text-align: left;
+  font-weight: 200;
+  padding-left: 20px;
+  padding-top: 5px;
+ // text-decoration: underline;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 4px;
+}
+
+.ls-dish-management-legend {
+  background-color: $color_basic_orange;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-top: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  ul {
+    padding-inline-start: 0px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 5px;
+    padding-left: 10px
+  }
+
+  li {
+    color: white;
+    padding-bottom: 2px
+  }
+
+  span {
+    padding-right: 5px
+  }
+}
+
+.ls-dish-flat-card {
+  border-width: 1.0px;
+  border-style: solid;
+  background-color: white;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: block;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-color: #979797;
+  //margin-top: -20px;
+  border-top-width: 0px;
+
+  h3 {
+    margin-top: 0px
+  }
+
+  .ls-card-link {
+    padding-left: 10px;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: right;
+
+    &:hover {
+      color: $color_basic_orange
+    }
+  }
+}
+
+table.legend-table {
+  width: 100%;
+
+  tr {
+    td {
+      text-align: left;
+      text-transform: capitalize;
+    }
+
+    td:nth-child(1) {
+      width: 10%;
+    }
+
+    td:nth-child(3) {
+      width: 10%
+    }
+  }
+}
+
+.loading-box {
+  width: 100%;
+  background-color: white;
+  border-width: 1.0px;
+  border-style: solid;
+  min-height: 300px;
+  padding: 15px;
+
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border-color: #979797;
+
+  .loading-text {
+    text-align: center;
+    padding-top: 110px;
+    color: $color_tapa;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+
+
+}
+

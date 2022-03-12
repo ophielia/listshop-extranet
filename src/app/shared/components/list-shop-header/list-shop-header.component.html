@@ -1,0 +1,63 @@
+<!-- Nav Start -->
+<nav class="navbar navbar-expand-lg navbar-light theme-nav fixed-top ls-theme-functional-nav">
+    <div class="container">
+
+        <!--<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="navbar-brand" [routerLink]="'/home'">
+                        <div class="ls-logo-img" ></div>
+                        <div class="navbar-brand-title">THE LIST SHOP</div></a>
+                </li>
+            </ul>
+        </div>-->
+        <a [routerLink]="'/home'" class="navbar-brand">
+            <div class="ls-logo-img"></div>
+        </a>
+        <div class="ls-logo-content-title">the list shop</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                (click)="isOpenMobile=!isOpenMobile">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" [class.show]="isOpenMobile">
+            <ul class="navbar-nav ml-auto" id="mymenu">
+                <li class="nav-item">
+                    <a class="nav-link nav-text-align" [routerLink]="'/mealplans'">Plan</a>
+                </li>
+                <li class="nav-item nav-text-align">
+                    <a class="nav-link" [routerLink]="'/dishes'">Dish</a>
+                </li>
+                <li class="nav-item nav-text-align">
+                    <a class="nav-link" [routerLink]="'/lists/manage'">List</a>
+                </li>
+                <!--
+                <div  *ngIf="!isOpenMobile"  ngbDropdown class="nav-item dropdown">
+                    <a class="nav-link" >
+                        <img ngbDropdownToggle class="account-image" src="../../../../assets/images/listshop/header/account_space_for_light.png" />
+                    </a>
+                    <div ngbDropdownMenu class="dropdown-menu" id="">
+                        <a class="nav-link" [routerLink]="'/user/login'">change password</a>
+                        <a class="nav-link" [routerLink]="'/user/signup'">logout</a>
+                    </div>
+                </div>
+                -->
+
+                <div id="forcemenu" ngbDropdown class="nav-item dropdown">
+                    <a class="nav-link">
+                        <img class="account-image" ngbDropdownToggle
+                             src="../../../../assets/images/listshop/header/account_space_for_light.png"/>
+                    </a>
+                    <div ngbDropdownMenu>
+                        <a class="nav-link" [routerLink]="'/user/login'">change password</a>
+                        <a class="nav-link" (click)="logout()">logout</a>
+                    </div>
+                </div>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Nav end-->

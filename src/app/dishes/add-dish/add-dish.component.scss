@@ -1,0 +1,137 @@
+@import '../../../assets/scss/variable';
+
+.add-button {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.inline-add-button {
+  display: inline-block;
+  margin-top: 5px;
+  img {
+    max-height: 15px;
+  }
+  margin-right: 5px;
+}
+
+.ls-group-of-buttons {
+  text-align: right;
+}
+
+
+.ls-tag-group-subtitle {
+  color: $color_dark_grey;
+  font-weight: bold;
+  font-size: large;
+  padding: 10px;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  border-radius: 0.25rem;
+  vertical-align: top;
+}
+
+.ls-add-dish-as {
+  padding-top: 10px;
+  text-align: right;
+  padding-right: 0px;
+  margin-right: 0px;
+
+}
+.ls-empty-info-span {
+  letter-spacing: 3px;
+  color: #777777;
+  padding-left: 10px;
+  font-size: small;
+}
+
+.ls-list-span-buttons {
+  display: inline;
+  text-transform: capitalize;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: white;
+  background-color: #e67d21;
+  border: 1px solid #e67d21;
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 16px;
+  }
+
+
+
+
+.ls-list-comma {
+  text-transform: capitalize;
+  &:after {
+    content: ', ';
+  }
+  &:hover {
+    font-weight: bolder;
+    padding-left: 5px;
+    &:after {
+      content: ' X ';
+      color: $color_basic_orange;
+      font-weight: bolder;
+      padding-right: 5px;
+    }
+  }
+  &:last-of-type {
+    &:after {
+      content: ' ';
+    }
+    &:hover {
+      &:after {
+        content: ' X ';
+        color: $color_basic_orange;
+        font-weight: bolder;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+.ls-rating {
+  text-transform: capitalize;
+  padding-bottom: 5px;
+}
+
+.ls-inline-input {
+  display: inline;
+  width: 75%;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+.ls-inline-block {
+  display: inline-block;
+  width: 50%;
+  margin-bottom: -15px;
+}
+
+
+
+.ls-add-tag {
+  padding-top: 5px;
+}
+
+.filled{
+  color: $color_basic_orange;
+  font-size: x-large;
+}
+
+.notfilled{
+  color:#6e6a6a;
+  font-size: x-large;
+}
+
+.ls-input-error {
+  display: inline-block;
+  width: 80%;
+  div {color: red;}
+}
+
+
+
+

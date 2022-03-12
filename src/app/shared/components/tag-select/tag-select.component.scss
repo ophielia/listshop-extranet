@@ -1,0 +1,96 @@
+@import 'src/assets/scss/variable';
+
+:host ::ng-deep span.p-autocomplete {
+  display: block;
+}
+
+:host ::ng-deep input.p-autocomplete-input {
+  width: 100%;
+
+  &:focus {
+    outline: black auto 1px;
+  }
+
+
+  &:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem rgba(230, 125, 33, 0.25);
+    border-color: $color_basic_orange;
+  }
+
+}
+
+:host ::ng-deep .p-inputtext {
+  &:enabled:hover {
+    border-color: $color_basic_orange;
+  }
+}
+
+
+  :host ::ng-deep .p-autocomplete-item {
+    white-space: normal;
+  }
+
+  :host ::ng-deep .p-highlight {
+    background-color: #777777;
+    color: white;
+  }
+
+
+  .autocomplete-input {
+    width: 90%;
+  }
+
+
+  table {
+    width: 100%;
+
+    tr {
+      width: 100%;
+
+      td.first-column {
+        width: 90%;
+      }
+
+      td.cancel-button {
+        text-align: center;
+        background-color: #e67d21;
+        color: white;
+      }
+
+      td.no-cancel-button {
+        color: white;
+        background-color: white;
+      }
+    }
+
+  }
+
+  .ls-panel {
+    /* style="top:30px" */
+    display: block;
+    width: inherit;
+    background-color: white;
+    border-width: 1.0px;
+    border-style: solid;
+    height: auto;
+    padding: 15px;
+
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-color: #979797;
+
+    div.add-link {
+      color: $color_tapa;
+    }
+
+    div.cancel-link {
+      text-align: right;
+      display: inline-block;
+      width: 100%;
+      text-align: end;
+      margin-top: 5px;
+      color: $color_basic_orange
+    }
+  }

@@ -1,0 +1,174 @@
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
+                <h2 class="title"><span>{{mealPlan ? mealPlan.name : "Meal Plan"}} - Add Dishes</span></h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end">
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+<!--breadcrumb start-->
+<div class="breadcrumb-bg breadcrumb-for-bar">
+    <div class="container dish-toolbar">
+        <div class="row">
+            <div class=" col-sm-6 col-md-8 col-lg-8">
+            <span class="button-icon">
+                <input type="text" class="form-control searchbox"
+                       placeholder="Dish Search"
+                       [(ngModel)]="searchValue"
+                       (keyup)="filterByDishname()"
+                       (keyup.enter)="clearSearchValue()"
+                />
+            </span>
+                <span class="button-icon" style="margin-left: 10px">
+                                   <app-tag-select class="at-tag-select-style"
+                                                   [tagTypes]="'Ingredient,Rating,DishType,TagType'"
+                                                   [selectType]="'All'"
+                                                   [groupType]="groupType"
+                                                   [allowAdd]="false"
+                                                   [showCancelButton]="false"
+                                                   [placeholderText]="'Filter Results'"
+                                                   (tagSelected)="addTagToFilter($event)"></app-tag-select>
+
+            </span>
+
+            </div>
+            <div class="col-md-4 col-sm-6 col-text-end">
+                <div class="sort-display">
+                    <!--    Name <img src="../../../assets/images/listshop/icons/white/arrowup.png" alt="add"> -->
+                    <span *ngIf="showOrderBy">
+                    <select name="sortkey" [(ngModel)]="sortKey" class="sort-select" (change)="changeSort()">
+                       <option *ngFor="let sortkey of sortOptions" [value]="sortkey">{{sortkey}}</option>
+                    </select>
+
+                    <img *ngIf="isSortUp()" src="../../../assets/images/listshop/icons/white/arrowup.png"
+                         (click)="changeSortDirection()" alt="sort-ascending">
+                    <img *ngIf="!isSortUp()" src="../../../assets/images/listshop/icons/white/arrowdown.png"
+                         (click)="changeSortDirection()" alt="sort-ascending">
+                    <img class="check" (click)="toggleShowOrderBy()"
+                         src="../../../assets/images/listshop/icons/orangeround/check.png" alt="sort-done">
+                    </span>
+
+                    <span *ngIf="!showOrderBy" (click)="toggleShowOrderBy()" style="padding-left:5px">
+                    {{sortKey}}
+                        <img *ngIf="isSortUp()" src="../../../assets/images/listshop/icons/white/arrowup.png"
+                             alt="sort-ascending">
+                    <img *ngIf="!isSortUp()" src="../../../assets/images/listshop/icons/white/arrowdown.png"
+                         alt="sort-ascending">
+                        </span>
+                </div>
+                <span  (click)="backToMealPlanEdit()" class="add-button">
+                    <img src="../../../assets/images/listshop/icons/orangeround/backarrow.png" alt="add"></span>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- active filter display -->
+    <div class="container active-filter-container">
+        <div class="row">
+            <div class=" col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div *ngFor="let tag of filterTags"
+                         class="col active-filter-block"
+                         (dblclick)="removeTagFromFilter(tag)"
+                         (click)="toggleInvert(tag)"
+                    >{{tag.name}}
+                        <img *ngIf="tag.is_inverted"
+                             src="../../../assets/images/listshop/icons/orangeplain/circleminus.png" alt="add">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- active filter display -->
+</div>
+<!--breadcrumb end -->
+
+<!--content start-->
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div *ngIf="isLoading" class="col-md-12 " class="loading-box">
+                <div class="loading-text">loading dishes...</div>
+            </div>
+            <ng-container *ngIf="!isLoading">
+                <div class="col-md-{{hasSelected ? 9 : 12}} ">
+                    <div class="row" *ngIf="!initialLoad">
+                        <!-- single dish element -->
+                        <div *ngFor="let dish of filteredDishes, let i = index"
+                             class="col-lg-{{hasSelected ? 4 : 3}} col-md-6">
+
+                            <!-- single list element -->
+                            <app-single-dish-element
+                                    [dish]=dish
+                                    [fullDisplay]="true"
+                                    [selectLabel]='"add"'
+                                    [showViewLink]="false"
+                                    (select)="addDishToMealPlan($event)"></app-single-dish-element>
+                            <!-- single list element -->
+
+
+                        </div>
+                        <!-- single dish element -->
+                    </div>
+                </div>
+                <div *ngIf="hasSelected" class="col-md-3 sticky-top">
+
+                    <!-- dishes in meal plan -->
+                    <div class="ls-dish-management-legend">
+                        <div class="selected-title">Dishes In {{mealPlan.name}}</div>
+                        <div *ngFor="let selectedDish of planDishes"
+                             class="selected-dish"
+                             (click)="removeFromMealPlan(selectedDish.dish_id)">
+                            {{selectedDish.name}}
+                        </div>
+                    </div>
+                    <!-- dishes in meal plan -->
+                    <!-- commands -->
+                    <div class="ls-dish-flat-card ls-card-contents">
+
+                        <div *ngIf="!showAddTag" (click)="backToMealPlanEdit()"><span class="action-link">
+                        <i aria-hidden="true" class="fa fa-angle-right"></i>
+                        Back To Edit Meal Plan</span>
+                        </div>
+
+
+
+                    </div>
+                    <!-- commands -->
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>
+<!--content End-->
+
+<!-- modal -->
+<app-modal #tagaddedmodal [autoHide]="2500">
+    <div class="app-modal-body">
+        Tag added to Dishes
+    </div>
+</app-modal>
+<app-modal #dishesaddedtomealplan [autoHide]="2500">
+    <div class="app-modal-body">
+        Dishes added to meal plan
+        <div *ngIf="displayId != null" style="float:right"><a class="modal-link" href="#">
+            <!--[routerLink]="'/mealPlans/edit/' + displayId"-->
+            Go To Meal Plan</a></div>
+    </div>
+</app-modal>
+<app-modal #addtagstodishesmodal [autoHide]="2500">
+    <div class="app-modal-body">
+        "{{displayId}}" tag added to dishes
+    </div>
+</app-modal>
+
+

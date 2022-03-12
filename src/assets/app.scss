@@ -1,0 +1,20 @@
+// Bootstrap Layout scss
+@import '~bootstrap/scss/bootstrap';
+
+// Owl-Carousel css
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+// Page loader Topbar
+@import "pace/pace-theme-min.css";
+
+// Main style Layout
+@import "scss/style";
+
+// Listshop main style layout
+@import "scss/ls-style";
+
+// color variation scss (if you want use different color variation simply remove comment)
+@import "scss/color/color-4";
+// Responsive Layout
+@import "scss/responsive";

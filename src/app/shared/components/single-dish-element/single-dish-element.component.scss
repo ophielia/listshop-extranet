@@ -1,0 +1,19 @@
+@import '../../../../assets/scss/variable';
+
+.ls-dish-element-title {
+  color: $color_dark_grey;
+  font-weight: bold;
+  font-size: large;
+  padding-bottom: 5px;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+}
+
+.ls-dish-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}

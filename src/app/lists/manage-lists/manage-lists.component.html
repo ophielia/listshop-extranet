@@ -1,0 +1,41 @@
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-text-center d-align-left">
+                <h2 class="title"><span>Shopping Lists</span></h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end">
+                <a (click)="createShoppingList()">
+                    <img src="../../../assets/images/listshop/icons/orangeround/orangeadd.png" alt="add"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+<!--content start-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="row ">
+                    <div *ngFor="let list of lists"
+                         class="col-lg-4 col-md-6">
+                        <!-- single list element -->
+                        <app-single-list-element
+                                [itemCount]="list.item_count"
+                                [listName]="list.name"
+                                [listId]="list.list_id"
+                                [listIsStarter]="list.is_starter"
+                                (delete)="deleteShoppingList($event)"
+                                (edit)="editShoppingList($event)"></app-single-list-element>
+                        <!-- single list element -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--content End-->

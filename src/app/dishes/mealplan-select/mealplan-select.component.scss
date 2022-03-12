@@ -1,0 +1,46 @@
+@import 'src/assets/scss/variable';
+
+.add-list-panel {
+  /* style="top:30px" */
+  display: block;
+  width: inherit;
+  background-color: white;
+  border-width: 1.0px;
+  border-style: solid;
+  height: auto;
+  padding: 15px;
+
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border-color: #979797;
+  li.add-link {
+    color: $color_tapa;
+    text-indent: 10px;
+    text-transform: capitalize;
+  }
+
+  li.add-link-stressed {
+    color: $color_tapa;
+    text-indent: 10px;
+    text-transform: capitalize;
+  }
+
+  div {
+    color: $color_basic_orange;
+    margin-bottom: 2px;
+  }
+
+  div.cancel-link {
+    width: 100%;
+    text-align: end;
+    img {
+      width:20px;
+    };
+  }
+}
+
+.add-list-title {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}

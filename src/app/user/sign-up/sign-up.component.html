@@ -1,0 +1,75 @@
+<!-- sign up start-->
+<section class="authentication-form">
+    <div class="innerpage-decor">
+        <div class="innerpage-circle1"><img src="assets/images/Testimonial2.png" alt=""></div>
+        <div class="innerpage-circle2"><img src="assets/images/Testimonial1.png" alt=""></div>
+    </div>
+    <div>
+        <h2 class="title text-center"><span>Sign Up</span></h2>
+        <div class="card">
+
+            <form [formGroup]="signUpForm" #formDir="ngForm" class="theme-form">
+             <div class="form-group">
+                    <input type="email"
+                           placeholder = "email address"
+                           class="form-control"
+                           (blur)="validateEmailNotTaken()"
+                           formControlName="email" required >
+                </div>
+                <div *ngIf="emailErrors.length > 0"
+                     class="alert alert-danger">
+                    <div *ngIf="errorsContain(emailErrors, 'isRequired')">
+                        Emails are required, sleepyhead.
+                    </div>
+                    <div *ngIf="errorsContain(emailErrors, 'textTooLong')">
+                        Email must be at less than 50 characters long.
+                    </div>
+                    <div *ngIf="errorsContain(emailErrors, 'textTooShort')">
+                        Email must be at least 6 characters long.
+                    </div>
+                    <div *ngIf="errorsContain(emailErrors, 'cantHaveSpaces')">
+                        The email cannot contain spaces.
+                    </div>
+                    <div *ngIf="errorsContain(emailErrors, 'InvalidEmail')">
+                        Please enter a valid email.
+                    </div>
+                    <div *ngIf="errorsContain(emailErrors, 'emailTaken')">
+                        This email has already been used.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="password" class="form-control" formControlName="userPassword"
+                           required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="confirm password" class="form-control"
+                           formControlName="confirmPassword" required>
+                </div>
+
+                <div *ngIf="passwordErrors.length > 0"
+                     class="alert alert-danger">
+                    <div *ngIf="errorsContain(passwordErrors, 'isRequired')">
+                        The password and password confirmation are required.
+                    </div>
+                    <div *ngIf="errorsContain(passwordErrors, 'textTooLong')">
+                        Passwords must be at less than 50 characters long.
+                    </div>
+                    <div *ngIf="errorsContain(passwordErrors, 'textTooShort')">
+                        Passwords must be at least 6 characters long.
+                    </div>
+                    <div *ngIf="errorsContain(passwordErrors, 'cantHaveSpaces')">
+                        Passwords cannot contain spaces.
+                    </div>
+                    <div *ngIf="errorsContain(passwordErrors, 'badVerificationMatch')">
+                        The password and password confirmation don't match.
+                    </div>
+                </div>
+
+                <div class="form-button text-center">
+                    <button type="submit"  (click)="signUp()" class="btn btn-custom theme-color">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- sign up end-->

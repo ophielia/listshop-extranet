@@ -1,0 +1,65 @@
+.ls-email-header {
+  padding-top: 10px;
+}
+
+.ls-logo-img {
+  background-image: url(../img/smallorangelogo.png);
+  width: 90px;
+  height: 90px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  text-align: justify;
+  vertical-align: center;
+}
+
+.ls-logo-title {
+  padding: 30px 10px;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 30px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #e67d21;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+.ls-spacer {
+  min-height: 20px;
+}
+
+
+.ls-user-button {
+  color: white;
+  font-size: 14px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  padding: 10px 25px;
+  cursor: pointer;
+  border: none;
+  background-size: 300% 100%;
+  transition: all 0.4s ease-in-out;
+  background-color: #e67d21;
+}
+.ls-user-button:hover {
+  background-position: 100% 0;
+  transition: all 0.4s ease-in-out;
+  color: white;
+}
+.ls-user-button:focus {
+  outline: none;
+  color: white;
+}
+.ls-user-button.outline {
+  border: 1px;
+  border-style: solid;
+  background-color: white;
+  background-image: none;
+}
+
+.ls-button-padding {
+  padding-bottom: 25px;
+  padding-top: 10px;
+}
+
+

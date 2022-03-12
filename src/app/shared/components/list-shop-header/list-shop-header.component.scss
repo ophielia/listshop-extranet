@@ -1,0 +1,64 @@
+@import '../../../../assets/scss/variable';
+
+.nav-text-align {
+  margin-top: 5px;
+}
+
+.account-image {
+  width: 30px;
+}
+
+
+
+@media(max-width: 991px) {
+  #forcemenu {
+    &.dropdown {
+      .dropdown-menu {
+        box-shadow: none;
+      }
+    }
+
+    .div.dropdown-menu.show {
+      box-shadow: none;
+
+      &.nav-link {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    a.nav-link {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      &.hover {
+        color: $color_basic_orange;
+      }
+    }
+
+
+  }
+}
+
+
+#forcemenu {
+  .div.dropdown-menu.show {
+    box-shadow: none;
+
+    &.nav-link {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  a.nav-link {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &.hover {
+      color: $color_basic_orange;
+    }
+  }
+
+
+}

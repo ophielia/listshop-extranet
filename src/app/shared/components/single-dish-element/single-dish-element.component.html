@@ -1,0 +1,17 @@
+
+<!--single list element start-->
+<div class="ls-card" >
+<div (click)="selectADish()">
+    <div class="ls-dish-element-title" >{{dish.name}}
+    </div>
+    <div *ngIf="fullDisplay && hasDescription()" class="ls-dish-description">{{dish.description}}</div>
+    <div *ngIf="hasReference()">Ref: {{dish.reference}}</div>
+</div>
+    <div class="ls-card-link-block">
+            <a class="ls-card-link" (click)="selectDishFromLink()">{{selectLabel}}</a>
+            <a class="ls-card-link" (click)="editDish()"  *ngIf="showViewLink" >edit</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!--single list element end-->
+

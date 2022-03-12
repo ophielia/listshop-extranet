@@ -1,0 +1,23 @@
+.about-me-text {
+  li {
+    list-style-type: disc;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: rgb(119, 119, 119);
+
+    span {
+      font-weight: bolder;
+      padding-right: 5px;
+    }
+
+    a {
+      text-decoration: underline;
+      font-weight: bolder;
+    }
+  }
+
+  p {
+
+    font-size: 16px;
+  }
+}

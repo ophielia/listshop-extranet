@@ -1,0 +1,46 @@
+
+
+<table>
+    <tr>
+        <td>
+            <p-autoComplete
+                    [(ngModel)]="autoSelectedTag"
+                    [suggestions]="filteredTags"
+                    (completeMethod)="filterTags($event)"
+                    field="name"
+                    inputStyleClass="autocomplete-input"
+                    panelStyleClass="autocomplete-panel"
+                    styleClass="ls-autocomplete"
+                    [delay]="200"
+                    (onSelect)="bingo($event)"
+                    (keyup.enter)="checkSearchEnter(focusanchor)"
+                    (keyup.escape)="cancelSelectTag()"
+                    placeholder="{{placeholderText}}" [minLength]="1" #focusanchor></p-autoComplete>
+
+        </td>
+        <ng-container *ngIf="showCancelButton">
+            <td  class="cancel-button" (click)="cancelSelectTag()">X</td>
+        </ng-container>
+        <ng-container *ngIf="!showCancelButton">
+            <td class="no-cancel-button"></td>
+        </ng-container>
+    <tr>
+</table>
+
+
+<div *ngIf="showAddTags" class="ls-panel " >
+
+    <div>
+        <ng-container *ngFor="let ttype of allTagTypes">
+            <div *ngIf="isIncluded(ttype)" class="add-link"
+                    (click)="add(ttype)">
+                Add as {{ttype}} Tag
+            </div>
+        </ng-container>
+    </div>
+
+    <div  (click)="cancelAdd()" class="cancel-link">
+        Cancel
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+<!-- Nav Start -->
+<nav class="navbar navbar-expand-lg navbar-light theme-nav fixed-top" [class.darkHeader]="darkHeader">
+  <div class="container">
+    <a [routerLink]="'/home'">
+      <div class="ls-logo-img"></div>
+      <div class="ls-logo-title">the list shop</div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="isOpenMobile=!isOpenMobile">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse default-nav" id="navbarSupportedContent" [class.show]="isOpenMobile">
+      <ul class="navbar-nav ml-auto" id="mymenu">
+        <li class="nav-item">
+          <a class="nav-link" #home href="#home" (click)="active('home')"
+             [ngClass]="{'active show': activeClass == 'home' }" [pageScrollOffset]="80" pageScroll>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about" (click)="active('about')"
+             [ngClass]="{'active show': activeClass == 'about' }" [pageScrollOffset]="80" pageScroll>about</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#feature" (click)="active('feature')" [ngClass]="{'active show': activeClass == 'feature' }" [pageScrollOffset]="80" pageScroll>feature</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  href="#testimonial" (click)="active('testimonial')" [ngClass]="{'active show': activeClass == 'testimonial' }" [pageScrollOffset]="80" pageScroll>idea</a>
+        </li>
+        <li *ngIf="isLoggedIn" class="nav-item">
+          <a class="nav-link" [routerLink]="'/lists/manage'">my lists</a>
+        </li>
+        <div *ngIf="!isLoggedIn" ngbDropdown class="nav-item dropdown">
+          <button class="btn connect-button dropdown-toggle" id="dropdownMenuButton" ngbDropdownToggle>connect</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" class="dropdown-menu ">
+            <a class="nav-link" [routerLink]="'/user/login'">sign in</a>
+            <a class="nav-link" [routerLink]="'/user/signup'">sign up</a>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Nav end-->

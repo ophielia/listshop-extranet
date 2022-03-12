@@ -1,0 +1,21 @@
+p {
+  &.caption-about {
+    text-align: left;
+    text-transform: none;
+
+    span {
+
+      text-transform: uppercase;
+      font-weight: bolder;
+
+    }
+
+
+  }
+  span.emphasized {
+
+    text-transform: none;
+    font-weight: normal;
+
+  }
+}

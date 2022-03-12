@@ -1,0 +1,16 @@
+
+<!--single list element start-->
+<div class="ls-card">
+    <div class="ls-list-element-title">{{listName}}
+        <span><img *ngIf="listIsStarter" class="sm-button" src="../../../assets/images/listshop/icons/orangeround/large/zap.png"
+                   alt="add" >
+                </span></div>
+    <div>{{itemCount}} Items</div>
+    <div class="ls-card-link-block">
+            <a class="ls-card-link" (click)="deleteList()">delete</a>
+            <a class="ls-card-link" (click)="editList()">edit</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!--single list element end-->
+

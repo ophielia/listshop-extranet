@@ -1,0 +1,108 @@
+@import 'src/assets/scss/variable';
+
+.ls-panel {
+
+
+  div {
+    color: $color_tapa;
+    margin-bottom: 2px;
+  }
+
+  div.cancel-link {
+    width: 100%;
+    text-align: end;
+
+    img {
+      width: 20px;
+    }
+  ;
+  }
+
+  .generate-list-title {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: $color_basic_orange;
+    margin-bottom: 12px;
+  }
+
+  .panel-action {
+    text-align: right;
+  }
+
+  .panel-action:first-of-type {
+    margin-top: 20px;
+  }
+
+  .panel-action:hover {
+    color: $color_basic_orange
+  }
+}
+
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  letter-spacing: 0;
+  text-transform: capitalize;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  input:checked ~ .checkmark {
+    background-color: $color_basic_orange;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}

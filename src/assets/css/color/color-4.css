@@ -1,0 +1,313 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name:TOVO APP
+    Template URI: http://themes.pixelstrap.com/tovo
+    Description: This is App Landing Page
+    Author: Pixelstrap
+    Author URI: https://themeforest.net/user/pixelstrap
+
+-----------------------------------------------------------------------------------*/
+.caption-img {
+  filter: hue-rotate(335deg); }
+
+.loader {
+  background-color: #e6b321; }
+
+h1 {
+  color: #e6b321; }
+
+.price-type {
+  background-image: url(./images/color/color-4/price-bg.png); }
+  .price-type h2 {
+    color: #e6b321; }
+
+.home {
+  background-image: url(./images/color/color-4/1.png); }
+
+.home-two {
+  background-image: url(./images/color/color-4/Homev2.png); }
+  .home-two .slide-cap-desc {
+    color: #CDB8A3; }
+
+.home-three {
+  background-image: url(./images/color/color-4/Homev3.png); }
+
+.navbar-light .default-nav .navbar-nav .nav-link.active {
+  color: #e6b321; }
+
+.navbar-light.darkHeader .navbar-nav .nav-link.active {
+  color: #e6b321 !important; }
+
+.navbar-light.darkHeader .navbar-nav .nav-item.dropdown .dropdown-menu .nav-link:hover {
+  color: #e6b321; }
+
+.slide-cap-desc {
+  color: #CDB8A3; }
+
+.tap-top {
+  background: linear-gradient(to right, #e67d21, #e6b321) !important; }
+
+.about {
+  background-image: url(./images/color/color-4/about-bg.png); }
+
+.about-right {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%); }
+
+.address-bar {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%); }
+
+.feature {
+  background-image: url(./images/color/color-4/feature-bg1.png); }
+
+.screenshot {
+  background-image: url(./images/color/color-4/screenshot-bg.png); }
+
+.team {
+  background-image: url(./images/color/color-4/team-bg.png); }
+
+.team-block {
+  background-image: url(./images/color/color-4/team-img-bg.png); }
+  .team-block .team-social li a {
+    border: 1px solid #e6b321; }
+    .team-block .team-social li a:hover {
+      background-color: #e6b321;
+      border: 1px solid #e6b321; }
+
+.blog-block {
+  background-image: url(./images/color/color-4/team-img-bg.png); }
+
+.color-picker .settings-header {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+  .color-picker .settings-header h3 {
+    color: white; }
+
+.color-picker .section {
+  border: 1px solid #e6b321; }
+
+.color-picker a.handle {
+  border: 1px solid #e6b321;
+  background: #e6b321; }
+
+.price {
+  background-image: url(./images/color/color-4/price.png); }
+
+.testimonial {
+  background-image: url(./images/color/color-4/testimonial-bg.png); }
+
+.testimonial-avtar {
+  background-image: url(./images/color/color-4/Testimonial.png); }
+
+.contact {
+  background-image: url(./images/color/color-4/contact.png); }
+
+.home-circle1 img {
+  filter: hue-rotate(335deg); }
+
+.home-circle2 img {
+  filter: hue-rotate(335deg); }
+
+.home-circle3 img {
+  filter: hue-rotate(335deg); }
+
+.home-right img {
+  filter: hue-rotate(0deg); }
+
+.about-phone img {
+  filter: hue-rotate(335deg); }
+
+.feature-phone img {
+  filter: hue-rotate(335deg); }
+
+.about-circle1 img {
+  filter: hue-rotate(0deg); }
+
+.about-circle2 img {
+  filter: hue-rotate(0deg); }
+
+.feature-style .feature-icon img {
+  filter: hue-rotate(335deg); }
+
+.feature-circle1 img {
+  filter: hue-rotate(0deg); }
+
+.feature-circle2 img {
+  filter: hue-rotate(0deg); }
+
+.screenshot-circle1 img {
+  filter: hue-rotate(335deg); }
+
+.screenshot-circle2 img {
+  filter: hue-rotate(335deg); }
+
+.screenshot-circle3 img {
+  filter: hue-rotate(335deg); }
+
+.screenshot-carousel img {
+  filter: hue-rotate(335deg); }
+
+.team-circle1 img {
+  filter: hue-rotate(335deg); }
+
+.team-circle2 img {
+  filter: hue-rotate(335deg); }
+
+.team-circle3 img {
+  filter: hue-rotate(335deg); }
+
+.testi-circle1 img {
+  filter: hue-rotate(335deg); }
+
+.testi-circle2 img {
+  filter: hue-rotate(335deg); }
+
+.testi-circle3 img {
+  filter: hue-rotate(335deg); }
+
+.contact-right img {
+  filter: hue-rotate(335deg); }
+
+.contact-circle1 img {
+  filter: hue-rotate(335deg); }
+
+.contact-circle2 img {
+  filter: hue-rotate(335deg); }
+
+.animated-circle img {
+  filter: hue-rotate(335deg); }
+
+.footer-text img {
+  filter: hue-rotate(335deg); }
+
+.testimonial-text h3 {
+  color: #e6b321; }
+
+.btn-custom.theme-color {
+  background-image: linear-gradient(to right, #e6b321, #e67d21, #e6b321, #e6b321); }
+  .btn-custom.theme-color:hover {
+    background-position: 100% 0; }
+
+.link-button.theme-color {
+  background-image: linear-gradient(to right, #e6b321, #e67d21, #e6b321, #e6b321); }
+  .link-button.theme-color:hover {
+    background-position: 100% 0; }
+  .link-button.theme-color.outline {
+    border-color: #e67d21;
+    background-image: none;
+    color: #e67d21; }
+
+#fp-nav ul li a.active {
+  border: 1px solid #e6b321; }
+  #fp-nav ul li a.active span {
+    background: #e6b321 !important; }
+
+#fp-nav ul li a span {
+  background: #e6b321 !important; }
+
+#fp-nav ul li:hover a.active span {
+  background: #e6b321 !important; }
+
+.fp-slidesNav ul li a span {
+  background: #e6b321 !important; }
+
+.fp-slidesNav ul li a.active span {
+  background: #e6b321 !important; }
+
+.fp-slidesNav ul li:hover a.active span {
+  background: #e6b321 !important; }
+
+.theme-nav .navbar-nav .active > .nav-link {
+  color: #e6b321; }
+
+.home-style-two .navbar-nav .dropdown-menu .nav-link:hover {
+  color: #e6b321 !important; }
+
+.three .navbar-nav .dropdown-menu .nav-link:hover {
+  color: #e6b321 !important; }
+
+.abt-hover:hover .icon-hover {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%); }
+
+.icon-hover:hover {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%);
+  border: 1px solid #279DB1; }
+
+.team-carousel.owl-theme .owl-dots .owl-dot span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.team-carousel.owl-theme .owl-dots .owl-dot.active span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.blog-carousel.owl-theme .owl-dots .owl-dot span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.blog-carousel.owl-theme .owl-dots .owl-dot.active span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.testimonial-carousel.owl-theme .owl-dots .owl-dot span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.testimonial-carousel.owl-theme .owl-dots .owl-dot.active span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.price-carousel.owl-theme .owl-dots .owl-dot span {
+  background: linear-gradient(to bottom, #e67d21 0, #e6b321 99%) !important; }
+
+.blog-pagin a.page-link {
+  color: #e6b321;
+  border: 1px solid #eee; }
+  .blog-pagin a.page-link:hover {
+    background-color: #e6b321; }
+
+.page-item.active .page-link {
+  background-color: #e6b321; }
+
+.tags .badge-theme {
+  background-color: #e6b321;
+  color: white; }
+
+.blog-cat-detail ul li a:hover,
+.manual-down {
+  color: #e6b321; }
+
+.price-block:hover .mrp h2 {
+  color: #e6b321; }
+
+.authentication-form {
+  filter: hue-rotate(335deg); }
+  .authentication-form .card {
+    border-top: 3px solid #e6b321; }
+
+.innerpage-decor img {
+  filter: hue-rotate(335deg); }
+
+.faq .card-header[aria-expanded="true"] a {
+  color: #e6b321; }
+
+.review-box h5 {
+  color: #e6b321; }
+
+@media (max-width: 768px) {
+  .home-two,
+  .home-three {
+    background-color: #e6b321; } }
+
+.theme-nav {
+  /*Dropdown css*/
+  /*dropdown css end*/ }
+  .theme-nav .nav-item:hover .nav-link {
+    color: #e6b321; }
+  .theme-nav .nav-item.dropdown .dropdown-menu .nav-item .nav-link.active {
+    color: #e6b321 !important; }
+  .theme-nav .nav-item.dropdown .dropdown-menu .nav-item .nav-link:hover {
+    color: #e6b321 !important;
+    transition: all 0.3s ease; }
+  .theme-nav.darkHeader .dropdown-menu .nav-item .nav-link.active {
+    color: #e6b321; }
+  .theme-nav .navbar-nav .active > .nav-link {
+    color: #e6b321; }
+
+ls-theme-functional-nav .nav-item .nav-link a:visited {
+  color: #e67d21; }
+
+.list-management {
+  background-image: url(./images/backgrounds/list-background.png); }
