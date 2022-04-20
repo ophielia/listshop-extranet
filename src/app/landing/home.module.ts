@@ -9,9 +9,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home.component';
 import { HomeTwoComponent } from './home/versions/home-two/home-two.component';
 import { IntroTwoComponent } from './home/intro-two/intro-two.component';
-import { AboutComponent } from './home/about/about.component';
-import { FeatureComponent } from './home/feature/feature.component';
-import { TestimonialComponent } from './home/testimonial/testimonial.component';
 import {AboutmeComponent} from "./aboutme/aboutme.component";
 import {ContentHeaderComponent} from "./contentheader/content-header.component";
 import {PrivacyComponent} from "./privacy/privacy.component";
@@ -33,9 +30,6 @@ import {PrivacyComponent} from "./privacy/privacy.component";
     PrivacyComponent,
     ContentHeaderComponent,
     IntroTwoComponent,
-    AboutComponent,
-    FeatureComponent,
-    TestimonialComponent
   ],
   providers: []
 })
