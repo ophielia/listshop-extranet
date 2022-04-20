@@ -31,17 +31,6 @@
                 <li class="nav-item nav-text-align">
                     <a class="nav-link" [routerLink]="'/lists/manage'">List</a>
                 </li>
-                <!--
-                <div  *ngIf="!isOpenMobile"  ngbDropdown class="nav-item dropdown">
-                    <a class="nav-link" >
-                        <img ngbDropdownToggle class="account-image" src="../../../../assets/images/listshop/header/account_space_for_light.png" />
-                    </a>
-                    <div ngbDropdownMenu class="dropdown-menu" id="">
-                        <a class="nav-link" [routerLink]="'/user/login'">change password</a>
-                        <a class="nav-link" [routerLink]="'/user/signup'">logout</a>
-                    </div>
-                </div>
-                -->
 
                 <div id="forcemenu" ngbDropdown class="nav-item dropdown">
                     <a class="nav-link">
@@ -49,7 +38,7 @@
                              src="../../../../assets/images/listshop/header/account_space_for_light.png"/>
                     </a>
                     <div ngbDropdownMenu>
-                        <a class="nav-link" [routerLink]="'/user/login'">change password</a>
+                        <a class="nav-link" [routerLink]="'/user/password'">change password</a>
                         <a class="nav-link" (click)="logout()">logout</a>
                     </div>
                 </div>

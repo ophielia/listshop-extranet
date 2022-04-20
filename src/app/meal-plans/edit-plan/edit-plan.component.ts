@@ -11,6 +11,7 @@ import {Dish, IDish} from "../../model/dish";
 import {DishService} from "../../shared/services/dish.service";
 import {MealPlanService} from "../../shared/services/meal-plan.service";
 import {MealPlan} from "../../model/mealplan";
+import {PlanContext} from "../plan-context/plan-context";
 
 @Component({
     selector: 'app-edit-plan',
@@ -30,6 +31,9 @@ export class EditPlanComponent implements OnInit, OnDestroy {
     includeStarter: boolean = true;
     private originalName: string = null;
     mealPlanName: string = "";
+    previousPlanId: string;
+    nextPlanId: string;
+
     allDishes: IDish[];
     errorMessage: any;
 
@@ -51,6 +55,7 @@ export class EditPlanComponent implements OnInit, OnDestroy {
         private mealPlanService: MealPlanService,
         public legendService: LegendService,
         private logger: NGXLogger,
+        private planContext: PlanContext
     ) {
     }
 
@@ -61,6 +66,7 @@ export class EditPlanComponent implements OnInit, OnDestroy {
             let id = params['id'];
             this.logger.debug('getting list with id: ', id);
             this.getMealPlan(id);
+            this.getSurroundingMealPlans(id);
         });
         this.getAllDishes();
     }
@@ -228,6 +234,12 @@ export class EditPlanComponent implements OnInit, OnDestroy {
                 this.getMealPlan(this.mealPlan.meal_plan_id);
             });
         this.unsubscribe.push($sub);
+
+    }
+
+    private getSurroundingMealPlans(id: string) {
+        this.previousPlanId = this.planContext.getPreviousMealPlanId(id);
+        this.nextPlanId = this.planContext.getNextMealPlanId(id);
 
     }
 }

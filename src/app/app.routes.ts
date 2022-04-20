@@ -13,8 +13,9 @@ export const rootRouterConfig: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent,
-        loadChildren: () => import('./landing/home.module').then(m => m.HomeModule)
+        component: ListsComponent,
+        pathMatch: 'prefix',
+        loadChildren: () => import('./lists/lists.module').then(m => m.ListsModule)
     },
     {
         path: 'user',

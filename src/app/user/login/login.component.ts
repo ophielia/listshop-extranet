@@ -9,130 +9,106 @@ import EmailValidator from "../../shared/validators/email-validator";
 import PasswordValidator from "../../shared/validators/password-validator";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
 
-  private unsubscribe: Subscription[] = [];
-  show: boolean;
-  signInForm: FormGroup;
+    private unsubscribe: Subscription[] = [];
+    show: boolean;
+    signInForm: FormGroup;
 
-  passwordErrors: ErrorType[] = [];
-  emailErrors: ErrorType[] = [];
+    passwordErrors: ErrorType[] = [];
+    emailErrors: ErrorType[] = [];
 
-  private returnUrl: string;
+    private returnUrl: string;
 
-  constructor(private route: ActivatedRoute,
-              private title: Title,
-              private meta: Meta,
-              private router: Router,
-              private fb: FormBuilder,
-              private authenticationService: AuthenticationService) {
-    // initialize variable value
-    this.show = false;
-  }
-
-  ngOnInit() {
-    this.title.setTitle(this.route.snapshot.data['title']);
-    this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
-    this.title.setTitle(this.route.snapshot.data['title']);
-    this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
-    this.signInForm = this.fb.group({
-      email: [""],
-      userPassword: [""]
-    });
-
-  }
-
-  ngOnDestroy() {
-    //this.fix.removeFixBlog();
-    this.unsubscribe.forEach(s => s.unsubscribe())
-  }
-
-  get email() {
-    return this.signInForm.get('email');
-  }
-
-  get userPassword() {
-    return this.signInForm.get('userPassword');
-  }
-
-  // click event function toggle
-  showPassword() {
-    this.show = !this.show;
-  }
-
-
-  doLogin() {
-    this.emailErrors = [];
-    this.passwordErrors = [];
-
-    this.emailErrors = EmailValidator.isValid(this.email.value);
-    if (this.emailErrors.length > 0) {
-      return;
-    }
-    this.passwordErrors = PasswordValidator.isValid(this.userPassword.value);
-    if (this.passwordErrors.length > 0) {
-      return;
+    constructor(private route: ActivatedRoute,
+                private title: Title,
+                private meta: Meta,
+                private router: Router,
+                private fb: FormBuilder,
+                private authenticationService: AuthenticationService) {
+        // initialize variable value
+        this.show = false;
     }
 
-    let $sub = this.authenticationService.login(this.signInForm.get('email').value.trim(),
-        this.signInForm.get('userPassword').value.trim())
-        .subscribe(success => {
-          if (!success) {
-            throw Error("BADCREDENTIALS");
-          }
-          console.log(this.returnUrl);
-          this.router.navigateByUrl(this.returnUrl);
+    ngOnInit() {
+        this.title.setTitle(this.route.snapshot.data['title']);
+        this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
+
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
+        this.title.setTitle(this.route.snapshot.data['title']);
+        this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
+        this.signInForm = this.fb.group({
+            email: [""],
+            userPassword: [""]
         });
-    this.unsubscribe.push($sub);
-  }
 
-  errorsContain(emailErrors: ErrorType[], searchType: string) {
-    return emailErrors.filter(t => t.valueOf() == searchType).length > 0;
-  }
+    }
 
-  goToForgotPassword() {
-    let eml = this.email;
-    var navigationExtras: NavigationExtras = {
-      state: {
-        email: ''
-      }
-    };
-    navigationExtras.state.email = this.email.value;
+    ngOnDestroy() {
+        //this.fix.removeFixBlog();
+        this.unsubscribe.forEach(s => s.unsubscribe())
+    }
 
-    this.router.navigate(['/user/reset'], navigationExtras);
+    get email() {
+        return this.signInForm.get('email');
+    }
 
-  }
+    get userPassword() {
+        return this.signInForm.get('userPassword');
+    }
 
-  /*this.router.navigate(['/user/reset'],
-      {
-        state: {
-          email: this.email
+    // click event function toggle
+    showPassword() {
+        this.show = !this.show;
+    }
+
+
+    doLogin() {
+        this.emailErrors = [];
+        this.passwordErrors = [];
+
+        this.emailErrors = EmailValidator.isValid(this.email.value)
+        if (this.emailErrors.length > 0) {
+            return;
         }
-      }
-      );
-}
+        this.passwordErrors = PasswordValidator.isValid(this.userPassword.value);
+        if (this.passwordErrors.length > 0) {
+            return;
+        }
 
+        let $sub = this.authenticationService.login(this.signInForm.get('email').value.trim(),
+            this.signInForm.get('userPassword').value.trim())
+            .subscribe(success => {
+                if (!success) {
+                    throw Error("BADCREDENTIALS");
+                }
+                console.log(this.returnUrl);
+                this.router.navigateByUrl(this.returnUrl);
+            });
+        this.unsubscribe.push($sub);
+    }
 
-  @RouteConfig([
-  {path: '/product/:id', component: ProductDetailComponentParam,
-   as: 'ProductDetail', data: {isProd: true}}])
+    errorsContain(emailErrors: ErrorType[], searchType: string) {
+        return emailErrors.filter(t => t.valueOf() == searchType).length > 0;
+    }
 
-export class ProductDetailComponentParam {
-  productID: string;
-  constructor(params: RouteParams, data: RouteData) {
-      this.productID = params.get('id');
+    goToForgotPassword() {
+        let eml = this.email;
+        var navigationExtras: NavigationExtras = {
+            state: {
+                email: ''
+            }
+        };
+        navigationExtras.state.email = this.email.value;
 
-      console.log('Is this prod environment', data.get('isProd'));
-  }
-}
-   */
+        this.router.navigate(['/user/reset'], navigationExtras);
+
+    }
 
 }

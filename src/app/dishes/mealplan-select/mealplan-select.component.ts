@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {IMealPlan} from "../../model/mealplan";
 import {MealPlanService} from "../../shared/services/meal-plan.service";
+import {ConfirmDialogService} from "../../shared/services/confirm-dialog.service";
 
 
 @Component({
@@ -19,7 +20,8 @@ export class MealplanSelectComponent implements OnInit, OnDestroy {
     listOfMealplans: IMealPlan[] = [];
     selectedMealplan: any;
 
-    constructor(private mealplanService: MealPlanService) {
+    constructor(private mealplanService: MealPlanService,
+                private confirmDialogService: ConfirmDialogService) {
 
     }
 

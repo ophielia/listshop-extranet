@@ -5,6 +5,7 @@ import {Meta, Title} from "@angular/platform-browser";
 import {ListService} from "../../shared/services/list.service";
 import {Subscription} from "rxjs";
 import {ShoppingList} from "../../model/shoppinglist";
+import {ConfirmDialogService} from "../../shared/services/confirm-dialog.service";
 
 @Component({
     selector: 'app-manage-lists',
@@ -22,7 +23,8 @@ export class ManageListsComponent implements OnInit, OnDestroy {
         private router: Router,
         private title: Title,
         private meta: Meta,
-        private listService: ListService
+        private listService: ListService,
+        private confirmDialogService: ConfirmDialogService
     ) {
     }
 
@@ -50,6 +52,12 @@ export class ManageListsComponent implements OnInit, OnDestroy {
     }
 
     deleteShoppingList(listId: string) {
+        this.confirmDialogService.confirmThis("Are you sure you'd like to delete this list?",
+            () => {console.log("dummy"); this.doDeleteShoppingList(listId);},
+            function () { })
+    }
+
+    doDeleteShoppingList(listId: string) {
         let sub$ = this.listService
             .deleteList(listId)
             .subscribe(l => this.getShoppingLists());

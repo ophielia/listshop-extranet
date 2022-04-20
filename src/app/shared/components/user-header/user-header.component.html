@@ -4,18 +4,19 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="navbar-brand" [routerLink]="'/home'">
-                    <div class="ls-logo-img" ></div>
-                    <div class="navbar-brand-title">THE LIST SHOP</div></a>
+                    <div class="ls-logo-img"></div>
+                    <div class="navbar-brand-title">THE LIST SHOP</div>
+                </a>
             </li>
         </ul>
     </div>
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 theme-nav">
-        <ul class="nav navbar-nav navbar-right ml-auto">
-            <li *ngIf="isLogin"><a class="link-button theme-color outline" [routerLink]="['/user/signup']" >
+        <ul class="nav navbar-nav navbar-right ml-auto" *ngIf="!isLoggedIn">
+            <li *ngIf="isLogin"><a class="link-button theme-color outline" [routerLink]="['/user/signup']">
                 Sign Up
             </a></li>
-            <li *ngIf="!isLogin"><a class="link-button theme-color outline" [routerLink]="['/user/login']" >
+            <li *ngIf="!isLogin"><a class="link-button theme-color outline" [routerLink]="['/user/login']">
                 Sign In
             </a></li>
         </ul>

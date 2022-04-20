@@ -15,6 +15,7 @@ import {GroupType} from "../../shared/services/tag-tree.object";
 import {GenerateListComponent} from "../../shared/components/generate-list/generate-list.component";
 import {ListService} from "../../shared/services/list.service";
 import {MealPlanService} from "../../shared/services/meal-plan.service";
+import {ConfirmDialogService} from "../../shared/services/confirm-dialog.service";
 
 
 @Component({
@@ -66,7 +67,8 @@ export class ManageDishesComponent implements OnInit, OnDestroy {
         private dishService: DishService,
         private mealPlanService: MealPlanService,
         private listService: ListService,
-        private logger: NGXLogger
+        private logger: NGXLogger,
+        private confirmDialogService: ConfirmDialogService
     ) {
     }
 

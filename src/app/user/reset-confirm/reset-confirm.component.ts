@@ -21,7 +21,6 @@ export class ResetConfirmComponent implements OnInit {
 
     ngOnInit() {
         this.title.setTitle(this.route.snapshot.data['title']);
-
         this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
     }

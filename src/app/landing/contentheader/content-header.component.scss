@@ -1,0 +1,5 @@
+@import '../../../assets/scss/_variable.scss';
+
+.theme-nav .nav-item:hover .nav-link {
+  color: $color_basic_orange;
+}

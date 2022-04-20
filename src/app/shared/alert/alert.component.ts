@@ -8,7 +8,7 @@ import {AlertService} from "../services/alert.service";
   styleUrls: ['./alert.component.css']
 })
 export class AlertComponent {
-  @Input() id: string;
+
 
   alerts: Alert[] = [];
 
@@ -19,7 +19,7 @@ export class AlertComponent {
   ngOnInit() {
     // https://www.positronx.io/understand-angular-change-detection-strategy/
 
-    this.alertService.getAlert(this.id).subscribe((alert: Alert) => {
+    this.alertService.getAlert().subscribe((alert: Alert) => {
       if (!alert.message) {
         // clear alerts when an empty alert is received
         this.alerts = [];

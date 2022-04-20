@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {catchError, map} from "rxjs/operators";
-import {of} from "rxjs";
+import {TokenType} from "../../model/token-request";
+
 
 @Component({
     selector: 'app-token-gateway',
@@ -15,9 +15,6 @@ export class TokenGatewayComponent implements OnInit {
 
 
     show: boolean;
-    signUpForm: FormGroup;
-    // variable
-
 
     private returnUrl: string;
 
@@ -34,64 +31,22 @@ export class TokenGatewayComponent implements OnInit {
     ngOnInit() {
         this.title.setTitle(this.route.snapshot.data['title']);
         this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
-        this.signUpForm = this.fb.group({
-            email: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")], this.validateEmailNotTaken.bind(this)],
-            userPassword: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-            confirmPassword: ["", [Validators.required]]
-        }, {updateOn: 'blur', validators: this.validatePasswordConfirmation});
-    }
+        this.route.params.subscribe(params => {
+            let type = params['type'];
+            let token = params['token'];
 
-    // click event function toggle
-    password() {
-        this.show = !this.show;
-    }
-
-    get email() {
-        return this.signUpForm.get('email');
-    }
-
-    get userPassword() {
-        return this.signUpForm.get('userPassword');
-    }
-
-    get confirmPassword() {
-        return this.signUpForm.get('confirmPassword');
-    }
-
-
-    signUp() {
-        // create user
-        this.authenticationService.createUser(this.signUpForm.get('email').value.trim(),
-
-            this.signUpForm.get('userPassword').value.trim())
-            .subscribe(success => {
-                if (!success) {
-                    var error: Error = Error("BADCREDENTIALS");
-                    throw error;
+            var navigationExtras: NavigationExtras = {
+                state: {
+                    token: ''
                 }
-                this.router.navigateByUrl(this.returnUrl);
-            });
-    }
-
-    validatePasswordConfirmation(group: FormGroup): any {
-        var pw = group.controls['userPassword'];
-        var pw2 = group.controls['confirmPassword'];
-
-        if (pw.value !== pw2.value) { // this is the trick
-            pw2.setErrors({passwordsDontMatch: true});
-        }
-
-        // even though there was an error, we still return null
-        // since the new error state was set on the individual field
-        return null;
-    }
-
-    validateEmailNotTaken(control: AbstractControl) {
-        return this.authenticationService.nameIsTaken(control.value).pipe(
-            map(isTaken => (isTaken ? {nameIsTaken: true} : null)),
-            catchError(() => of(null))
-        );
+            };
+            console.log("type: " + TokenType.PasswordReset.valueOf());
+            console.log("type: " + (type == TokenType.PasswordReset.valueOf()));
+            navigationExtras.state.token = token;
+            if (type == TokenType.PasswordReset.valueOf()) {
+                this.router.navigate(['/user/password/token'], navigationExtras);
+            }
+        });
     }
 
 }

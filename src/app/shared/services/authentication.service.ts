@@ -11,6 +11,9 @@ import {CreateUserPost} from "../../model/create-user-post";
 import CreateUserStatus from "../../model/create-user-status";
 import {ListService} from "./list.service";
 import {TokenRequest, TokenType} from "../../model/token-request";
+import {TokenProcessPost} from "../../model/token-process-post";
+import {ChangePasswordPost} from "../../model/change-password-post";
+import {ListShopPayload} from "../../model/list-shop-payload";
 
 
 @Injectable()
@@ -61,7 +64,6 @@ export class AuthenticationService {
                 }),
                 catchError(this.handleError));
     }
-
 
     createUser(username: string, password: string): Observable<CreateUserStatus> {
         // clear any existing token
@@ -120,11 +122,13 @@ export class AuthenticationService {
     }
 
     nameIsTaken(userName: string): Observable<boolean> {
-        var requestUrl = this.userUrl + '/name?name=' + userName
+        var requestUrl = this.userUrl + '/name'
 
-        return this.httpClient.get(requestUrl)
+        var listShopPayload = new ListShopPayload();
+        listShopPayload.parameters[0] = userName;
+
+        return this.httpClient.post(requestUrl, JSON.stringify(listShopPayload))
             .pipe(map((response: HttpResponse<any>) => {
-                // login successful if there's a jwt token in the response
                 if (!response) {
                     return false;
                 }
@@ -144,19 +148,16 @@ export class AuthenticationService {
                 ));
     }
 
-    handleError(error: any) {
-        // log error
-        // could be something more sophisticated
-        let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
-        console.error(errorMsg);
+    deleteUser(): Observable<any> {
+        var requestUrl = this.userUrl
 
-        // throw an application level error
-        return throwError(error);
-    }
-
-
-    static clearToken() {
-        localStorage.removeItem('currentUser');
+        return this.httpClient.delete(requestUrl)
+            .pipe(
+                finalize(() => {
+                        localStorage.removeItem('currentUser');
+                        return of(true);
+                    }
+                ));
     }
 
     isAuthenticated() {
@@ -187,7 +188,6 @@ export class AuthenticationService {
                 return 'other';
         }
     }
-
 
     getBrowserVersion(){
         var userAgent = navigator.userAgent, tem,
@@ -220,19 +220,54 @@ export class AuthenticationService {
                     // login successful if there's a jwt token in the response
                     let userTest = "userTest";
                     return userTest;
-                    /*
-                                        if (user) {
-                                            // store username and jwt token in local storage to keep user logged in between page refreshes
-                                            localStorage.setItem('currentUser', JSON.stringify(user));
-
-                                            // create list, and return true
-
-                                            return CreateUserStatus.Success;
-                                        } else {
-                                            return CreateUserStatus.UnknownError;
-                                        }
-                     */
                 }),
                 catchError(this.handleError));
     }
+
+    resetPasswordWithToken(token: string, newPassword: string): Observable<any> {
+        localStorage.removeItem('currentUser');
+
+        var passwordResetRequest = new TokenProcessPost();
+        passwordResetRequest.token_parameter = newPassword;
+        passwordResetRequest.token = token;
+        passwordResetRequest.token_type = TokenType.PasswordReset;
+
+        let url = this.userUrl + "/token";
+        return this.httpClient.post(url, JSON.stringify(passwordResetRequest))
+            .pipe(map((response: HttpResponse<any>) => {
+                    return "done";
+                }));
+    }
+
+    static clearToken() {
+        localStorage.removeItem('currentUser');
+    }
+
+    changePassword(originalPassword: string, newPassword: string): Observable<any> {
+        let encodedNewPassword = btoa(newPassword);
+        let encodedOrigPassword = btoa(originalPassword);
+        let postObject = new ChangePasswordPost();
+        postObject.new_password = encodedNewPassword;
+        postObject.original_password = encodedOrigPassword;
+
+        let url = this.userUrl + "/password";
+
+        return this.httpClient.post(url, JSON.stringify(postObject))
+            .pipe(map((response: HttpResponse<any>) => {
+                    // login successful if there's a jwt token in the response
+                    return "ok";
+                }),
+                catchError(this.handleError));
+    }
+
+    handleError(error: any) {
+        // log error
+        // could be something more sophisticated
+        let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
+        console.error(errorMsg);
+
+        // throw an application level error
+        return throwError(error);
+    }
+
 }

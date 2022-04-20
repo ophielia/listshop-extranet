@@ -43,6 +43,40 @@
     </div>
 </div>
 <!--breadcrumb end -->
+<!--navigation start -->
+<div class="navigation-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-10">
+                <div>
+                    <div class="straddling-button">
+                        <a *ngIf="previousPlanId" [routerLink]="['/mealplans/edit', previousPlanId]">
+                            <img class="lg-button"
+                                 src="../../../assets/images/listshop/icons/whitewithborder/@backarrow.png"
+                                 alt="add">
+
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-4 col-lg-2 order-md-last title-bar-action">
+                <div>
+                    <div class="straddling-button">
+                        <a *ngIf="nextPlanId" [routerLink]="['/mealplans/edit', nextPlanId]">
+                            <img class="lg-button"
+                                 src="../../../assets/images/listshop/icons/whitewithborder/@rightarrow.png"
+                                 alt="add">
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--navigation end -->
 <!-- list Section starts -->
 <section>
     <div class="container">

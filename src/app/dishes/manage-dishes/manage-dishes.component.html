@@ -100,7 +100,9 @@
             <div *ngIf="isLoading" class="col-md-12 " class="loading-box">
                 <div class="loading-text">loading dishes...</div>
             </div>
-            <ng-container *ngIf="!isLoading">
+            <div *ngIf="!isLoading && filteredDishes.length == 0"
+                 class="ls-flat-card empty-list">No dishes (yet)</div>
+            <ng-container *ngIf="!isLoading && filteredDishes.length > 0 ">
                 <div class="col-md-{{hasSelected ? 9 : 12}} ">
                     <div class="row ">
                         <!-- single dish element -->
@@ -142,7 +144,7 @@
                         </div>
                         <div *ngIf="showAddTag">
                             <app-tag-select class="at-tag-select-style"
-                                            [tagTypes]="'Ingredient,Rating,DishType,TagType'"
+                                            [tagTypes]="'Ingredient'"
                                             [selectType]="'Assign'"
                                             [allowAdd]="true"
                                             [showCancelButton]="true"
@@ -217,5 +219,7 @@
          "{{displayId}}" tag added to dishes
     </div>
 </app-modal>
+
+<app-confirm-dialog></app-confirm-dialog>
 
 

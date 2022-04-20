@@ -58,4 +58,10 @@ export class HeaderComponent implements AfterViewInit {
             this.darkHeader = false;
         }
     }
+
+    logout(): void {
+        this.authorizationService.logout().subscribe(t => {
+                this.isLoggedIn = false;
+            });
+    }
 }

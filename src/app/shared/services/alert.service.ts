@@ -19,7 +19,7 @@ export class AlertService {
           this.keepAfterRouteChange = false;
         } else {
           // clear alert messages
-          this.clear();
+        //  this.clear();
         }
       }
 
@@ -27,11 +27,9 @@ export class AlertService {
   }
 
   // subscribe to alerts
-  getAlert(alertId?: string): Observable<any> {
+  getAlert(): Observable<any> {
     return this.subject.asObservable()
-        .pipe(
-         filter((x: Alert) => x && x.alertId === alertId)
-        );
+        .pipe();
   }
 
   // convenience methods

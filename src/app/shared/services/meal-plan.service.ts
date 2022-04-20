@@ -29,7 +29,7 @@ export class MealPlanService {
 
         return this.httpClient.get(this.mealplanUrl)
             .pipe(map((response: HttpResponse<any>) => {
-                    // map and return
+                // map and return
                     return MealPlanService.mapMealPlans(response);
                 }),
                 catchError(this.handleError));

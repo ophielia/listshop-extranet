@@ -7,4 +7,6 @@ export enum ErrorType {
     textTooLong = 'textTooLong',
     isRequired = 'isRequired',
     emailTaken = 'emailTaken',
+    passwordIsBad = 'passwordIsBad',
+    generalError = 'generalError',
 }

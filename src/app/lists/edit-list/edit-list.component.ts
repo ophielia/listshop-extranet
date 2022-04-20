@@ -38,6 +38,7 @@ export class EditListComponent implements OnInit, OnDestroy {
     private originalName: string = null;
     shoppingListName: string = "";
     frequentToggleAvailable: boolean = true;
+    frequentItemsExist: boolean = false;
     allDishes: IDish[];
     errorMessage: any;
     private highlightSourceId: string;
@@ -46,7 +47,6 @@ export class EditListComponent implements OnInit, OnDestroy {
     shoppingList: ShoppingList;
     removedItems: IItem[] = [];
     selectedItems: string[] = [];
-
 
 
     constructor(
@@ -150,27 +150,6 @@ export class EditListComponent implements OnInit, OnDestroy {
         this.unsubscribe.push($sub);
     }
 
-    removeTagFromList(item: Item) {
-
-        let $sub = this.listService.removeItemFromShoppingList(this.shoppingList.list_id, item.item_id,
-            item.tag.tag_id)
-            .subscribe(() => {
-                this.getShoppingList(this.shoppingList.list_id);
-                this.markItemRemoved(item);
-            });
-        this.unsubscribe.push($sub);
-    }
-
-    toggleItemCrossedOff(item: Item) {
-        let $sub = this.listService.setItemCrossedOff(this.shoppingList.list_id, item.item_id,
-            !item.crossed_off)
-            .subscribe(() => {
-                this.getShoppingList(this.shoppingList.list_id);
-            });
-        this.unsubscribe.push($sub);
-
-    }
-
     toggleItemSelected(item: Item, category: Category) {
         item.is_selected = !item.is_selected;
         var inList = this.selectedContains(item.tag.tag_id)
@@ -187,11 +166,6 @@ export class EditListComponent implements OnInit, OnDestroy {
     private selectedContains(tag_id: String): boolean {
         var inListString = this.selectedItems.find(s => s == tag_id);
         return inListString != null;
-    }
-
-
-    markItemRemoved(item: IItem) {
-        this.removedItems.push(item);
     }
 
     showLegends(item: Item) {
@@ -328,9 +302,11 @@ export class EditListComponent implements OnInit, OnDestroy {
     private processRetrievedShoppingList(p: IShoppingList) {
         this.handleCrossedOffAndSelected(p);
         this.prepareLegend(p);
+        this.frequentItemsExist = this.frequentItemsPresent(p);
         this.adjustForStarter(p);
         this.shoppingList = this.filterForDisplay(p);
         this.showItemLegends = this.newEvaluateShowLegend();
+
     }
 
     private prepareLegend(list: IShoppingList) {
@@ -478,7 +454,7 @@ export class EditListComponent implements OnInit, OnDestroy {
             }
         } else {
             this.showMakeStarter = true;
-            this.frequentToggleAvailable = true;
+            this.frequentToggleAvailable = this.frequentItemsExist;
 
             // check showFrequent toggle, and set source id if on.
             if (this.showFrequent && this.highlightSourceId == null) {
@@ -536,5 +512,19 @@ export class EditListComponent implements OnInit, OnDestroy {
             });
         this.unsubscribe.push($sub);
 
+    }
+
+    private frequentItemsPresent(list: IShoppingList): boolean {
+
+        for (let category of list.categories) {
+            for (let item of category.items) {
+                for (let sourceKey of item.source_keys) {
+                    if (sourceKey == LegendService.FREQUENT) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -15,7 +15,6 @@ import MappingUtils from "../../model/mapping-utils";
 export class TagService {
 
     private tagUrl;
-    private tagInfoUrl: string;
 
     constructor(
         private httpClient: HttpClient,

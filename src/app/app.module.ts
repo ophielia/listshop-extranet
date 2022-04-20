@@ -15,41 +15,46 @@ import {ListShopErrorHandler} from "./shared/handlers/list-shop-error-handler";
 import {AlertComponent} from "./shared/alert/alert.component";
 import {AuthGuardHandler} from "./shared/handlers/auth-guard-handler";
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
+import {AlertService} from "./shared/services/alert.service";
+import {NgxSpinnerModule} from "ngx-spinner";
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-      UserComponent,
-      AlertComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    ReactiveFormsModule,
-    HttpClientModule,
-    LoggerModule.forRoot({
-      //serverLoggingUrl: '/api/logs',
-      level: NgxLoggerLevel.TRACE,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-    }),
-    BrowserAnimationsModule,
-    SharedModule,
-    UserModule,
-    ListsModule,
-    // tslint:disable-next-line: max-line-length
-    RouterModule.forRoot(rootRouterConfig, {
-      useHash: false,
-      anchorScrolling: 'enabled',
-      scrollPositionRestoration: 'enabled',
-      enableTracing: false,
-      initialNavigation: 'enabled'
-    })
-  ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ListShopTokenInterceptor, multi: true},
-    {provide: ErrorHandler, useClass: ListShopErrorHandler},
-      AuthGuardHandler
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        UserComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'serverApp'}),
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgxSpinnerModule,
+        LoggerModule.forRoot({
+            //serverLoggingUrl: '/api/logs',
+            level: NgxLoggerLevel.TRACE,
+            serverLogLevel: NgxLoggerLevel.ERROR,
+            disableConsoleLogging: false
+        }),
+        BrowserAnimationsModule,
+        SharedModule,
+        UserModule,
+        ListsModule,
+        // tslint:disable-next-line: max-line-length
+        RouterModule.forRoot(rootRouterConfig, {
+            useHash: false,
+            anchorScrolling: 'enabled',
+            scrollPositionRestoration: 'enabled',
+            enableTracing: false,
+            initialNavigation: 'enabled'
+        })
+    ],
+    providers: [
+        AlertService,
+        {provide: HTTP_INTERCEPTORS, useClass: ListShopTokenInterceptor, multi: true},
+        {provide: ErrorHandler, useClass: ListShopErrorHandler},
+        AuthGuardHandler
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

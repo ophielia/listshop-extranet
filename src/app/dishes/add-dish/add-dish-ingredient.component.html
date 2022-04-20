@@ -57,13 +57,14 @@
 
                                 </div>
 
+                                <div class="ls-card-link-block"><a
+                                        class="ls-card-link" [routerLink]="['/dishes/edit', dish.dish_id]">done</a></div>
+
                                 <span *ngFor="let tag of ingredientTags" class="ls-list-span"
                                       (click)="removeTagFromDish(tag)">{{tag.name}}</span>
                                 <div>
                                     <div class="clearfix spacer50"></div>
                                 </div>
-                                <div class="ls-card-link-block"><a
-                                        class="ls-card-link" [routerLink]="['/dishes/edit', dish.dish_id]">done</a></div>
 
 
                                 <div class="clearfix"></div>

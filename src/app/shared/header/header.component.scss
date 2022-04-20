@@ -1,0 +1,78 @@
+@import '../../../assets/scss/variable';
+
+.nav-text-align {
+  margin-top: 5px;
+}
+
+.account-image {
+  width:30px;
+  height: 30px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-image: url(../../../assets/images/listshop/header/account_space_for_dark.png);
+}
+
+.account-image:after {
+  content: none !important;
+}
+
+
+
+.darkHeader .account-image {
+  background-image: url(../../../assets/images/listshop/header/account_space_for_light.png);
+}
+
+
+
+@media(max-width: 991px) {
+  #forcemenu {
+    &.dropdown {
+      .dropdown-menu {
+        box-shadow: none;
+      }
+    }
+
+    .div.dropdown-menu.show {
+      box-shadow: none;
+
+      &.nav-link {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    a.nav-link {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      &.hover {
+        color: $color_basic_orange;
+      }
+    }
+
+
+  }
+}
+
+
+#forcemenu {
+  .div.dropdown-menu.show {
+    box-shadow: none;
+
+    &.nav-link {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  a.nav-link {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &.hover {
+      color: $color_basic_orange;
+    }
+  }
+
+
+}

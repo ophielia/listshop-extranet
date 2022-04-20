@@ -16,7 +16,7 @@
     <div class="container dish-toolbar">
         <div class="row">
             <div class=" col-sm-6 col-md-8 col-lg-8">
-                <h2 class="title"><span>{{dish.name}}</span></h2>
+                <h2 class="title"><span>{{dish?dish.name:""}}</span></h2>
             </div>
             <div class="col-md-4 col-sm-6 col-text-end">
                 <div class="title-bar-action">
@@ -35,7 +35,7 @@
     <div class="container">
         <div class="row">
 
-            <div *ngIf="isLoading" class="col-md-12 " class="loading-box">
+            <div *ngIf="isLoading" class="col-md-12 loading-box">
                 <div class="loading-text">loading dish...</div>
             </div>
             <ng-container *ngIf="!isLoading">
@@ -168,9 +168,6 @@
         <div class="ls-card">
             <div class="ls-tag-group-subtitle">Ingredients:
             </div>
-            <span *ngFor="let tag of ingredientTags" class="ls-list-span"
-                  (click)="removeTagFromDish(tag)">{{tag.name}}</span>
-
             <div>
                 <div *ngIf="this.showAddIngredient" class="ls-add-tag">
 
@@ -184,6 +181,11 @@
                                     (cancelAddTag)="toggleAddIngredient()"></app-tag-select>
 
                 </div>
+            </div>
+            <span *ngFor="let tag of ingredientTags" class="ls-list-span"
+                  (click)="removeTagFromDish(tag)">{{tag.name}}</span>
+
+            <div>
                 <div *ngIf="!this.showAddIngredient" class="ls-card-link-block">
 <span><a class="add-button" (click)="toggleAddIngredient()">
 <img src="../../../assets/images/listshop/icons/orangeround/orangeadd.png" alt="add"></a></span>
@@ -233,7 +235,7 @@
         <div class="ls-card">
             <div class="ls-tag-group-subtitle">Ratings:
             </div>
-            <div>
+            <div *ngIf="dishRatingInfo != null">
                 <ng-container *ngFor="let rating of dishRatingInfo.ratings, let i = index">
                     <div class="ls-rating">
                         {{rating.label}} :

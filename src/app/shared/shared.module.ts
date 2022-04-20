@@ -25,6 +25,9 @@ import {ModalComponent} from "./components/modal/modal";
 import {UserHeaderComponent} from "./components/user-header/user-header.component";
 import {ListShopHeaderComponent} from "./components/list-shop-header/list-shop-header.component";
 import {SingleDishElementComponent} from "./components/single-dish-element/single-dish-element.component";
+import {AlertComponent} from "./alert/alert.component";
+import {ConfirmDialogService} from "./services/confirm-dialog.service";
+import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 
 @NgModule({
     exports: [
@@ -39,7 +42,9 @@ import {SingleDishElementComponent} from "./components/single-dish-element/singl
         ListSelectComponent,
         GenerateListComponent,
         ModalComponent,
-        SingleDishElementComponent
+        AlertComponent,
+        SingleDishElementComponent,
+        ConfirmDialogComponent
 
     ],
     imports: [
@@ -54,6 +59,7 @@ import {SingleDishElementComponent} from "./components/single-dish-element/singl
         HeaderComponent,
         FooterComponent,
         LoaderComponent,
+        AlertComponent,
         UserHeaderComponent,
         ListShopHeaderComponent,
         DishSelectComponent,
@@ -61,7 +67,8 @@ import {SingleDishElementComponent} from "./components/single-dish-element/singl
         GenerateListComponent,
         ListSelectComponent,
         ModalComponent,
-        SingleDishElementComponent
+        SingleDishElementComponent,
+        ConfirmDialogComponent
     ],
     providers: [
         WINDOW_PROVIDERS,
@@ -70,7 +77,8 @@ import {SingleDishElementComponent} from "./components/single-dish-element/singl
         ListService,
         DishService,
         TagService,
-        MealPlanService
+        MealPlanService,
+        ConfirmDialogService
 
     ]
 })

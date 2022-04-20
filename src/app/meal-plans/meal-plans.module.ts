@@ -12,6 +12,7 @@ import {SinglePlanElementComponent} from "./single-plan-element/single-plan-elem
 import {EditPlanComponent} from "./edit-plan/edit-plan.component";
 import {PlanDishElementComponent} from "./plan-dish-element/plan-dish-element.component";
 import {AddDishToPlanComponent} from "./add-dish-to-plan/add-dish-to-plan.component";
+import {PlanContext} from "./plan-context/plan-context";
 
 
 @NgModule({
@@ -29,6 +30,9 @@ import {AddDishToPlanComponent} from "./add-dish-to-plan/add-dish-to-plan.compon
         InputSwitchModule,
         FormsModule,
         NgbRatingModule
+    ],
+    providers: [
+        PlanContext
     ]
 })
 export class MealPlansModule {

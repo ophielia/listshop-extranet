@@ -36,6 +36,15 @@
             <a class="nav-link" [routerLink]="'/user/signup'">sign up</a>
           </div>
         </div>
+        <div *ngIf="isLoggedIn" id="forcemenu" ngbDropdown class="nav-item dropdown">
+          <a class="nav-link">
+            <div class="account-image" ngbDropdownToggle></div>
+          </a>
+          <div ngbDropdownMenu>
+            <a class="nav-link" [routerLink]="'/user/password'">change password</a>
+            <a class="nav-link" (click)="logout()">logout</a>
+          </div>
+        </div>
       </ul>
     </div>
   </div>
