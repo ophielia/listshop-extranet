@@ -1000,6 +1000,30 @@ img.lg-button {
   align-items: center;
 }
 
+.console-management {
+  width: 100vw;
+  background-image: $url_listmanagement_bg;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  position: relative;
+  align-items: center;
+}
+
+.tag-management {
+  width: 100vw;
+  margin-top: 14px;
+  background-image: $url_listmanagement_bg;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  position: relative;
+  align-items: center;
+}
+
+
 .ls-list-element-title {
   color: $color_dark_grey;
   font-weight: bold;
@@ -1012,7 +1036,7 @@ img.lg-button {
 
 /** navigation **/
 .ls-theme-functional-nav {
-  background-color: white;
+  //background-color: white;
 
   .navbar-brand {
     color: black;

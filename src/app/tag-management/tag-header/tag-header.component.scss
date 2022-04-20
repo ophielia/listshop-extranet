@@ -1,0 +1,28 @@
+.tag-header {
+  margin-top: 115px;
+}
+
+.poor-mans-nav {
+
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+
+  ul {
+  }
+
+  .nav-links {
+    width: fit-content;
+    margin-left: auto;
+
+    span {
+      text-transform: uppercase;
+      padding: 0px 10px;
+      font-size: 13px;
+    }
+
+    a {
+      color: #e67d21;
+    }
+  }
+}

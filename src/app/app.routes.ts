@@ -4,6 +4,8 @@ import {DishesComponent} from "./dishes/dishes.component";
 import {UserComponent} from "./user/user.component";
 import {MealPlansComponent} from "./meal-plans/meal-plans.component";
 import {HomeComponent} from "./landing/home.component";
+import {UserManagementComponent} from "./user-management/user-management.component";
+import {TagManagementComponent} from "./tag-management/tag-management.component";
 
 export const rootRouterConfig: Routes = [
     {
@@ -21,6 +23,16 @@ export const rootRouterConfig: Routes = [
         path: 'user',
         component: UserComponent,
         loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+    },
+    {
+        path: 'manage/users',
+        component: UserManagementComponent,
+        loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule)
+    },
+    {
+        path: 'manage/tags',
+        component: TagManagementComponent,
+        loadChildren: () => import('./tag-management/tag-management.module').then(m => m.TagManagementModule)
     },
     {
         path: 'dishes',

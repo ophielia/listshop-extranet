@@ -45,7 +45,6 @@ import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog
         AlertComponent,
         SingleDishElementComponent,
         ConfirmDialogComponent
-
     ],
     imports: [
         CommonModule,

@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse default-nav" id="navbarSupportedContent" [class.show]="isOpenMobile">
       <ul class="navbar-nav ml-auto" id="mymenu">
         <li *ngIf="isLoggedIn" class="nav-item">
-          <a class="nav-link" [routerLink]="'/lists/manage'">Get Going</a>
+          <a class="nav-link" [routerLink]="'/manage/users'">Get Going</a>
         </li>
         <div *ngIf="!isLoggedIn" ngbDropdown class="nav-item dropdown">
           <button class="btn connect-button dropdown-toggle" id="dropdownMenuButton" ngbDropdownToggle>connect</button>
