@@ -43,10 +43,6 @@ export class UserService {
     }
 
     mapAdminUsers(object: Object): IAdminUser[] {
-        let embeddedObj = object["_embedded"];
-        if (embeddedObj) {
-            return embeddedObj["shoppingListResourceList"].map(MappingUtils.toShoppingList);
-        }
-        return null;
+            return object["users"].map(MappingUtils.toAdminUser);
     }
 }

@@ -59,7 +59,12 @@
                     <div class="row ">
                         <!-- results -->
                         <div class="col-md-12 " class="loading-box">
-                            <div class="loading-text">loading results...</div>
+                            <div *ngIf="searchResults.length == 0 " class="loading-text">no results...</div>
+                            <ng-container *ngIf="searchResults.length > 0 ">
+                                <div *ngFor="let result of searchResults" class="result-text">
+                                    {{result.email}}
+                                </div>
+                            </ng-container>
                         </div>
                         <!-- results -->
                     </div>

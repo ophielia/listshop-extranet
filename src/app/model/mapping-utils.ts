@@ -10,6 +10,7 @@ import {Slot} from "./slot";
 import {RatingUpdateInfo} from "./rating-update-info";
 import {IRatingInfo, RatingInfo} from "./rating-info";
 import {DishRatingInfo, IDishRatingInfo} from "./dish-rating-info";
+import {AdminUser} from "./admin-user";
 
 
 export default class MappingUtils {
@@ -25,6 +26,16 @@ export default class MappingUtils {
             token: r.user.token
 
         });
+    }
+
+    static toAdminUser(r: any): AdminUser {
+        return <AdminUser>({
+            email: r.email,
+            creation_date: r.creation_date,
+            user_id: r.user_id,
+            last_login: r.last_login
+        });
+
     }
 
     static toShoppingList(jsonResult: any): IShoppingList {

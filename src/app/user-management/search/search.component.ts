@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   listId: string;
   userId: string;
   email: string;
-  searchResults: AdminUser[];
+  searchResults: AdminUser[] = [];
 
   constructor(private logger: NGXLogger,
               private userService: UserService,) {
@@ -30,10 +30,13 @@ export class SearchComponent implements OnInit {
 
   doUserSearch() {
     this.logger.info("in do user search");
-
+    this.searchResults = [];
     let $sub = this.userService.searchUsers(this.email, this.userId, this.listId)
         .subscribe(p => {
           this.searchResults = p;
+          this.email = "";
+          this.userId = "";
+          this.listId = "";
         });
     this.unsubscribe.push($sub);
   }
