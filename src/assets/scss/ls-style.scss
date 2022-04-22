@@ -1235,11 +1235,40 @@ img.lg-button {
 /** dish tool bar **/
 .dish-toolbar {
   padding-bottom: 15px;
+
   span.action-link {
     color: $color_basic_orange;
     display: block;
     padding: 0.5rem 1rem;
   }
+}
+
+.loading-box {
+  width: 100%;
+  background-color: white;
+  border-width: 1.0px;
+  border-style: solid;
+  min-height: 300px;
+  padding: 15px;
+
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border-color: #979797;
+
+  .loading-text {
+    text-align: center;
+    padding-top: 110px;
+    color: $color_tapa;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .result-text {
+    color: $color_tapa;
+  }
+
+
 }
 
 

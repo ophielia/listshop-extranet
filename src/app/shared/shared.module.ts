@@ -28,6 +28,7 @@ import {SingleDishElementComponent} from "./components/single-dish-element/singl
 import {AlertComponent} from "./alert/alert.component";
 import {ConfirmDialogService} from "./services/confirm-dialog.service";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
+import {UserService} from "./services/user.service";
 
 @NgModule({
     exports: [
@@ -77,6 +78,7 @@ import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog
         DishService,
         TagService,
         MealPlanService,
+        UserService,
         ConfirmDialogService
 
     ]

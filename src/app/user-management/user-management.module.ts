@@ -6,6 +6,7 @@ import {SearchComponent} from './search/search.component';
 import {UserManagementComponent} from './user-management.component';
 import {SharedModule} from "../shared/shared.module";
 import {EditUserComponent} from './edit-user/edit-user.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {EditUserComponent} from './edit-user/edit-user.component';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     UserManagementRoutingModule
   ]
 })

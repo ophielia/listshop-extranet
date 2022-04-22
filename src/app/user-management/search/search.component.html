@@ -1,1 +1,71 @@
-<p>search works!</p>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-text-center d-align-left">
+                <h2 class="title"><span>User Search</span></h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end">
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+<!--breadcrumb start-->
+<div class="breadcrumb-bg breadcrumb-for-bar">
+    <div class="container dish-toolbar">
+        <div class="row">
+            <div class=" col-sm-4 col-md-12 col-lg-12">
+            <span class="button-icon">
+                <input type="text" class="form-control searchbox"
+                       placeholder="Search By Email"
+                       [(ngModel)]="email"
+                       (keyup.enter)="doUserSearch()"
+                />
+            </span>
+                <span class="button-icon" style="margin-left: 10px">
+                         <input type="text" class="form-control searchbox"
+                                placeholder="Search By User Id"
+                                [(ngModel)]="userId"
+                                (keyup.enter)="doUserSearch()"
+                         />
+            </span>
+                <span class="button-icon" style="margin-left: 10px">
+                         <input type="text" class="form-control searchbox"
+                                placeholder="Search By List Id"
+                                [(ngModel)]="listId"
+                                (keyup.enter)="doUserSearch()"
+                         />
+            </span>
+                <span (click)="doUserSearch()" class="search-button" style="margin-left: 10px">
+                         Search
+            </span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--breadcrumb end -->
+
+<!--content start-->
+<section>
+    <div class="container">
+        <div class="row">
+
+
+            <ng-container>
+                <div class="col-md-12">
+                    <div class="row ">
+                        <!-- results -->
+                        <div class="col-md-12 " class="loading-box">
+                            <div class="loading-text">loading results...</div>
+                        </div>
+                        <!-- results -->
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>
+<!--content End-->

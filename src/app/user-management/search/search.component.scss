@@ -1,0 +1,16 @@
+@import '../../../assets/scss/variable';
+
+.searchbox {
+  display: inline-block;
+  width: auto;
+}
+
+.search-button {
+  text-align: center;
+  margin: 15px 0px 15px 0px;
+  background-color: $color_basic_orange;
+  border-radius: 4px;
+  color: white;
+  padding: 8px;
+
+}
