@@ -1,0 +1,31 @@
+@import '../../../assets/scss/variable';
+
+.label {
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.value {
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+.breadcrumb-as-content {
+  margin-bottom: 500px;
+}
+
+.spacer {
+  min-height: 20px;
+  display: inline-block;
+}
+
+.search-button {
+  display: inline-block;
+  text-align: center;
+  //margin: 15px 0px 15px 0px;
+  background-color: $color_basic_orange;
+  border-radius: 4px;
+  color: white;
+  padding: 8px;
+
+}

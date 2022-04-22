@@ -42,7 +42,22 @@ export class UserService {
                 catchError(this.handleError));
     }
 
-    mapAdminUsers(object: Object): IAdminUser[] {
-            return object["users"].map(MappingUtils.toAdminUser);
+    findUser(userId: string) {
+        let url = this.userUrl + "/" + userId;
+        return this.httpClient.get(url)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return this.mapAdminUser(response);
+                }),
+                catchError(this.handleError));
     }
+
+    mapAdminUsers(object: Object): IAdminUser[] {
+        return object["users"].map(MappingUtils.toAdminUser);
+    }
+
+    mapAdminUser(object: Object): IAdminUser {
+        return MappingUtils.toAdminUser(object);
+    }
+
+
 }

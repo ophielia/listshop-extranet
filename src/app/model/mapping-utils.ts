@@ -33,7 +33,10 @@ export default class MappingUtils {
             email: r.email,
             creation_date: r.creation_date,
             user_id: r.user_id,
-            last_login: r.last_login
+            last_login: r.last_login,
+            dish_count: r.dish_count,
+            list_count: r.list_count,
+            meal_plan_count: r.meal_plan_count
         });
 
     }

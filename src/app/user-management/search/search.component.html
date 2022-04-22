@@ -61,7 +61,8 @@
                         <div class="col-md-12 " class="loading-box">
                             <div *ngIf="searchResults.length == 0 " class="loading-text">no results...</div>
                             <ng-container *ngIf="searchResults.length > 0 ">
-                                <div *ngFor="let result of searchResults" class="result-text">
+                                <div *ngFor="let result of searchResults"
+                                     [routerLink]="['/manage/users/edit', result.user_id]" class="result-text">
                                     {{result.email}}
                                 </div>
                             </ng-container>

@@ -1,1 +1,64 @@
-<p>edit-user works!</p>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-text-center d-align-left">
+                <h2 class="title"><span>View User</span></h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end">
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+<!--content start-->
+<div class="breadcrumb-bg breadcrumb-for-bar breadcrumb-as-content">
+
+    <!--
+      email: string;
+  user_id: string;
+  last_login: Date;
+  creation_date: Date;
+  list_count: number;
+  dish_count: number;
+  meal_plan_count: number;
+    -->
+    <div class="container dish-toolbar">
+        <div class="row">
+            <div class=" col-sm-4 col-md-6 col-lg-6">
+                <div class="button-icon">
+                    <span class="label">User Id:</span><span class="value">{{user.user_id}}</span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">User Email:</span><span class="value">{{user.email}}</span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">Created:</span><span class="value">{{user.creation_date | date}}</span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">Last Login:</span><span class="value">{{user.last_login | date}}</span>
+                </div>
+            </div>
+            <div class=" col-sm-4 col-md-6 col-lg-6">
+                <div class="button-icon">
+                    <span class="spacer"></span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">List Count:</span><span class="value">{{user.list_count}}</span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">Dish Count:</span><span class="value">{{user.dish_count}}</span>
+                </div>
+                <div class="button-icon">
+                    <span class="label">Meal Plan Count:</span><span class="value">{{user.meal_plan_count}}</span>
+                </div>
+                <span class="search-button">
+                         User Tags
+            </span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--content end -->
