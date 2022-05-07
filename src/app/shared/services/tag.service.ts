@@ -3,28 +3,25 @@ import {catchError, map} from "rxjs/operators";
 import {NGXLogger} from "ngx-logger";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
-import TagType from "../../model/tag-type";
 import {environment} from "../../../environments/environment";
 import {ITag} from "../../model/tag";
 import MappingUtils from "../../model/mapping-utils";
 
 
-
-
 @Injectable()
 export class TagService {
 
-    private tagUrl;
+    private adminTagUrl;
 
     constructor(
         private httpClient: HttpClient,
         private logger: NGXLogger
     ) {
-        this.tagUrl = environment.apiUrl + "tag";
+        this.adminTagUrl = environment.apiUrl + "admin/tag";
     }
 
     getById(tag_id: string): Promise<ITag> {
-        let url = this.tagUrl + "/" + tag_id;
+        let url = this.adminTagUrl + "/" + tag_id;
         return this.httpClient
             .get(url)
             .pipe(map((response: HttpResponse<any>) => {
@@ -36,7 +33,7 @@ export class TagService {
 
     getAllExtendedTags(): Promise<ITag[]> {
         this.logger.debug("Retrieving all tags");
-        var url = this.tagUrl + "?extended=true";
+        var url = this.adminTagUrl + "?extended=true";
 
 
         return this.httpClient
@@ -49,6 +46,22 @@ export class TagService {
 
     }
 
+    getTagList(userId: string, forReview: boolean): Promise<ITag[]> {
+        this.logger.debug("Retrieving tags for list");
+        var url = this.adminTagUrl + "/standard/list";
+        if (userId) {
+            var url = this.adminTagUrl + "/user/" + userId + "/list";
+        }
+
+        return this.httpClient
+            .get(`${url}`)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapTagsClient(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+    }
+
     addTag(newTagName: string, tagType: string): Observable<HttpResponse<Object>> {
         var newTag: ITag = <ITag>({
             name: newTagName,
@@ -57,7 +70,7 @@ export class TagService {
 
         return this
             .httpClient
-            .post(this.tagUrl,
+            .post(this.adminTagUrl,
                 JSON.stringify(newTag), {observe: 'response'});
 
     }
@@ -80,6 +93,7 @@ export class TagService {
         // throw an application level error
         return throwError(error);
     }
+
 
 }
 
