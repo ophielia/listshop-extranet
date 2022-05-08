@@ -1,4 +1,5 @@
 import {Dish} from "./dish";
+
 export interface ITag {
   tag_id: string;
   name: string;
@@ -11,6 +12,7 @@ export interface ITag {
   search_select: boolean;
   is_inverted: boolean;
   is_group: boolean;
+  user_id: string;
 }
 
 export class Tag implements ITag {
@@ -28,4 +30,5 @@ export class Tag implements ITag {
   search_select: boolean;
   is_inverted: boolean;
   is_group: boolean = false;
+  user_id: string;
 }

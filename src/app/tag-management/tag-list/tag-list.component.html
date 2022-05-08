@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-text-center d-align-left">
-                <h2 class="title"><span>Tag List</span></h2>
+                <h2 class="title"><span>Tag List - Standard</span></h2>
             </div>
             <div class="col-md-6 col-sm-6 col-text-end">
             </div>
@@ -40,7 +40,7 @@
                 <div *ngIf="tagList.length == 0 " class="loading-text">no results...</div>
                 <ng-container *ngIf="tagList.length > 0 ">
                     <div *ngFor="let result of tagList" class="result-text">
-                        {{result.name}} ({{result.tag_id}})
+                        <span (click)="selectTag(result);">{{result.name}} ({{result.tag_id}})</span>
                     </div>
                 </ng-container>
             </div>
@@ -49,9 +49,30 @@
                     <div>
                         <div class="sidebar-dark-title">Actions</div>
 
+                        <div class="ls-panel" *ngIf="showAddToUser">
+                            <div (click)="toggleShowAssign()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div>
+                                <table class="generate-panel">
+                                    <tr>
+                                        <td class="generate-panel"><input [(ngModel)]="userId"
+                                                                          placeholder="user id"></td>
+                                    </tr>
+                                    <tr (click)="assignSelectedToUser()">
+                                        <td>Assign To User</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </div>
                         <ul>
-                            <li>one action</li>
-                            <li>two action</li>
+                            <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign To User</li>
+
+                            <li>Assign Tag Category</li>
                         </ul>
 
 
@@ -62,15 +83,11 @@
                         <div class="sidebar-title">SELECTED</div>
 
                         <ul>
-                            <li>one action</li>
-                            <li>two action</li>
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (click)="deSelectTag(result);">{{result.name}} ({{result.tag_id}})</span>
+                            </li>
                         </ul>
 
-                        <!--<div *ngFor="let selectedDish of planDishes"
-                             class="selected-dish"
-                             (click)="removeFromMealPlan(selectedDish.dish_id)">
-                            {{selectedDish.name}}
-                        </div> -->
                     </div>
                 </div>
             </div>

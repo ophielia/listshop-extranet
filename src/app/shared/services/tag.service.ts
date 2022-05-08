@@ -47,10 +47,11 @@ export class TagService {
     }
 
     getTagList(userId: string, forReview: boolean): Promise<ITag[]> {
-        this.logger.debug("Retrieving tags for list");
-        var url = this.adminTagUrl + "/standard/list";
+        this.logger.debug("Retrieving tags for reviewlist");
+        var reviewClause = forReview ? "?filter=ToReview" : ""
+        var url = this.adminTagUrl + "/standard/list" + reviewClause;
         if (userId) {
-            var url = this.adminTagUrl + "/user/" + userId + "/list";
+            var url = this.adminTagUrl + "/user/" + userId + "/list" + reviewClause;
         }
 
         return this.httpClient

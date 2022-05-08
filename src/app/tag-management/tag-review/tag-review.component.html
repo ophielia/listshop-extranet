@@ -1,2 +1,79 @@
 <app-tag-header></app-tag-header>
-<div>tag-review works!</div>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-text-center d-align-left">
+                <h2 class="title"><span>Review Tags</span></h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end">
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+<!--toolbar start-->
+<div class="breadcrumb-bg breadcrumb-for-bar">
+    <div class="container dish-toolbar">
+        <div class="row">
+            <div class=" col-sm-12 col-md-6 col-lg-6">
+
+
+            </div>
+            <div class=" col-sm-12 col-md-6 col-lg-6 toolbar-action">
+                <span class="toolbar-label">     Sort: </span>
+                <span class="action-link" (click)="changeSorting('created')">     Created</span>
+                <span class="action-link" (click)="changeSorting('name')">     Name</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--toolbar end -->
+<!--content start-->
+<section class="admin-section">
+    <div class="container">
+        <div class="row ">
+            <!-- results -->
+            <div class="col-md-8 col-lg-8 loading-box">
+                <div *ngIf="tagList.length == 0 " class="loading-text">no results...</div>
+                <ng-container *ngIf="tagList.length > 0 ">
+                    <div *ngFor="let result of tagList" class="result-text">
+                        <span (click)="selectTag(result);">{{result.name}} ({{result.tag_id}}) ({{result.user_id}}
+                            )</span>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <div class="ls-admin-sidebar-dark">
+                    <div>
+                        <div class="sidebar-dark-title">Actions</div>
+
+                        <ul>
+                            <li>Create Standard For Selected</li>
+
+                            <li>Mark All as Reviewed</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="ls-admin-sidebar-light">
+                    <div>
+                        <div class="sidebar-title">SELECTED</div>
+
+                        <ul>
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (click)="deSelectTag(result);">{{result.name}} ({{result.tag_id}})</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- results -->
+        </div>
+    </div>
+</section>
+<!--content End-->

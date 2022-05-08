@@ -15,9 +15,12 @@ export class TagListComponent implements OnInit {
   unsubscribe: Subscription[] = [];
 
   tagList: ITag[] = []
-  userId: string = null;
+  selectedTags: ITag[] = []
+  public userId: string = null;
   sortDirection: number = -1
   currentSortBy: string = "created";
+
+  showAddToUser: boolean = false;
 
 
   constructor(private logger: NGXLogger,
@@ -79,5 +82,27 @@ export class TagListComponent implements OnInit {
       this.sortDirection = this.sortDirection * -1;
     }
     this.sortTagList();
+  }
+
+  selectTag(result: ITag) {
+    this.selectedTags.push(result);
+  }
+
+  deSelectTag(result: ITag) {
+    this.selectedTags = this.selectedTags.filter(t => t.tag_id != result.tag_id);
+  }
+
+  toggleShowAssign() {
+    this.showAddToUser = !this.showAddToUser;
+  }
+
+
+  assignSelectedToUser(userId: string) {
+
+  }
+
+
+  toggleShowGenerate() {
+
   }
 }

@@ -182,6 +182,7 @@ export default class MappingUtils {
     private static _toTag(jsonResult: any): ITag {
         return <ITag>({
             tag_id: jsonResult.tag_id,
+            user_id: jsonResult.user_id,
             name: jsonResult.name,
             description: jsonResult.description,
             search_select: jsonResult.search_select,
