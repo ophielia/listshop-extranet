@@ -5,6 +5,8 @@ import {IAdminUser} from "../../model/admin-user";
 import {NGXLogger} from "ngx-logger";
 import {UserService} from "../../shared/services/user.service";
 import {Subscription} from "rxjs";
+import {ITag} from "../../model/tag";
+import {TagService} from "../../shared/services/tag.service";
 
 @Component({
   selector: 'app-edit-user',
@@ -16,11 +18,14 @@ export class EditUserComponent implements OnInit {
 
   user: IAdminUser;
   userId: string;
+  tagList: ITag[] = [];
+  private showUserTags: boolean = false;
 
   constructor(private logger: NGXLogger,
               private route: ActivatedRoute,
               private title: Title,
-              private userService: UserService) {
+              private userService: UserService,
+              private tagService: TagService) {
   }
 
   ngOnDestroy() {
@@ -41,4 +46,22 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+  toggleShowUserTags() {
+    this.showUserTags = !this.showUserTags;
+    if (this.showUserTags) {
+      this.refreshTags();
+    }
+  }
+
+  private refreshTags() {
+    const promise = this.tagService.getTagList(this.userId, false);
+    console.log(promise);
+    promise.then((data) => {
+      this.logger.debug("tag data retrieved.");
+      this.tagList = data;
+
+    }).catch((error) => {
+      console.log("Promise rejected with " + JSON.stringify(error));
+    });
+  }
 }

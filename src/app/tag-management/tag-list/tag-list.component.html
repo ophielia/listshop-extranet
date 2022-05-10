@@ -58,10 +58,10 @@
                             <div>
                                 <table class="generate-panel">
                                     <tr>
-                                        <td class="generate-panel"><input [(ngModel)]="userId"
+                                        <td class="generate-panel"><input [(ngModel)]="userIdForAssign"
                                                                           placeholder="user id"></td>
                                     </tr>
-                                    <tr (click)="assignSelectedToUser()">
+                                    <tr (click)="assignSelectedToUser(userIdForAssign)">
                                         <td>Assign To User</td>
                                     </tr>
                                 </table>

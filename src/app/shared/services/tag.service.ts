@@ -6,6 +6,8 @@ import {Observable, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {ITag} from "../../model/tag";
 import MappingUtils from "../../model/mapping-utils";
+import {ITagOperationPut} from "../../model/tag-operation-put";
+import TagOperationType from "../../model/tag-operation-type";
 
 
 @Injectable()
@@ -96,6 +98,43 @@ export class TagService {
     }
 
 
+    markTagsAsReviewed(tagIds: string[]) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.MarkAsReviewed
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+    }
+
+    assignTagToUser(tagIds: string[], userId: string) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            user_id: userId,
+            tag_operation_type: TagOperationType.AssignToUser
+        });
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+
+    }
+
+    createStandardFromUserTags(tagIds: string[]) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.CopyToStandard
+        });
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+
+
+    }
 }
 
 

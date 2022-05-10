@@ -17,6 +17,7 @@ export class TagListComponent implements OnInit {
   tagList: ITag[] = []
   selectedTags: ITag[] = []
   public userId: string = null;
+  public userIdForAssign: string = null;
   sortDirection: number = -1
   currentSortBy: string = "created";
 
@@ -36,15 +37,7 @@ export class TagListComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle(this.route.snapshot.data['title']);
 
-    const promise = this.tagService.getTagList(this.userId, false);
-    console.log(promise);
-    promise.then((data) => {
-      this.logger.debug("tag data retrieved.");
-      this.tagList = data;
-      this.sortTagList();
-    }).catch((error) => {
-      console.log("Promise rejected with " + JSON.stringify(error));
-    });
+    this.getTags();
   }
 
   private sortTagList() {
@@ -98,11 +91,23 @@ export class TagListComponent implements OnInit {
 
 
   assignSelectedToUser(userId: string) {
-
+    let tagIds = this.selectedTags.map(t => t.tag_id);
+    this.tagService.assignTagToUser(tagIds, userId).subscribe(r => {
+      this.getTags();
+      this.selectedTags = [];
+    });
   }
 
 
-  toggleShowGenerate() {
-
+  private getTags() {
+    const promise = this.tagService.getTagList(this.userId, false);
+    console.log(promise);
+    promise.then((data) => {
+      this.logger.debug("tag data retrieved.");
+      this.tagList = data;
+      this.sortTagList();
+    }).catch((error) => {
+      console.log("Promise rejected with " + JSON.stringify(error));
+    });
   }
 }

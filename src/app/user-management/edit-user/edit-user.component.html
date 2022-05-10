@@ -52,11 +52,22 @@
                 <div class="button-icon">
                     <span class="label">Meal Plan Count:</span><span class="value">{{user.meal_plan_count}}</span>
                 </div>
-                <span class="search-button">
+                <span class="search-button" (click)="toggleShowUserTags()">
                          User Tags
             </span>
             </div>
 
+        </div>
+
+        <div class="row ">
+            <!-- results -->
+            <div class="col-md-8 col-lg-8 loading-box">
+                <ng-container *ngIf="showUserTags && tagList.length > 0 ">
+                    <div *ngFor="let result of tagList" class="result-text">
+                        <span>{{result.name}} ({{result.tag_id}})</span>
+                    </div>
+                </ng-container>
+            </div>
         </div>
     </div>
 

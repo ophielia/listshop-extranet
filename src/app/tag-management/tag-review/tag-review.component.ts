@@ -34,6 +34,10 @@ export class TagReviewComponent implements OnInit {
     ngOnInit(): void {
         this.title.setTitle(this.route.snapshot.data['title']);
 
+        this.getTags()
+    }
+
+    private getTags() {
         const promise = this.tagService.getTagList(this.userId, true);
         console.log(promise);
         promise.then((data) => {
@@ -91,4 +95,20 @@ export class TagReviewComponent implements OnInit {
     }
 
 
+    markAsReviewed() {
+        let tagIds = this.selectedTags.map(t => t.tag_id);
+        this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
+            this.getTags();
+            this.selectedTags = [];
+        });
+    }
+
+
+    createStandard() {
+        let tagIds = this.selectedTags.map(t => t.tag_id);
+        this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
+            this.getTags();
+            this.selectedTags = [];
+        });
+    }
 }
