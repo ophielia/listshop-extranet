@@ -1,0 +1,32 @@
+<!-- sign up start-->
+<section class="authentication-form">
+    <div class="innerpage-decor">
+        <div class="innerpage-circle1"><img src="assets/images/Testimonial2.png" alt=""></div>
+        <div class="innerpage-circle2"><img src="assets/images/Testimonial1.png" alt=""></div>
+    </div>
+    <div>
+        <h2 class="title text-center"><span>Delete User</span></h2>
+        <div class="card" *ngIf="isLoggedIn">
+            <p class="instructions">Deleting your user deletes your account, and all information associated
+                with your account: lists, meal plans, dishes, etc. It cannot be undone, so proceed with caution. </p>
+            <div class="form-button text-center">
+                <button type="submit" (click)="deleteUser()" class="btn btn-custom theme-color little-bit-of-space">
+                    Delete User
+                </button>
+            </div>
+        </div>
+        <div class="card" *ngIf="!isLoggedIn">
+            <p class="instructions">Ironically, you'll need to login to delete your user. Otherwise, we don't know
+                which account it is which should be deleted.</p>
+            <div class="form-button text-center">
+                <button type="submit" [routerLink]="'/user/login'"
+                        class="btn btn-custom theme-color little-bit-of-space">Sign In, to delete User
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+<ngx-spinner bdColor="rgba(0,0,0,0.3)" size="medium" color="#e67d21" type="ball-spin-fade-rotating" [fullScreen]="true">
+    <p style="color: white"> Processing... </p></ngx-spinner>
+<!-- sign up end-->

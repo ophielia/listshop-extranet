@@ -6,7 +6,6 @@ import {filter, map} from "rxjs/operators";
 import {ContentType, GroupType, TagTree} from "./tag-tree.object";
 import {TagService} from "./tag.service";
 import {NGXLogger} from "ngx-logger";
-import TagSelectType from "../../model/tag-select-type";
 
 @Injectable({providedIn: 'root'})
 export class TagTreeService implements OnDestroy {
@@ -53,7 +52,7 @@ export class TagTreeService implements OnDestroy {
 
 
     allContentList(id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType,
-                   tagTypes: TagType[], tagSelectType: TagSelectType): Observable<ITag[]> {
+                   tagTypes: TagType[]): Observable<ITag[]> {
 
 
         this.refreshTagTreeIfNeeded();
@@ -61,7 +60,7 @@ export class TagTreeService implements OnDestroy {
 
         return observable.pipe(map((response: boolean) => {
             this.logger.debug("loaded, now returning.");
-            return this._tagTree.contentList(id, contentType, isAbbreviated, groupType, tagTypes, tagSelectType);
+            return this._tagTree.contentList(id, contentType, isAbbreviated, groupType, tagTypes);
         }));
 
 
@@ -77,7 +76,7 @@ export class TagTreeService implements OnDestroy {
         this.isLoadingSubject.next(true);
 
 
-        const promise = this.tagService.getAllExtendedTags();
+        const promise = this.tagService.getTagsForTagTree();
         console.log(promise);
         promise.then((data) => {
             this.logger.debug("tag data retrieved, building TagTree");
@@ -102,4 +101,7 @@ export class TagTreeService implements OnDestroy {
     }
 
 
+    setTagExpansion(tag_id: string, expanded: boolean) {
+        this._tagTree.setTagExpansion(tag_id, expanded);
+    }
 }

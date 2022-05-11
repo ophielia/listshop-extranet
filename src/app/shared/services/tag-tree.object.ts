@@ -1,6 +1,5 @@
 import TagType from "../../model/tag-type";
 import {ITag, Tag} from "../../model/tag";
-import TagSelectType from "../../model/tag-select-type";
 
 
 export class TagTree {
@@ -19,10 +18,9 @@ export class TagTree {
             if (existingRelation) {
                 existingRelation.tag_type = tag.tag_type;
                 existingRelation.tag_id = tag.tag_id;
-                existingRelation.assign_select = tag.assign_select;
-                existingRelation.search_select = tag.search_select;
+                existingRelation.is_group = tag.is_group;
             } else {
-                var node = new TagTreeNode(tag.tag_id, tag.tag_type, tag.assign_select, tag.search_select);
+                var node = new TagTreeNode(tag.tag_id, tag.tag_type, tag.is_group);
                 this._lookupRelations.set(tag.tag_id, node);
             }
             // add to parent
@@ -38,13 +36,13 @@ export class TagTree {
     }
 
     private addTagToParentNode(tag: ITag) {
-        let parentId = tag.parent_id ? tag.parent_id : "0";
+        let parentId = tag.parent_id ? tag.parent_id : TagTree.BASE_GROUP;
         // pull parent node
         var parent = this._lookupRelations.get(parentId);
 
         if (!parent) {
             // doesn't exist - make node with dummy values
-            parent = new TagTreeNode("", "", false, false);
+            parent = new TagTreeNode("", "", false);
         }
         // add child tag
         parent.children.push(tag.tag_id);
@@ -77,7 +75,7 @@ export class TagTree {
                 returnList.unshift(parentDisplay);// add the display at the beginning of the array
 
                 // set the parent id
-                parentId = parentDisplay.tag_id ? parentDisplay.parent_id : "0";
+                parentId = parentDisplay.tag_id ? parentDisplay.parent_id : TagTree.BASE_GROUP;
 
             }
             safety++;
@@ -87,7 +85,7 @@ export class TagTree {
 
         // add all display at the beginning
         var allDisplay = new Tag();
-        allDisplay.tag_id = "0";
+        allDisplay.tag_id = TagTree.BASE_GROUP;
         allDisplay.name = "All";
         returnList.unshift(allDisplay);
 
@@ -96,14 +94,14 @@ export class TagTree {
     }
 
 
-    contentList(id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType, tagTypes: TagType[], tagSelectType: TagSelectType): ITag[] {
+    contentList(id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType, tagTypes: TagType[]): ITag[] {
         let requestedNode = this._lookupRelations.get(id);
         if (!requestedNode) {
             return [];
         }
 
         if (id == TagTree.BASE_GROUP) {
-            return this.baseContentList(isAbbreviated, contentType, groupType, tagTypes, tagSelectType);
+            return this.baseContentList(isAbbreviated, contentType, groupType, tagTypes);
         }
 
         // gather all tags belonging to id
@@ -114,7 +112,7 @@ export class TagTree {
             allChildrenTags = this.directTags(requestedNode, groupType);
         }
 
-        return this.nodesToDisplays(allChildrenTags, groupType, tagSelectType);
+        return this.nodesToDisplays(allChildrenTags, groupType);
     }
 
     private allTags(node: TagTreeNode, groupType: GroupType): TagTreeNode[] {
@@ -152,7 +150,7 @@ export class TagTree {
         return allOfThem;
     }
 
-    private baseContentList(isAbbreviated: boolean, contentType: ContentType, groupType: GroupType, tagTypes: TagType[], tagSelectType: TagSelectType): ITag[] {
+    private baseContentList(isAbbreviated: boolean, contentType: ContentType, groupType: GroupType, tagTypes: TagType[]): ITag[] {
         var baseNode = this._lookupRelations.get(TagTree.BASE_GROUP);
         if (!baseNode) {
             return [];
@@ -168,31 +166,31 @@ export class TagTree {
             }
             var childNodeMatch = tagTypes.indexOf(childNode.tag_type) >= 0;
 
-            if (childNodeMatch) {
-                if (childNode.isGroup()) {
-                    filteredChildren = filteredChildren.concat(this.allTags(childNode, groupType));
-                } else {
-                    filteredChildren.push(childNode);
-                }
-
+            if (!childNodeMatch) {
+                continue;
             }
+
+            if (childNode.isGroup() && contentType == ContentType.All) {
+                filteredChildren = filteredChildren.concat(this.allTags(childNode, groupType));
+            } else if (childNode.isGroup() && contentType == ContentType.All) {
+                filteredChildren = filteredChildren.concat(this.directTags(childNode, groupType));
+            } else {
+                filteredChildren.push(childNode);
+            }
+
+
         }
 
-        return this.nodesToDisplays(filteredChildren, groupType, tagSelectType);
+        return this.nodesToDisplays(filteredChildren, groupType);
     }
 
 
-    private nodesToDisplays(nodes: TagTreeNode[], groupType: GroupType, tagSelectType: TagSelectType) {
-        var isSearchOnly = tagSelectType == TagSelectType.Search;
-        var isAssignOnly = tagSelectType == TagSelectType.Assign;
-
+    private nodesToDisplays(nodes: TagTreeNode[], groupType: GroupType) {
         // put into set
         var allTagSet = new Set<TagTreeNode>();
-        nodes.filter(tN => !isSearchOnly || (isSearchOnly && tN.search_select))
-            .filter(tN => !isAssignOnly || (isAssignOnly && tN.assign_select))
-            .forEach(tagNode => {
-                allTagSet.add(tagNode);
-            });
+        nodes.forEach(tagNode => {
+            allTagSet.add(tagNode);
+        });
 
         // separate into childTags and childGroups (displays)
         var childTags: ITag[] = [];
@@ -223,29 +221,31 @@ export class TagTree {
 
     }
 
+    setTagExpansion(tag_id: string, expanded: boolean) {
+        var display = this._lookupDisplay.get(tag_id);
+        display.is_expanded = expanded;
+        this._lookupDisplay.set(tag_id, display);
+    }
 }
 
 export class TagTreeNode {
     tag_id: string;
     tag_type: TagType;
-    assign_select: boolean;
-    search_select: boolean;
+    is_group: boolean;
     children: string[] = [];
 
 
     constructor(tag_id: string,
                 tag_type: string,
-                assign_select: boolean,
-                search_select: boolean) {
+                is_group: boolean) {
         this.tag_id = tag_id;
         this.tag_type = tag_type;
-        this.assign_select = assign_select;
-        this.search_select = search_select;
+        this.is_group = is_group;
     }
 
 
     isGroup(): boolean {
-        return this.children && this.children.length > 0;
+        return this.is_group;
     }
 }
 

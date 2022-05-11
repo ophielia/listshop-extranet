@@ -13,6 +13,7 @@ export interface ITag {
   is_inverted: boolean;
   is_group: boolean;
   user_id: string;
+  is_expanded: boolean;
 }
 
 export class Tag implements ITag {
@@ -31,4 +32,5 @@ export class Tag implements ITag {
   is_inverted: boolean;
   is_group: boolean = false;
   user_id: string;
+  is_expanded: boolean = false;
 }

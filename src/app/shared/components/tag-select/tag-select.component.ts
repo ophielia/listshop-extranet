@@ -59,7 +59,7 @@ export class TagSelectComponent implements OnInit, OnDestroy {
         let tagTypesAsArray = this.tagTypes.split(",")
 
         let $sub = this.tagTreeService.allContentList(TagTree.BASE_GROUP,
-            ContentType.All, false, this.groupType, tagTypesAsArray, this.selectType)
+            ContentType.All, false, this.groupType, tagTypesAsArray)
             .subscribe(data => {
                 this.logger.debug("in subscribe in tag-select. data: " + data.length)
                 this.tagList = data;

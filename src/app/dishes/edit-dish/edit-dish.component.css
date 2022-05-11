@@ -1,0 +1,123 @@
+.add-button {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.inline-add-button {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.inline-add-button img {
+    max-height: 15px;
+}
+
+.ls-tag-group-subtitle {
+    color: #616161;
+    font-weight: bold;
+    font-size: large;
+    padding: 10px;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+    border-radius: 0.25rem;
+    margin: 10px;
+    vertical-align: top;
+}
+
+.ls-empty-info-span {
+    letter-spacing: 3px;
+    color: #777777;
+    padding-left: 10px;
+    font-size: small;
+}
+
+.ls-list-span {
+    display: block;
+    text-transform: capitalize;
+    padding-left: 28px;
+}
+
+.ls-list-span:hover {
+    font-weight: bolder;
+}
+
+.ls-list-span:hover:after {
+    font-weight: bolder;
+    content: " X ";
+    color: #e67d21;
+}
+
+.ls-list-comma {
+    text-transform: capitalize;
+}
+
+.ls-list-comma:after {
+    content: ", ";
+}
+
+.ls-list-comma:hover {
+    font-weight: bolder;
+    padding-left: 5px;
+}
+
+.ls-list-comma:hover:after {
+    content: " X ";
+    color: #e67d21;
+    font-weight: bolder;
+    padding-right: 5px;
+}
+
+.ls-list-comma:last-of-type:after {
+    content: " ";
+}
+
+.ls-list-comma:last-of-type:hover:after {
+    content: " X ";
+    color: #e67d21;
+    font-weight: bolder;
+    padding-right: 5px;
+}
+
+.ls-rating {
+    text-transform: capitalize;
+    padding-bottom: 5px;
+}
+
+.ls-inline-input {
+    display: inline;
+    width: 75%;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.ls-inline-block {
+    display: inline-block;
+    width: 50%;
+    margin-bottom: -15px;
+}
+
+.ls-add-tag {
+    padding-top: 5px;
+}
+
+.filled {
+    color: #e67d21;
+    font-size: x-large;
+}
+
+.notfilled {
+    color: #6e6a6a;
+    font-size: x-large;
+}
+
+.ls-input-error {
+    display: inline-block;
+    width: 80%;
+}
+
+.ls-input-error div {
+    color: red;
+}
+
+/*# sourceMappingURL=edit-dish.component.css.map */

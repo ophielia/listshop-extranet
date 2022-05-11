@@ -4,6 +4,7 @@ import {AuthGuardHandler} from "../shared/handlers/auth-guard-handler";
 import {TagOverviewComponent} from "./tag-overview/tag-overview.component";
 import {TagReviewComponent} from "./tag-review/tag-review.component";
 import {TagListComponent} from "./tag-list/tag-list.component";
+import {TagGridComponent} from "./tag-grid/tag-grid.component";
 
 const routes: Routes = [
   {
@@ -40,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'grid',
-    component: TagListComponent,
+    component: TagGridComponent,
     data: {
       title: 'The List Shop - Admin Console | Tag Grid',
       content: 'The List Shop - Admin Console | Tag Grid'

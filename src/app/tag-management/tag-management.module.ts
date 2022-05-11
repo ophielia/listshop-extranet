@@ -11,12 +11,13 @@ import {TagHeaderComponent} from "./tag-header/tag-header.component";
 import {TagListComponent} from './tag-list/tag-list.component';
 import {TagGridComponent} from './tag-grid/tag-grid.component';
 import {FormsModule} from "@angular/forms";
+import {SingleTagNodeComponent} from './single-tag-node/single-tag-node.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
         TagOverviewComponent,
-        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent],
+        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent],
     imports: [
         CommonModule,
         SharedModule,

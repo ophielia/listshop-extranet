@@ -183,15 +183,16 @@ export default class MappingUtils {
         return <ITag>({
             tag_id: jsonResult.tag_id,
             user_id: jsonResult.user_id,
-            name: jsonResult.name,
             description: jsonResult.description,
-            search_select: jsonResult.search_select,
-            assign_select: jsonResult.assign_select,
-            power: jsonResult.power,
-            parent_id: jsonResult.parent_id,
-            dishes: jsonResult.dishes ? jsonResult.dishes.map(MappingUtils._toDish) : null,
             is_inverted: false,
-            tag_type: jsonResult.tag_type
+            is_group: jsonResult.is_group,
+            name: jsonResult.name,
+            parent_id: jsonResult.parent_id,
+            power: jsonResult.power,
+            tag_type: jsonResult.tag_type,
+            is_expanded: false,
+            search_select: jsonResult.search_select,
+            assign_select: jsonResult.assign_select
         })
     }
 

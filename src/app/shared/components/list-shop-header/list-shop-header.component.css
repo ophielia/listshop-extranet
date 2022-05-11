@@ -1,0 +1,51 @@
+.nav-text-align {
+    margin-top: 5px;
+}
+
+.account-image {
+    width: 30px;
+}
+
+@media (max-width: 991px) {
+    #forcemenu.dropdown .dropdown-menu {
+        box-shadow: none;
+    }
+
+    #forcemenu .div.dropdown-menu.show {
+        box-shadow: none;
+    }
+
+    #forcemenu .div.dropdown-menu.show.nav-link {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    #forcemenu a.nav-link {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    #forcemenu a.nav-link.hover {
+        color: #e67d21;
+    }
+}
+
+#forcemenu .div.dropdown-menu.show {
+    box-shadow: none;
+}
+
+#forcemenu .div.dropdown-menu.show.nav-link {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#forcemenu a.nav-link {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#forcemenu a.nav-link.hover {
+    color: #e67d21;
+}
+
+/*# sourceMappingURL=list-shop-header.component.css.map */

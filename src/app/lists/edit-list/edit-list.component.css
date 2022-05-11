@@ -1,0 +1,139 @@
+:host ::ng-deep .p-inputswitch-checked .p-inputswitch-slider {
+    background: #e67d21;
+}
+
+:host ::ng-deep .p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+    background: #e67d21;
+}
+
+:host ::ng-deep .p-inputswitch-checked:enabled:focus {
+    box-shadow: unset;
+    border-color: unset;
+}
+
+:host ::ng-deep .p-inputtext {
+    padding: 1px;
+    border: 1px solid #777777;
+    text-indent: 2px;
+}
+
+:host ::ng-deep .p-inputtext:enabled:focus {
+    box-shadow: unset;
+    border-color: #777777;
+}
+
+:host ::ng-deep .p-inputtext:enabled:hover {
+    border-color: #777777;
+}
+
+:host ::ng-deep .p-focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: unset;
+}
+
+:host ::ng-deep .p-focus:hover .p-inputswitch-slider {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: unset;
+}
+
+:host ::ng-deep .p-focus:active .p-inputswitch-slider {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: unset;
+}
+
+:host ::ng-deep .p-focus:hover {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: unset;
+}
+
+:host ::ng-deep .p-focus:active {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: unset;
+}
+
+table.legend-table {
+    width: 100%;
+}
+
+table.legend-table tr td {
+    text-align: left;
+    text-transform: capitalize;
+}
+
+table.legend-table tr td:nth-child(1) {
+    width: 10%;
+}
+
+table.legend-table tr td:nth-child(3) {
+    width: 10%;
+}
+
+.change-name input {
+    text-indent: 5px;
+}
+
+.change-name input:focus {
+    outline: none;
+}
+
+.change-name span {
+    padding-left: 10px;
+}
+
+.empty-list {
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
+    color: #777777;
+}
+
+table.display-frequent {
+    width: 100%;
+}
+
+table.display-frequent td {
+    text-align: left;
+    text-transform: capitalize;
+    color: #777777;
+}
+
+table.display-frequent td:nth-child(2) {
+    width: 30%;
+}
+
+.ls-list-column-header-special {
+    box-shadow: 1px 1px 4px #e67d21b5;
+    border-color: #e67d21;
+}
+
+.ls-selected-actions {
+    width: 100%;
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+.ls-selected-actions .selected-label {
+    padding-right: 20px;
+    text-color: black;
+}
+
+.ls-selected-actions .selected-actions {
+    color: #e67d21;
+    text-transform: uppercase;
+    padding-right: 15px;
+}
+
+.title-bar-action {
+    text-transform: uppercase;
+    margin: auto;
+    text-align: right;
+}
+
+/*# sourceMappingURL=edit-list.component.css.map */

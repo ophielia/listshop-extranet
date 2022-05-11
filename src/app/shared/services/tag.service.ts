@@ -33,9 +33,9 @@ export class TagService {
             .toPromise();
     }
 
-    getAllExtendedTags(): Promise<ITag[]> {
+    getTagsForTagTree(): Promise<ITag[]> {
         this.logger.debug("Retrieving all tags");
-        var url = this.adminTagUrl + "?extended=true";
+        var url = this.adminTagUrl + "/standard/grid";
 
 
         return this.httpClient

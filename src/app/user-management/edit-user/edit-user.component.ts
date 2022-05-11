@@ -19,7 +19,7 @@ export class EditUserComponent implements OnInit {
   user: IAdminUser;
   userId: string;
   tagList: ITag[] = [];
-  private showUserTags: boolean = false;
+  showUserTags: boolean = false;
 
   constructor(private logger: NGXLogger,
               private route: ActivatedRoute,
