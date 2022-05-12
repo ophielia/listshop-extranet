@@ -54,10 +54,30 @@
                     <div>
                         <div class="sidebar-dark-title">Actions</div>
 
+                        <div class="ls-panel" *ngIf="showAddToUser">
+                            <div (click)="toggleShowAssign()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div>
+                                <table class="generate-panel">
+                                    <tr>
+                                        <td class="generate-panel"><input [(ngModel)]="userIdForAssign"
+                                                                          placeholder="user id"></td>
+                                    </tr>
+                                    <tr (click)="assignSelectedToUser(userIdForAssign)">
+                                        <td>Assign To User</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </div>
                         <ul>
                             <li>Change Parent Group</li>
                             <li>Create Tag</li>
-                            <li>Assign Tag To User</li>
+                            <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li>Change Tag Name</li>
                         </ul>
 

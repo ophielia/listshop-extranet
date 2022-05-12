@@ -100,6 +100,10 @@ export class TagTreeService implements OnDestroy {
         ;
     }
 
+    refreshTagTree() {
+        this.createOrRefreshTagTree();
+    }
+
 
     setTagExpansion(tag_id: string, expanded: boolean) {
         this._tagTree.setTagExpansion(tag_id, expanded);
