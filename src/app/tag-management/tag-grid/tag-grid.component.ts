@@ -17,6 +17,8 @@ export class TagGridComponent implements OnInit, OnDestroy {
   tagTypes: TagType[] = [TagType.Ingredient]
   allTagTypes: TagType[];
   tagList: ITag[] = [];
+  selectedTags: ITag[] = [];
+  searchFragment: string;
   loaded: boolean = false;
 
   constructor(private logger: NGXLogger,
@@ -42,4 +44,20 @@ export class TagGridComponent implements OnInit, OnDestroy {
 
   }
 
+  expandOrCollapseGrid(expand: boolean) {
+    this.tagTreeService.setExpansionForAllNodes(expand);
+  }
+
+  searchTags() {
+    this.tagTreeService.findByFragment(this.searchFragment);
+  }
+
+  selectTag(tag: ITag) {
+    console.log("tag selected in grid:" + tag.tag_id);
+    this.selectedTags.push(tag);
+  }
+
+  unSelectTag(tagid: string) {
+    this.selectedTags = this.selectedTags.filter(t => t.tag_id != tagid);
+  }
 }

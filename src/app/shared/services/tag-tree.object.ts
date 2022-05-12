@@ -172,8 +172,6 @@ export class TagTree {
 
             if (childNode.isGroup() && contentType == ContentType.All) {
                 filteredChildren = filteredChildren.concat(this.allTags(childNode, groupType));
-            } else if (childNode.isGroup() && contentType == ContentType.All) {
-                filteredChildren = filteredChildren.concat(this.directTags(childNode, groupType));
             } else {
                 filteredChildren.push(childNode);
             }
@@ -222,9 +220,65 @@ export class TagTree {
     }
 
     setTagExpansion(tag_id: string, expanded: boolean) {
+
         var display = this._lookupDisplay.get(tag_id);
+
         display.is_expanded = expanded;
         this._lookupDisplay.set(tag_id, display);
+        var childrenIds = this._lookupRelations.get(tag_id).children;
+        childrenIds.forEach(id => {
+            var child = this._lookupDisplay.get(id);
+            child.is_display = expanded;
+            child.is_expanded = expanded;
+        })
+    }
+
+    setTagExpansionForAll(expanded: boolean) {
+
+        this.resetTagState();
+        this._lookupDisplay.forEach(entry => {
+            entry.is_expanded = expanded;
+        });
+    }
+
+    resetTagState() {
+        this._lookupDisplay.forEach(entry => {
+            entry.is_expanded = true;
+            entry.is_display = true;
+        });
+    }
+
+    filterForFragment(searchFragment: string) {
+        if (!searchFragment || searchFragment.trim().length == 0) {
+            return;
+        }
+        let cleanedSearch = searchFragment.trim().toLocaleLowerCase();
+        var foundIds: string[] = [];
+        // search - and reset display at the same time
+        this._lookupDisplay.forEach(entry => {
+            var expandedAndDisplayed = false;
+            if (entry.name.toLocaleLowerCase().trim().indexOf(cleanedSearch) >= 0) {
+                foundIds.push(entry.parent_id);
+                expandedAndDisplayed = true;
+            }
+            entry.is_expanded = expandedAndDisplayed;
+            entry.is_display = expandedAndDisplayed;
+        });
+        // now expand all the way up
+        var parentsToExpand = new Set<String>();
+        for (let tagId of foundIds) {
+            var startId = tagId;
+            while (startId != TagTree.BASE_GROUP) {
+                // add start id to parentsToExpand
+                parentsToExpand.add(startId);
+                // get tag for start id
+                var parent = this._lookupDisplay.get(startId);
+                parent.is_expanded = true;
+                // get start id
+                startId = parent.parent_id;
+            }
+        }
+
     }
 }
 

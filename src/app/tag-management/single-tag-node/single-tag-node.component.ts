@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ITag} from "../../model/tag";
 import {NGXLogger} from "ngx-logger";
@@ -13,6 +13,7 @@ import {ContentType, GroupType} from "../../shared/services/tag-tree.object";
 export class SingleTagNodeComponent implements OnInit {
     unsubscribe: Subscription[] = [];
     @Input() tag: ITag;
+    @Output() select: EventEmitter<ITag> = new EventEmitter<ITag>();
     tagGroups: ITag[];
     tagChildren: ITag[];
 
@@ -50,5 +51,9 @@ export class SingleTagNodeComponent implements OnInit {
                 this.tagChildren = data;
             });
         this.unsubscribe.push($sub2);
+    }
+
+    selectTag(tag: ITag) {
+        this.select.emit(tag);
     }
 }

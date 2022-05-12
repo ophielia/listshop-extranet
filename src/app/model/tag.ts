@@ -14,6 +14,7 @@ export interface ITag {
   is_group: boolean;
   user_id: string;
   is_expanded: boolean;
+  is_display: boolean;
 }
 
 export class Tag implements ITag {
@@ -33,4 +34,5 @@ export class Tag implements ITag {
   is_group: boolean = false;
   user_id: string;
   is_expanded: boolean = false;
+  is_display: boolean;
 }

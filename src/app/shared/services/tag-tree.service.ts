@@ -104,4 +104,12 @@ export class TagTreeService implements OnDestroy {
     setTagExpansion(tag_id: string, expanded: boolean) {
         this._tagTree.setTagExpansion(tag_id, expanded);
     }
+
+    setExpansionForAllNodes(expand: boolean) {
+        this._tagTree.setTagExpansionForAll(expand);
+    }
+
+    findByFragment(searchFragment: string) {
+        this._tagTree.filterForFragment(searchFragment);
+    }
 }

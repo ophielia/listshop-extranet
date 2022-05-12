@@ -17,10 +17,15 @@
     <div class="container dish-toolbar">
         <div class="row">
             <div class=" col-sm-12 col-md-6 col-lg-6">
-
-
+                <input type="text" class="form-control searchbox"
+                       placeholder="Find Tags"
+                       [(ngModel)]="searchFragment"
+                       (keyup.enter)="searchTags()"
+                />
             </div>
             <div class=" col-sm-12 col-md-6 col-lg-6 toolbar-action">
+                <span class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</span>
+                <span class="expand-collapse-link" (click)="expandOrCollapseGrid(false)">Collapse All</span>
 
             </div>
 
@@ -38,10 +43,8 @@
                 <div *ngIf="tagList.length == 0 " class="loading-text">no results...</div>
                 <ng-container *ngIf="tagList.length > 0 ">
                     <div *ngFor="let result of tagList" class="result-text">
-                        <!-- <span >{{result.name}} ({{result.tag_id}}) ({{result.is_group}}
-                            )</span> -->
-                        <app-single-tag-node [tag]="result">
-
+                        <app-single-tag-node [tag]="result"
+                                             (select)="selectTag($event)">
                         </app-single-tag-node>
                     </div>
                 </ng-container>
@@ -52,7 +55,10 @@
                         <div class="sidebar-dark-title">Actions</div>
 
                         <ul>
-                            <li>No Actions Yet</li>
+                            <li>Change Parent Group</li>
+                            <li>Create Tag</li>
+                            <li>Assign Tag To User</li>
+                            <li>Change Tag Name</li>
                         </ul>
 
 
@@ -63,9 +69,10 @@
                         <div class="sidebar-title">SELECTED</div>
 
                         <ul>
-                            <!-- <li *ngFor="let result of selectedTags" class="result-text">
-                                 <span (click)="deSelectTag(result);">{{result.name}} ({{result.tag_id}})</span>
-                             </li> -->
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (dblclick)="unSelectTag(result.tag_id);">{{result.name}} ({{result.tag_id}}
+                                    )</span>
+                            </li>
                         </ul>
 
                     </div>
