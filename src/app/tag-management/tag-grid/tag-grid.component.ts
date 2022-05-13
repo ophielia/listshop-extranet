@@ -15,6 +15,7 @@ import {TagService} from "../../shared/services/tag.service";
 export class TagGridComponent implements OnInit, OnDestroy {
   unsubscribe: Subscription[] = [];
   groupType: GroupType = GroupType.All;
+  selectGroupType: GroupType = GroupType.GroupsOnly;
   tagTypes: TagType[] = [TagType.Ingredient]
   allTagTypes: TagType[];
   tagList: ITag[] = [];
@@ -24,6 +25,9 @@ export class TagGridComponent implements OnInit, OnDestroy {
 
   showAddToUser = false;
   loaded: boolean = false;
+  private assignTddagId: string;
+  private assignTag: ITag;
+  showChangeParent: boolean = false;
 
   constructor(private logger: NGXLogger,
               private tagService: TagService,
@@ -57,6 +61,7 @@ export class TagGridComponent implements OnInit, OnDestroy {
   }
 
   expandOrCollapseGrid(expand: boolean) {
+    this.searchFragment = "";
     this.tagTreeService.setExpansionForAllNodes(expand);
   }
 
@@ -77,6 +82,21 @@ export class TagGridComponent implements OnInit, OnDestroy {
     });
   }
 
+  assignSelectedToParent() {
+    if (this.selectedTags.length == 0 ||
+        !this.assignTag) {
+      this.showChangeParent = false;
+      return;
+    }
+    let tagIds = this.selectedTags.map(t => t.tag_id);
+    this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
+      this.refreshGrid();
+      this.selectedTags = [];
+      this.showChangeParent = false;
+      this.assignTag = null;
+    });
+  }
+
   selectTag(tag: ITag) {
     console.log("tag selected in grid:" + tag.tag_id);
     this.selectedTags.push(tag);
@@ -89,4 +109,15 @@ export class TagGridComponent implements OnInit, OnDestroy {
   toggleShowAssign() {
     this.showAddToUser = !this.showAddToUser;
   }
+
+  toggleShowChangeParent() {
+    this.showChangeParent = !this.showChangeParent;
+    this.assignTag = null;
+  }
+
+  selectTagForAssign(tag: ITag) {
+    this.assignTag = tag;
+  }
+
+
 }

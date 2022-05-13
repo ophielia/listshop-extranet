@@ -60,6 +60,7 @@ export class TagTreeService implements OnDestroy {
 
         return observable.pipe(map((response: boolean) => {
             this.logger.debug("loaded, now returning.");
+
             return this._tagTree.contentList(id, contentType, isAbbreviated, groupType, tagTypes);
         }));
 

@@ -135,6 +135,15 @@ export class TagService {
 
 
     }
+
+    assignTagsToParent(tagIds: string[], parentId: string) {
+        let tagIdString = tagIds.join(",");
+        let url = `${this.adminTagUrl}/${parentId}/children?tagIds=${tagIdString}`
+        return this
+            .httpClient
+            .post(url, {observe: 'response'});
+
+    }
 }
 
 

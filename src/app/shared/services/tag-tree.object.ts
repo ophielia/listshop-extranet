@@ -100,8 +100,11 @@ export class TagTree {
             return [];
         }
 
-        if (id == TagTree.BASE_GROUP) {
+        if (id == TagTree.BASE_GROUP && ContentType.All == contentType) {
+            return this.contentListSkipRelations(groupType, tagTypes);
+        } else if (id == TagTree.BASE_GROUP && ContentType.Direct == contentType) {
             return this.baseContentList(isAbbreviated, contentType, groupType, tagTypes);
+
         }
 
         // gather all tags belonging to id
@@ -280,6 +283,23 @@ export class TagTree {
         }
 
     }
+
+    private contentListSkipRelations(groupType: GroupType, tagTypes: TagType[]) {
+        let tagsToReturn: ITag[] = [];
+        this._lookupDisplay.forEach(entry => {
+            if (tagTypes.indexOf(entry.tag_type) >= 0) {
+                var isgroup = entry.is_group;
+                if (groupType == GroupType.All) {
+                    tagsToReturn.push(entry);
+                } else if (groupType == GroupType.GroupsOnly && isgroup) {
+                    tagsToReturn.push(entry);
+                } else if (groupType == GroupType.ExcludeGroups && isgroup) {
+                    tagsToReturn.push(entry);
+                }
+            }
+        })
+        return tagsToReturn;
+    }
 }
 
 export class TagTreeNode {
@@ -309,7 +329,7 @@ export enum ContentType {
 }
 
 export enum GroupType {
-    GroupsOnly,
-    ExcludeGroups = 1,
-    All = 2
+    GroupsOnly = 1,
+    ExcludeGroups = 2,
+    All = 3
 }

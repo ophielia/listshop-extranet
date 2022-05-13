@@ -53,8 +53,10 @@ export class TagSelectComponent implements OnInit, OnDestroy {
         this.showAddTags = false;
 
         this.currentSelect = this.selectType;
-
-        this.groupType = this.selectType == 'Assign' ? GroupType.ExcludeGroups : GroupType.All;
+        console.log("grouptype:" + this.groupType);
+        if (!this.groupType) {
+            this.groupType = this.selectType == 'Assign' ? GroupType.ExcludeGroups : GroupType.All;
+        }
 
         let tagTypesAsArray = this.tagTypes.split(",")
 
