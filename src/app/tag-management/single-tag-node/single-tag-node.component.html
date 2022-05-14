@@ -20,7 +20,7 @@
 <!-- single tags -->
 <ul *ngIf="tag.is_expanded">
     <li *ngFor="let child of tagChildren">
-        <span *ngIf="child.is_display" (dblclick)="selectTag(child)">    {{child.name}} ({{child.is_display}})
+        <span *ngIf="child.is_display" (dblclick)="selectTag(child)">    {{child.name}} ({{child.tag_id}})
             ({{child.is_expanded}})
         </span>
     </li>

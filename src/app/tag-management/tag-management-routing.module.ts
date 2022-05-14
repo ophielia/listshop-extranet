@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuardHandler} from "../shared/handlers/auth-guard-handler";
-import {TagOverviewComponent} from "./tag-overview/tag-overview.component";
 import {TagReviewComponent} from "./tag-review/tag-review.component";
 import {TagListComponent} from "./tag-list/tag-list.component";
 import {TagGridComponent} from "./tag-grid/tag-grid.component";
@@ -14,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'overview',
-    component: TagOverviewComponent,
+    component: TagGridComponent,
     data: {
       title: 'The List Shop - Admin Console | Tag Overview',
       content: 'The List Shop - Admin Console | Tag Overview'

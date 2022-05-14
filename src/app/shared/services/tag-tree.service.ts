@@ -117,4 +117,6 @@ export class TagTreeService implements OnDestroy {
     findByFragment(searchFragment: string) {
         this._tagTree.filterForFragment(searchFragment);
     }
+
+
 }

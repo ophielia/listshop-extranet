@@ -4,7 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-text-center d-align-left">
-                <h2 class="title"><span>Tag Grid</span></h2>
+                <h2 class="title">
+                    <span>Tag Grid</span>
+                    <span> - Standard</span>
+                </h2>
             </div>
             <div class="col-md-6 col-sm-6 col-text-end">
             </div>
@@ -25,12 +28,12 @@
             </div>
             <div class=" col-sm-12 col-md-4 col-lg-4 toolbar-action">
                 <div style="display:inline-block">
-                    <div class="expand-collapse-link">Ingredients</div>
-                    <div class="expand-collapse-link">Non-Edible</div>
+                    <div class="expand-collapse-link" (click)="changeTagType(ingredient)">Ingredients</div>
+                    <div class="expand-collapse-link" (click)="changeTagType(nonEdible)">Non-Edible</div>
                 </div>
                 <div style="display:inline-block">
-                    <div class="expand-collapse-link">Tag</div>
-                    <div class="expand-collapse-link">Ratings</div>
+                    <div class="expand-collapse-link" (click)="changeTagType(tagtype)">Tag</div>
+                    <div class="expand-collapse-link" (click)="changeTagType(rating)">Ratings</div>
                 </div>
             </div>
             <div class=" col-sm-12 col-md-4 col-lg-4 toolbar-action">
@@ -93,11 +96,11 @@
                             <div *ngIf="!assignTag" class="ls-add-tag">
 
                                 <app-tag-select class="at-tag-select-style"
-                                                [tagTypes]="'Ingredient'"
+                                                [tagTypes]=tagTypes[0].toString()
                                                 [groupType]=selectGroupType
                                                 [allowAdd]="false"
                                                 [showCancelButton]="false"
-                                                [placeholderText]="'Add Ingredient'"
+                                                [placeholderText]="'Add ' + tagTypes[0].toString()"
                                                 (tagSelected)="selectTagForAssign($event)"></app-tag-select>
 
                             </div>
@@ -109,11 +112,67 @@
                             </div>
 
                         </div>
+                        <div class="ls-panel" *ngIf="showCreateTag">
+                            <div (click)="toggleShowCreateTag()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div class="panel-title">
+                                Create Tag
+                            </div>
+                            <div>Tag Name</div>
+                            <div class="ls-add-tag">
+                                <input type="text" class="form-control ls-inline-input"
+                                       [(ngModel)]="tagNameEntry"
+                                />
+                            </div>
+                            <div>Tag Group<span *ngIf="assignTag"> - {{assignTag.name}}</span></div>
+                            <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                <app-tag-select class="at-tag-select-style"
+                                                [tagTypes]=tagTypes[0].toString()
+                                                [groupType]=selectGroupType
+                                                [allowAdd]="false"
+                                                [showCancelButton]="false"
+                                                [placeholderText]="'Add ' + tagTypes[0].toString()"
+                                                (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+
+                            </div>
+                            <div><span>Is Group</span>
+                                <span class="generate-panel"><p-inputSwitch
+                                        [(ngModel)]="addAsGroup"></p-inputSwitch></span>
+                            </div>
+                            <div *ngIf="assignTag" class="panel-action" (click)="createTag()">
+                                Create Tag
+                            </div>
+
+                        </div>
+                        <div class="ls-panel" *ngIf="showChangeTagName">
+                            <div (click)="toggleShowChangeName()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div class="panel-title">
+                                Change Tag Name
+                            </div>
+                            <div>Tag Name</div>
+                            <div class="ls-add-tag">
+                                <input type="text" class="form-control ls-inline-input"
+                                       [(ngModel)]="tagNameEntry"
+                                />
+                            </div>
+                            <div class="panel-action" (click)="changeTagName()">
+                                Create Tag
+                            </div>
+
+                        </div>
                         <ul>
                             <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
-                            <li>Create Tag</li>
+                            <li *ngIf="!showCreateTag" (click)="toggleShowCreateTag()">Create Tag</li>
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
-                            <li>Change Tag Name</li>
+                            <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
                         </ul>
 
 

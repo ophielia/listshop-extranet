@@ -4,22 +4,25 @@ import {NGXLogger} from "ngx-logger";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
-import {ITag} from "../../model/tag";
+import {ITag, Tag} from "../../model/tag";
 import MappingUtils from "../../model/mapping-utils";
 import {ITagOperationPut} from "../../model/tag-operation-put";
 import TagOperationType from "../../model/tag-operation-type";
+import TagType from "../../model/tag-type";
 
 
 @Injectable()
 export class TagService {
 
     private adminTagUrl;
+    private standardTagUrl;
 
     constructor(
         private httpClient: HttpClient,
         private logger: NGXLogger
     ) {
         this.adminTagUrl = environment.apiUrl + "admin/tag";
+        this.standardTagUrl = environment.apiUrl + "tag";
     }
 
     getById(tag_id: string): Promise<ITag> {
@@ -143,6 +146,33 @@ export class TagService {
             .httpClient
             .post(url, {observe: 'response'});
 
+    }
+
+    createTag(name: string, parentId: string, tagType: TagType, addAsGroup: boolean, forUser: boolean) {
+        var newTag: ITag = <ITag>({
+            name: name,
+            tag_type: tagType,
+            is_group: addAsGroup
+        });
+        let forUserFilter = forUser ? "" : "?asStandard=true";
+        let url = `${this.standardTagUrl}/${parentId}/child${forUserFilter}`;
+        return this
+            .httpClient
+            .post(url,
+                JSON.stringify(newTag), {observe: 'response'});
+    }
+
+    changeTagName(newName: string, tag: Tag) {
+        var newTag: Tag = <Tag>({
+            name: newName,
+            is_group: tag.is_group,
+            tag_type: tag.tag_type
+        });
+        let url = `${this.adminTagUrl}/${tag.tag_id}`;
+        return this
+            .httpClient
+            .put(url,
+                JSON.stringify(newTag), {observe: 'response'});
     }
 }
 

@@ -22,12 +22,19 @@ export class TagGridComponent implements OnInit, OnDestroy {
   selectedTags: ITag[] = [];
   searchFragment: string;
   userIdForAssign: string;
+  ingredient = TagType.Ingredient;
+  tagtype = TagType.TagType;
+  nonEdible = TagType.NonEdible;
+  rating = TagType.Rating
+  tagNameEntry: string;
+  addAsGroup: boolean;
 
   showAddToUser = false;
   loaded: boolean = false;
-  private assignTddagId: string;
-  private assignTag: ITag;
+  assignTag: ITag;
   showChangeParent: boolean = false;
+  showCreateTag: boolean;
+  showChangeTagName: boolean;
 
   constructor(private logger: NGXLogger,
               private tagService: TagService,
@@ -97,6 +104,12 @@ export class TagGridComponent implements OnInit, OnDestroy {
     });
   }
 
+  changeTagType(type: TagType) {
+    this.tagTypes = [type];
+
+    this.retrieveListForGrid();
+  }
+
   selectTag(tag: ITag) {
     console.log("tag selected in grid:" + tag.tag_id);
     this.selectedTags.push(tag);
@@ -115,9 +128,51 @@ export class TagGridComponent implements OnInit, OnDestroy {
     this.assignTag = null;
   }
 
+  toggleShowChangeName() {
+    this.showChangeTagName = !this.showChangeTagName;
+    this.assignTag = null;
+  }
+
   selectTagForAssign(tag: ITag) {
     this.assignTag = tag;
   }
 
 
+  toggleShowCreateTag() {
+    this.showCreateTag = !this.showCreateTag;
+  }
+
+  createTag() {
+    if (!this.tagNameEntry || this.tagNameEntry.trim().length == 0) {
+      return;
+    }
+    let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
+        this.tagTypes[0], this.addAsGroup, false)
+        .subscribe(data => {
+          this.refreshGrid();
+          this.retrieveListForGrid();
+          this.assignTag = null;
+          this.tagNameEntry = "";
+          this.showCreateTag = false;
+        });
+    this.unsubscribe.push($sub);
+  }
+
+  changeTagName() {
+    if (!this.tagNameEntry ||
+        this.tagNameEntry.trim().length == 0 ||
+        this.selectedTags.length != 1) {
+      return;
+    }
+    let updatedTag = this.selectedTags[0];
+    let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
+        .subscribe(data => {
+          this.refreshGrid();
+          this.retrieveListForGrid();
+          this.assignTag = null;
+          this.tagNameEntry = "";
+          this.showChangeTagName = false;
+        });
+    this.unsubscribe.push($sub);
+  }
 }
