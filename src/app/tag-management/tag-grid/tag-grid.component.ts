@@ -6,6 +6,7 @@ import {NGXLogger} from "ngx-logger";
 import {ITag} from "../../model/tag";
 import {Subscription} from "rxjs";
 import {TagService} from "../../shared/services/tag.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tag-grid',
@@ -28,6 +29,8 @@ export class TagGridComponent implements OnInit, OnDestroy {
   rating = TagType.Rating
   tagNameEntry: string;
   addAsGroup: boolean;
+  userId: string = null;
+  userName: string = null;
 
   showAddToUser = false;
   loaded: boolean = false;
@@ -38,8 +41,14 @@ export class TagGridComponent implements OnInit, OnDestroy {
 
   constructor(private logger: NGXLogger,
               private tagService: TagService,
+              private router: Router,
               private tagTreeService: TagTreeService) {
     this.allTagTypes = TagType.listAll();
+    var extraNavigation = this.router.getCurrentNavigation().extras;
+    if (extraNavigation.state.userId && extraNavigation.state.userName) {
+      this.userId = extraNavigation.state.userId;
+      this.userName = extraNavigation.state.userName;
+    }
   }
 
   ngOnInit(): void {
@@ -53,7 +62,7 @@ export class TagGridComponent implements OnInit, OnDestroy {
   retrieveListForGrid() {
     this.groupType = GroupType.All;
 
-    let $sub = this.tagTreeService.allContentList(TagTree.BASE_GROUP,
+    let $sub = this.tagTreeService.allContentList(this.userId, TagTree.BASE_GROUP,
         ContentType.Direct, false, this.groupType, this.tagTypes)
         .subscribe(data => {
           this.logger.debug("in subscribe in tag-select. data: " + data.length)
@@ -64,7 +73,7 @@ export class TagGridComponent implements OnInit, OnDestroy {
   }
 
   refreshGrid() {
-    this.tagTreeService.refreshTagTree();
+    this.tagTreeService.refreshTagTree(this.userId);
   }
 
   expandOrCollapseGrid(expand: boolean) {

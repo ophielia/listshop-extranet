@@ -13,6 +13,7 @@
     <li *ngFor="let group of tagGroups">
         <ng-container>
             <app-single-tag-node [tag]="group"
+                                 [userId]="userId"
                                  (select)="selectTag($event)"></app-single-tag-node>
         </ng-container>
     </li>

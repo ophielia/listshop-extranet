@@ -3,10 +3,11 @@
 <div class="titlebar-bg">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-text-center d-align-left">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
                 <h2 class="title">
                     <span>Tag Grid</span>
-                    <span> - Standard</span>
+                    <span *ngIf="!userName"> - Standard</span>
+                    <span *ngIf="userName"> - {{userName}}</span>
                 </h2>
             </div>
             <div class="col-md-6 col-sm-6 col-text-end">
@@ -57,6 +58,7 @@
                 <ng-container *ngIf="tagList.length > 0 ">
                     <div *ngFor="let result of tagList" class="result-text">
                         <app-single-tag-node [tag]="result"
+                                             [userId]="userId"
                                              (select)="selectTag($event)">
                         </app-single-tag-node>
                     </div>

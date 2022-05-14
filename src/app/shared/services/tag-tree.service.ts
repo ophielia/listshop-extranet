@@ -24,7 +24,7 @@ export class TagTreeService implements OnDestroy {
         // (i.e. the class has never been instantiated before)
         // set it to the newly instantiated object of this class
         if (!TagTreeService.instance) {
-            this.createOrRefreshTagTree();
+            this.createOrRefreshTagTree(null);
             TagTreeService.instance = this;
         }
 
@@ -51,11 +51,11 @@ export class TagTreeService implements OnDestroy {
     }
 
 
-    allContentList(id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType,
+    allContentList(userId: string, id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType,
                    tagTypes: TagType[]): Observable<ITag[]> {
 
 
-        this.refreshTagTreeIfNeeded();
+        this.refreshTagTreeIfNeeded(userId);
         let observable = this.finishedLoadingObservable();
 
         return observable.pipe(map((response: boolean) => {
@@ -73,11 +73,10 @@ export class TagTreeService implements OnDestroy {
             .pipe(filter(value => value == false));
     }
 
-    private createOrRefreshTagTree() {
+    private createOrRefreshTagTree(userId: string) {
         this.isLoadingSubject.next(true);
 
-
-        const promise = this.tagService.getTagsForTagTree();
+        const promise = this.tagService.getTagsForTagTree(userId);
         console.log(promise);
         promise.then((data) => {
             this.logger.debug("tag data retrieved, building TagTree");
@@ -92,17 +91,17 @@ export class TagTreeService implements OnDestroy {
 
     }
 
-    refreshTagTreeIfNeeded() {
+    refreshTagTreeIfNeeded(userId: string) {
         var limit = this._lastLoaded + TagTreeService.refreshPeriod;
         if ((new Date().getTime()) > limit) {
             this.logger.debug("refreshing TagTree");
-            this.createOrRefreshTagTree();
+            this.createOrRefreshTagTree(userId);
         }
         ;
     }
 
-    refreshTagTree() {
-        this.createOrRefreshTagTree();
+    refreshTagTree(userId: string) {
+        this.createOrRefreshTagTree(userId);
     }
 
 
@@ -116,6 +115,10 @@ export class TagTreeService implements OnDestroy {
 
     findByFragment(searchFragment: string) {
         this._tagTree.filterForFragment(searchFragment);
+    }
+
+    filterByUserId(userId: string) {
+        this._tagTree.filterForUserId(userId);
     }
 
 

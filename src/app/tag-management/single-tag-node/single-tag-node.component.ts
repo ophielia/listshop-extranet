@@ -13,6 +13,7 @@ import {ContentType, GroupType} from "../../shared/services/tag-tree.object";
 export class SingleTagNodeComponent implements OnInit {
     unsubscribe: Subscription[] = [];
     @Input() tag: ITag;
+    @Input() userId: string;
     @Output() select: EventEmitter<ITag> = new EventEmitter<ITag>();
     tagGroups: ITag[];
     tagChildren: ITag[];
@@ -37,14 +38,14 @@ export class SingleTagNodeComponent implements OnInit {
     }
 
     private refreshGrid() {
-        let $sub = this.tagTreeService.allContentList(this.tag.tag_id,
+        let $sub = this.tagTreeService.allContentList(this.userId, this.tag.tag_id,
             ContentType.Direct, false, GroupType.GroupsOnly, [this.tag.tag_type])
             .subscribe(data => {
                 this.logger.debug("in subscribe in tag-select. data: " + data.length)
                 this.tagGroups = data;
             });
         this.unsubscribe.push($sub);
-        let $sub2 = this.tagTreeService.allContentList(this.tag.tag_id,
+        let $sub2 = this.tagTreeService.allContentList(this.userId, this.tag.tag_id,
             ContentType.Direct, false, GroupType.ExcludeGroups, [this.tag.tag_type])
             .subscribe(data => {
                 this.logger.debug("in subscribe in tag-select. data: " + data.length)

@@ -284,6 +284,37 @@ export class TagTree {
 
     }
 
+    filterForUserId(userId: string) {
+        if (!userId || userId.trim().length == 0) {
+            return;
+        }
+        var foundIds: string[] = [];
+        // search - and reset display at the same time
+        this._lookupDisplay.forEach(entry => {
+            var expandedAndDisplayed = false;
+            if (entry.user_id && entry.user_id == userId) {
+                foundIds.push(entry.parent_id);
+                expandedAndDisplayed = true;
+            }
+            entry.is_expanded = expandedAndDisplayed;
+            entry.is_display = expandedAndDisplayed;
+        });
+        // now expand all the way up
+        var parentsToExpand = new Set<String>();
+        for (let tagId of foundIds) {
+            var startId = tagId;
+            while (startId != TagTree.BASE_GROUP) {
+                // add start id to parentsToExpand
+                parentsToExpand.add(startId);
+                // get tag for start id
+                var parent = this._lookupDisplay.get(startId);
+                parent.is_expanded = true;
+                // get start id
+                startId = parent.parent_id;
+            }
+        }
+    }
+
     private contentListSkipRelations(groupType: GroupType, tagTypes: TagType[]) {
         let tagsToReturn: ITag[] = [];
         this._lookupDisplay.forEach(entry => {

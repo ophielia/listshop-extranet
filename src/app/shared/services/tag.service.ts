@@ -30,19 +30,21 @@ export class TagService {
         return this.httpClient
             .get(url)
             .pipe(map((response: HttpResponse<any>) => {
-                return TagService.mapTagClient(response);
-            }),
+                    return TagService.mapTagClient(response);
+                }),
                 catchError(TagService.handleError))
             .toPromise();
     }
 
-    getTagsForTagTree(): Promise<ITag[]> {
-        this.logger.debug("Retrieving all tags");
-        var url = this.adminTagUrl + "/standard/grid";
-
+    getTagsForTagTree(userId: string): Promise<ITag[]> {
+        this.logger.debug("Retrieving all tags, userId: " + userId);
+        var url = `${this.adminTagUrl}/standard/grid`;
+        if (userId && userId.trim().length > 0) {
+            url = `${this.adminTagUrl}/user/${userId}/grid`;
+        }
 
         return this.httpClient
-            .get(`${url}`)
+            .get(url)
             .pipe(map((response: HttpResponse<any>) => {
                     return TagService.mapTagsClient(response);
                 }),

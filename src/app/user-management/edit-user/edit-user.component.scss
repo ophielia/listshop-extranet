@@ -24,8 +24,27 @@
   text-align: center;
   //margin: 15px 0px 15px 0px;
   background-color: $color_basic_orange;
+  margin-right: 10px;
   border-radius: 4px;
   color: white;
   padding: 8px;
 
+}
+
+.edit-button {
+  display: inline-block;
+  text-align: right;
+  //margin: 15px 0px 15px 0px;
+  #background-color: $color_basic_orange;
+  margin-right: 10px;
+  #border-radius: 4px;
+  color: $color_basic_orange;
+  padding: 8px;
+  text-transform: uppercase;
+
+
+}
+
+.edit-row {
+  text-align: right;
 }

@@ -17,6 +17,9 @@ import {InputSwitchModule} from "primeng/inputswitch";
 @NgModule({
     declarations: [TagManagementComponent,
         TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent],
+    exports: [
+        SingleTagNodeComponent
+    ],
     imports: [
         CommonModule,
         SharedModule,
