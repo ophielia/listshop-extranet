@@ -286,6 +286,7 @@ export class TagTree {
 
     filterForUserId(userId: string) {
         if (!userId || userId.trim().length == 0) {
+            this.resetTagState();
             return;
         }
         var foundIds: string[] = [];

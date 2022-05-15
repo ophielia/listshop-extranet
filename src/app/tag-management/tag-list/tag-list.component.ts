@@ -28,6 +28,7 @@ export class TagListComponent implements OnInit {
               private route: ActivatedRoute,
               private title: Title,
               private tagService: TagService) {
+
   }
 
   ngOnDestroy() {

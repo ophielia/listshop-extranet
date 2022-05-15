@@ -176,6 +176,13 @@ export class TagService {
             .put(url,
                 JSON.stringify(newTag), {observe: 'response'});
     }
+
+    moveGroupToBase(tag_id: string) {
+        let url = `${this.adminTagUrl}/base/${tag_id}`;
+        return this
+            .httpClient
+            .put(url, {observe: 'response'});
+    }
 }
 
 

@@ -82,6 +82,39 @@
   font-family: Poppins, sans-serif;
 }
 
+.link-box {
+  width: 230px;
+  display: inline-block;
+  margin: 5px;
+  background-color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  border-radius: 10px;
+  margins: auto;
+  border-color: #777777;
+  text-align: center;
+
+  .left-side {
+    text-align: right;
+    display: inline-block;
+  }
+
+  .center-side {
+    text-align: center;
+    display: inline-block;
+  }
+
+  .right-side {
+    text-align: left;
+    display: inline-block;
+  }
+}
+
+.subtitle {
+  font-size: 18px;
+}
+
 .admin-section {
   padding-top: 10px;
 }
@@ -220,3 +253,4 @@
   padding-right: 10px;
 
 }
+

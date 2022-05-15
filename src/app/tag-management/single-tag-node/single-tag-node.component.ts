@@ -8,7 +8,7 @@ import {ContentType, GroupType} from "../../shared/services/tag-tree.object";
 @Component({
     selector: 'app-single-tag-node',
     templateUrl: './single-tag-node.component.html',
-    styleUrls: ['./single-tag-node.component.css']
+    styleUrls: ['./single-tag-node.component.scss']
 })
 export class SingleTagNodeComponent implements OnInit {
     unsubscribe: Subscription[] = [];

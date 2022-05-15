@@ -7,7 +7,7 @@
                 <h2 class="title">
                     <span>Tag Grid</span>
                     <span *ngIf="!userName"> - Standard</span>
-                    <span *ngIf="userName"> - {{userName}}</span>
+                    <span *ngIf="userName" class="subtitle"> - {{userName}}</span>
                 </h2>
             </div>
             <div class="col-md-6 col-sm-6 col-text-end">
@@ -27,21 +27,32 @@
                        (keyup.enter)="searchTags()"
                 />
             </div>
-            <div class=" col-sm-12 col-md-4 col-lg-4 toolbar-action">
-                <div style="display:inline-block">
-                    <div class="expand-collapse-link" (click)="changeTagType(ingredient)">Ingredients</div>
-                    <div class="expand-collapse-link" (click)="changeTagType(nonEdible)">Non-Edible</div>
-                </div>
-                <div style="display:inline-block">
-                    <div class="expand-collapse-link" (click)="changeTagType(tagtype)">Tag</div>
-                    <div class="expand-collapse-link" (click)="changeTagType(rating)">Ratings</div>
-                </div>
-            </div>
-            <div class=" col-sm-12 col-md-4 col-lg-4 toolbar-action">
-                <span class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</span>
-                <span class="expand-collapse-link" (click)="expandOrCollapseGrid(false)">Collapse All</span>
 
+            <div class=" col-sm-12 col-md-8 col-lg-8 " style="text-align:right">
+                <div class=" link-box">
+                    <div style="display:inline-block" class="left-side">
+                        <div class="expand-collapse-link" (click)="changeTagType(ingredient)">Ingredients</div>
+                        <div class="expand-collapse-link" (click)="changeTagType(nonEdible)">Non-Edible</div>
+                    </div>
+                    <div style="display:inline-block" class="right-side">
+                        <div class="expand-collapse-link" (click)="changeTagType(tagtype)">Tag</div>
+                        <div class="expand-collapse-link" (click)="changeTagType(rating)">Ratings</div>
+                    </div>
+                </div>
+                <div *ngIf="showUserFilter" class="  link-box">
+                    <div style="display:inline-block" class="center-side">
+                        <div class="expand-collapse-link" (click)="applyUserFilter(true)">User Filter</div>
+                        <div class="expand-collapse-link" (click)="applyUserFilter(false)">Standard</div>
+                    </div>
+                </div>
+                <div class="  link-box">
+                    <div style="display:inline-block" class="center-side">
+                        <div class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</div>
+                        <div class="expand-collapse-link" (click)="expandOrCollapseGrid(false)">Collapse All</div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
     </div>
@@ -172,9 +183,11 @@
                         </div>
                         <ul>
                             <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
+                            <li (click)="moveToBaseGroup()">Move to Base Group</li>
                             <li *ngIf="!showCreateTag" (click)="toggleShowCreateTag()">Create Tag</li>
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
+                            <li *ngIf="showUserFilter" (click)="createStandard()">Create Standard For Selected</li>
                         </ul>
 
 

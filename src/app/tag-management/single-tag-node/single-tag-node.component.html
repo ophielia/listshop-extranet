@@ -21,8 +21,11 @@
 <!-- single tags -->
 <ul *ngIf="tag.is_expanded">
     <li *ngFor="let child of tagChildren">
-        <span *ngIf="child.is_display" (dblclick)="selectTag(child)">    {{child.name}} ({{child.tag_id}})
-            ({{child.is_expanded}})
+        <ng-container *ngIf="child.is_display">
+        <span (dblclick)="selectTag(child)"
+              [class.user_defined]="child.user_id != null && child.user_id != '0'">    {{child.name}} ({{child.tag_id}})  ({{child.user_id}}
+            )
         </span>
+        </ng-container>
     </li>
 </ul>

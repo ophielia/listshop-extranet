@@ -38,6 +38,7 @@ export class TagGridComponent implements OnInit, OnDestroy {
   showChangeParent: boolean = false;
   showCreateTag: boolean;
   showChangeTagName: boolean;
+  showUserFilter: boolean;
 
   constructor(private logger: NGXLogger,
               private tagService: TagService,
@@ -45,13 +46,15 @@ export class TagGridComponent implements OnInit, OnDestroy {
               private tagTreeService: TagTreeService) {
     this.allTagTypes = TagType.listAll();
     var extraNavigation = this.router.getCurrentNavigation().extras;
-    if (extraNavigation.state.userId && extraNavigation.state.userName) {
+    if (extraNavigation.state && extraNavigation.state.userId && extraNavigation.state.userName) {
       this.userId = extraNavigation.state.userId;
       this.userName = extraNavigation.state.userName;
+      this.showUserFilter = true;
     }
   }
 
   ngOnInit(): void {
+    this.tagTreeService.refreshTagTree(this.userId);
     this.retrieveListForGrid();
   }
 
@@ -85,6 +88,11 @@ export class TagGridComponent implements OnInit, OnDestroy {
     this.tagTreeService.findByFragment(this.searchFragment);
   }
 
+  applyUserFilter(apply: boolean) {
+    var filter = apply ? this.userId : null;
+    this.tagTreeService.filterByUserId(filter);
+  }
+
   assignSelectedToUser(userId: string) {
     if (this.selectedTags.length == 0) {
       this.showAddToUser = false;
@@ -115,8 +123,67 @@ export class TagGridComponent implements OnInit, OnDestroy {
 
   changeTagType(type: TagType) {
     this.tagTypes = [type];
+    this.searchFragment = null;
 
     this.retrieveListForGrid();
+  }
+
+  createTag() {
+    if (!this.tagNameEntry || this.tagNameEntry.trim().length == 0) {
+      return;
+    }
+    let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
+        this.tagTypes[0], this.addAsGroup, false)
+        .subscribe(data => {
+          this.refreshGrid();
+          this.retrieveListForGrid();
+          this.assignTag = null;
+          this.tagNameEntry = "";
+          this.showCreateTag = false;
+        });
+    this.unsubscribe.push($sub);
+  }
+
+  moveToBaseGroup() {
+    if (this.selectedTags.length == 1) {
+      let updatedTag = this.selectedTags[0];
+      if (!updatedTag.is_group) {
+        return;
+      }
+      let $sub = this.tagService.moveGroupToBase(updatedTag.tag_id)
+          .subscribe(data => {
+            this.refreshGrid();
+            this.retrieveListForGrid();
+            this.selectedTags = [];
+          });
+      this.unsubscribe.push($sub);
+    }
+  }
+
+  changeTagName() {
+    if (!this.tagNameEntry ||
+        this.tagNameEntry.trim().length == 0 ||
+        this.selectedTags.length != 1) {
+      return;
+    }
+    let updatedTag = this.selectedTags[0];
+    let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
+        .subscribe(data => {
+          this.refreshGrid();
+          this.retrieveListForGrid();
+          this.assignTag = null;
+          this.tagNameEntry = "";
+          this.showChangeTagName = false;
+        });
+    this.unsubscribe.push($sub);
+  }
+
+  createStandard() {
+    let tagIds = this.selectedTags.map(t => t.tag_id);
+    this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
+      this.selectedTags = [];
+      this.retrieveListForGrid();
+    });
   }
 
   selectTag(tag: ITag) {
@@ -151,37 +218,5 @@ export class TagGridComponent implements OnInit, OnDestroy {
     this.showCreateTag = !this.showCreateTag;
   }
 
-  createTag() {
-    if (!this.tagNameEntry || this.tagNameEntry.trim().length == 0) {
-      return;
-    }
-    let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
-        this.tagTypes[0], this.addAsGroup, false)
-        .subscribe(data => {
-          this.refreshGrid();
-          this.retrieveListForGrid();
-          this.assignTag = null;
-          this.tagNameEntry = "";
-          this.showCreateTag = false;
-        });
-    this.unsubscribe.push($sub);
-  }
 
-  changeTagName() {
-    if (!this.tagNameEntry ||
-        this.tagNameEntry.trim().length == 0 ||
-        this.selectedTags.length != 1) {
-      return;
-    }
-    let updatedTag = this.selectedTags[0];
-    let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
-        .subscribe(data => {
-          this.refreshGrid();
-          this.retrieveListForGrid();
-          this.assignTag = null;
-          this.tagNameEntry = "";
-          this.showChangeTagName = false;
-        });
-    this.unsubscribe.push($sub);
-  }
 }
