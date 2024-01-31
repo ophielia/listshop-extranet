@@ -26,6 +26,10 @@
                        [(ngModel)]="searchFragment"
                        (keyup.enter)="searchTags()"
                 />
+                <select name="userFilter" [(ngModel)]="tagUserIdFilter" (change)="filterTagsForUser()">
+                    <option *ngFor="let user of usersWithTags" [value]="user.user_id">({{user.user_id}})</option>
+                </select>
+
             </div>
 
             <div class=" col-sm-12 col-md-8 col-lg-8 " style="text-align:right">

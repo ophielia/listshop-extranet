@@ -1,12 +1,13 @@
 import TagType from "../../model/tag-type";
 import {ITag, Tag} from "../../model/tag";
+import {NGXLogger} from "ngx-logger";
 
 
 export class TagTree {
     public static BASE_GROUP = "0";
     private _lookupDisplay = new Map<string, ITag>();
     private _lookupRelations = new Map<string, TagTreeNode>();
-
+    private logger: NGXLogger;
     constructor(tags: ITag[]) {
 
         for (let i = 0; i < tags.length; i++) {
@@ -285,12 +286,18 @@ export class TagTree {
     }
 
     filterForUserId(userId: string) {
+        this.resetTagState();
         if (!userId || userId.trim().length == 0) {
-            this.resetTagState();
             return;
         }
         var foundIds: string[] = [];
         // search - and reset display at the same time
+        this._lookupDisplay.forEach(entry => {
+            if (entry.user_id != 0) {
+                console.log("Entry: tag_id: " + entry.tag_id + " user_id: " + entry.user_id)
+            }
+
+        });
         this._lookupDisplay.forEach(entry => {
             var expandedAndDisplayed = false;
             if (entry.user_id && entry.user_id == userId) {

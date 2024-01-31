@@ -7,6 +7,8 @@ import {ITag} from "../../model/tag";
 import {Subscription} from "rxjs";
 import {TagService} from "../../shared/services/tag.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../shared/services/user.service";
+import {IAdminUser} from "../../model/admin-user";
 
 @Component({
   selector: 'app-tag-grid',
@@ -20,8 +22,10 @@ export class TagGridComponent implements OnInit, OnDestroy {
   tagTypes: TagType[] = [TagType.Ingredient]
   allTagTypes: TagType[];
   tagList: ITag[] = [];
+  usersWithTags: IAdminUser[] = [];
   selectedTags: ITag[] = [];
   searchFragment: string;
+  tagUserIdFilter: string;
   userIdForAssign: string;
   ingredient = TagType.Ingredient;
   tagtype = TagType.TagType;
@@ -43,7 +47,9 @@ export class TagGridComponent implements OnInit, OnDestroy {
   constructor(private logger: NGXLogger,
               private tagService: TagService,
               private router: Router,
-              private tagTreeService: TagTreeService) {
+              private tagTreeService: TagTreeService,
+              private userService: UserService
+  ) {
     this.allTagTypes = TagType.listAll();
     var extraNavigation = this.router.getCurrentNavigation().extras;
     if (extraNavigation.state && extraNavigation.state.userId && extraNavigation.state.userName) {
@@ -56,6 +62,7 @@ export class TagGridComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.tagTreeService.refreshTagTree(this.userId);
     this.retrieveListForGrid();
+    this.retrieveUserList();
   }
 
   ngOnDestroy() {
@@ -75,6 +82,17 @@ export class TagGridComponent implements OnInit, OnDestroy {
     this.unsubscribe.push($sub);
   }
 
+  retrieveUserList() {
+    this.groupType = GroupType.All;
+
+    let $sub = this.userService.getAllUsersWithTags()
+        .subscribe(data => {
+          this.logger.debug("in subscribe in tag-select. data: " + data.length)
+          this.usersWithTags = data;
+        });
+    this.unsubscribe.push($sub);
+  }
+
   refreshGrid() {
     this.tagTreeService.refreshTagTree(this.userId);
   }
@@ -86,6 +104,11 @@ export class TagGridComponent implements OnInit, OnDestroy {
 
   searchTags() {
     this.tagTreeService.findByFragment(this.searchFragment);
+  }
+
+  filterTagsForUser() {
+    this.userId = this.tagUserIdFilter;
+    this.tagTreeService.filterByUserId(this.userId);
   }
 
   applyUserFilter(apply: boolean) {
