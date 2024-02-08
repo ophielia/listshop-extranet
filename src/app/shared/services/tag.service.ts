@@ -9,6 +9,7 @@ import MappingUtils from "../../model/mapping-utils";
 import {ITagOperationPut} from "../../model/tag-operation-put";
 import TagOperationType from "../../model/tag-operation-type";
 import TagType from "../../model/tag-type";
+import {TagSearchCriteria} from "../../model/tag-search-criteria";
 
 
 @Injectable()
@@ -69,6 +70,20 @@ export class TagService {
                 catchError(TagService.handleError))
             .toPromise();
     }
+
+    getTagListForCriteria(searchCriteria: TagSearchCriteria): Promise<ITag[]> {
+        this.logger.debug("Retrieving tags for tag tool");
+        var url = `${this.adminTagUrl}/search`;
+
+        return this.httpClient
+            .post(`${url}`, JSON.stringify(searchCriteria))
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapTagsClient(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+    }
+
 
     addTag(newTagName: string, tagType: string): Observable<HttpResponse<Object>> {
         var newTag: ITag = <ITag>({

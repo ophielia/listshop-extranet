@@ -293,9 +293,7 @@ export class TagTree {
         var foundIds: string[] = [];
         // search - and reset display at the same time
         this._lookupDisplay.forEach(entry => {
-            if (entry.user_id != 0) {
                 console.log("Entry: tag_id: " + entry.tag_id + " user_id: " + entry.user_id)
-            }
 
         });
         this._lookupDisplay.forEach(entry => {

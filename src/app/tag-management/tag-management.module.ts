@@ -12,11 +12,14 @@ import {TagGridComponent} from './tag-grid/tag-grid.component';
 import {FormsModule} from "@angular/forms";
 import {SingleTagNodeComponent} from './single-tag-node/single-tag-node.component';
 import {InputSwitchModule} from "primeng/inputswitch";
+import {TagToolComponent} from './tag-tool/tag-tool.component';
+import {TagsAsListComponentComponent} from './tags-as-list-component/tags-as-list-component.component';
+import {TagsAsGridComponentComponent} from './tags-as-grid-component/tags-as-grid-component.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent],
+        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent],
     exports: [
         SingleTagNodeComponent
     ],

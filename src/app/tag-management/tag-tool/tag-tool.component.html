@@ -1,0 +1,218 @@
+<app-tag-header></app-tag-header>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
+                <h2 class="title">
+                    <span>Tag Tool</span>
+                </h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-text-end nav-links">
+                <span [ngClass]="{'accented':isListDisplay()}" (click)="setListDisplayStyle()">List</span>
+                <span [ngClass]="{'accented':isGridDisplay()}" (click)="setGridDisplayStyle()">Grid</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+
+<!--toolbar start-->
+<div class="breadcrumb-bg breadcrumb-for-bar">
+    <div class="container dish-toolbar">
+        <div class="row">
+            <div class=" col-sm-12 col-md-4 col-lg-4">
+                <input type="text" class="form-control searchbox"
+                       placeholder="Find Tags"
+                       [(ngModel)]="searchFragment"
+                       (keyup.enter)="searchTags()"
+                />
+                <span>Users : </span><select name="userFilter" [(ngModel)]="tagUserIdFilter"
+                                             (change)="filterTagsForUser()">
+                <option value="-1">all</option>
+                <option value="0">default</option>
+                <option *ngFor="let user of usersWithTags" [value]="user.user_id">({{user.user_id}})</option>
+            </select>
+
+            </div>
+
+            <div class=" col-sm-12 col-md-8 col-lg-8 " style="text-align:right">
+                <div class=" link-box">
+                    <div style="display:inline-block" class="left-side">
+                        <div class="expand-collapse-link" (click)="changeTagType(ingredient)">Ingredients</div>
+                        <div class="expand-collapse-link" (click)="changeTagType(nonEdible)">Non-Edible</div>
+                    </div>
+                    <div style="display:inline-block" class="right-side">
+                        <div class="expand-collapse-link" (click)="changeTagType(tagtype)">Tag</div>
+                        <div class="expand-collapse-link" (click)="changeTagType(rating)">Ratings</div>
+                    </div>
+                </div>
+                <div *ngIf="showUserFilter" class="  link-box">
+                    <div style="display:inline-block" class="center-side">
+                        <div class="expand-collapse-link" (click)="applyUserFilter(true)">User Filter</div>
+                        <div class="expand-collapse-link" (click)="applyUserFilter(false)">Standard</div>
+                    </div>
+                </div>
+                <div class="  link-box">
+                    <div style="display:inline-block" class="center-side">
+                        <div class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</div>
+                        <div class="expand-collapse-link" (click)="expandOrCollapseGrid(false)">Collapse All</div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<!--toolbar end -->
+<!--content start-->
+<section class="admin-section">
+    <div class="container">
+        <div class="row ">
+            <!-- results -->
+            <div class="col-md-8 col-lg-8 loading-box">
+                <app-tags-as-list-component *ngIf="isListDisplay()"
+                                            [tagList]="tagList"
+                                            [userId]="tagSearchCriteria.user_id"
+                ></app-tags-as-list-component>
+                <app-tags-as-grid-component *ngIf="isGridDisplay()"></app-tags-as-grid-component>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <div class="ls-admin-sidebar-dark">
+                    <div>
+                        <div class="sidebar-dark-title">Actions</div>
+
+                        <div class="ls-panel" *ngIf="showAddToUser">
+                            <div (click)="toggleShowAssign()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div>
+                                <table class="generate-panel">
+                                    <tr>
+                                        <td class="generate-panel"><input [(ngModel)]="userIdForAssign"
+                                                                          placeholder="user id"></td>
+                                    </tr>
+                                    <tr (click)="assignSelectedToUser(userIdForAssign)">
+                                        <td>Assign To User</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </div>
+                        <div class="ls-panel" *ngIf="showChangeParent">
+                            <div (click)="toggleShowChangeParent()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                <app-tag-select class="at-tag-select-style"
+                                                [tagTypes]=tagTypes[0].toString()
+                                                [groupType]=selectGroupType
+                                                [allowAdd]="false"
+                                                [showCancelButton]="false"
+                                                [placeholderText]="'Add ' + tagTypes[0].toString()"
+                                                (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+
+                            </div>
+                            <div *ngIf="assignTag">
+                                {{assignTag.name}}
+                            </div>
+                            <div *ngIf="assignTag" class="panel-action" (click)="assignSelectedToParent()">
+                                Assign Selected to Parent
+                            </div>
+
+                        </div>
+                        <div class="ls-panel" *ngIf="showCreateTag">
+                            <div (click)="toggleShowCreateTag()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div class="panel-title">
+                                Create Tag
+                            </div>
+                            <div>Tag Name</div>
+                            <div class="ls-add-tag">
+                                <input type="text" class="form-control ls-inline-input"
+                                       [(ngModel)]="tagNameEntry"
+                                />
+                            </div>
+                            <div>Tag Group<span *ngIf="assignTag"> - {{assignTag.name}}</span></div>
+                            <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                <app-tag-select class="at-tag-select-style"
+                                                [tagTypes]=tagTypes[0].toString()
+                                                [groupType]=selectGroupType
+                                                [allowAdd]="false"
+                                                [showCancelButton]="false"
+                                                [placeholderText]="'Add ' + tagTypes[0].toString()"
+                                                (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+
+                            </div>
+                            <div><span>Is Group</span>
+                                <span class="generate-panel"><p-inputSwitch
+                                        [(ngModel)]="addAsGroup"></p-inputSwitch></span>
+                            </div>
+                            <div *ngIf="assignTag" class="panel-action" (click)="createTag()">
+                                Create Tag
+                            </div>
+
+                        </div>
+                        <div class="ls-panel" *ngIf="showChangeTagName">
+                            <div (click)="toggleShowChangeName()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div class="panel-title">
+                                Change Tag Name
+                            </div>
+                            <div>Tag Name</div>
+                            <div class="ls-add-tag">
+                                <input type="text" class="form-control ls-inline-input"
+                                       [(ngModel)]="tagNameEntry"
+                                />
+                            </div>
+                            <div class="panel-action" (click)="changeTagName()">
+                                Create Tag
+                            </div>
+
+                        </div>
+                        <ul>
+                            <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
+                            <li (click)="moveToBaseGroup()">Move to Base Group</li>
+                            <li *ngIf="!showCreateTag" (click)="toggleShowCreateTag()">Create Tag</li>
+                            <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
+                            <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
+                            <li *ngIf="showUserFilter" (click)="createStandard()">Create Standard For Selected</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="ls-admin-sidebar-light">
+                    <div>
+                        <div class="sidebar-title">SELECTED</div>
+
+                        <ul>
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (dblclick)="unSelectTag(result.tag_id);">{{result.name}} ({{result.tag_id}}
+                                    )</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- results -->
+        </div>
+    </div>
+</section>
+<!--content End-->
