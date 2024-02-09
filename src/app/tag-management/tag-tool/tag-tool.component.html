@@ -53,11 +53,21 @@
                         <div class="expand-collapse-link" (click)="applyUserFilter(false)">Standard</div>
                     </div>
                 </div>
-                <div class="  link-box">
+                <div *ngIf="isGridDisplay()" class="link-box">
                     <div style="display:inline-block" class="center-side">
                         <div class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</div>
                         <div class="expand-collapse-link" (click)="expandOrCollapseGrid(false)">Collapse All</div>
                     </div>
+                </div>
+                <div *ngIf="isListDisplay()" class="link-box">
+                    <div style="display:inline-block" class="center-side">
+                        <label class="checkbox-container expand-collapse-link" (click)="toggleGroups()">Include Groups
+                            <input type="checkbox" [(ngModel)]="includeGroups">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+
+
                 </div>
             </div>
 

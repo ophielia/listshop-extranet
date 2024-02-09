@@ -27,10 +27,13 @@ export class TagToolComponent implements OnInit, OnDestroy {
   selectGroupType: GroupType = GroupType.GroupsOnly;
   tagTypes: TagType[] = [TagType.Ingredient]
   allTagTypes: TagType[];
+  searchFragment: string;
+  includeGroups: boolean = false;
+
 
   usersWithTags: IAdminUser[] = [];
   selectedTags: ITag[] = [];
-  searchFragment: string;
+
   tagUserIdFilter: string;
   userIdForAssign: string;
   ingredient = TagType.Ingredient;
@@ -49,6 +52,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
   showCreateTag: boolean;
   showChangeTagName: boolean;
   showUserFilter: boolean;
+
 
 
   constructor(private logger: NGXLogger,
@@ -110,12 +114,16 @@ export class TagToolComponent implements OnInit, OnDestroy {
   }
 
   searchTags() {
-    this.tagTreeService.findByFragment(this.searchFragment);
+    this.tagSearchCriteria.text_fragment = this.searchFragment;
+    this.retrieveTagList();
   }
 
   filterTagsForUser() {
-    this.userId = this.tagUserIdFilter;
-    this.tagTreeService.filterByUserId(this.userId);
+    if (this.tagUserIdFilter == '-1') {
+      this.tagSearchCriteria.user_id = null;
+    }
+    this.tagSearchCriteria.user_id = this.tagUserIdFilter;
+    this.retrieveTagList();
   }
 
   applyUserFilter(apply: boolean) {
@@ -152,7 +160,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
   }
 
   changeTagType(type: TagType) {
-    this.tagTypes = [type];
+    this.tagSearchCriteria.tag_types = [type];
     this.searchFragment = null;
 
     this.retrieveTagList();
@@ -267,5 +275,11 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   setGridDisplayStyle() {
     this.displayType = DisplayType.Grid;
+  }
+
+  toggleGroups() {
+    this.includeGroups = !this.includeGroups;
+    this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
+    this.retrieveTagList();
   }
 }

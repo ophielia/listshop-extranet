@@ -37,23 +37,23 @@ export class TagService {
             .toPromise();
     }
 
-    getTagsForTagTree(userId: string): Promise<ITag[]> {
+    /*  getTagsForTagTree(userId: string): Promise<ITag[]> {
         this.logger.debug("Retrieving all tags, userId: " + userId);
-        var url = `${this.adminTagUrl}/standard/grid`;
-        if (userId && userId.trim().length > 0) {
-            url = `${this.adminTagUrl}/user/${userId}/grid`;
-        }
+         var url = `${this.adminTagUrl}/standard/grid`;
+         if (userId && userId.trim().length > 0) {
+             url = `${this.adminTagUrl}/user/${userId}/grid`;
+         }
 
-        return this.httpClient
-            .get(url)
-            .pipe(map((response: HttpResponse<any>) => {
-                    return TagService.mapTagsClient(response);
-                }),
-                catchError(TagService.handleError))
-            .toPromise();
+         return this.httpClient
+             .get(url)
+             .pipe(map((response: HttpResponse<any>) => {
+                     return TagService.mapTagsClient(response);
+                 }),
+                 catchError(TagService.handleError))
+             .toPromise();
 
-    }
-
+     }
+ */
     getTagList(userId: string, forReview: boolean): Promise<ITag[]> {
         this.logger.debug("Retrieving tags for reviewlist");
         var reviewClause = forReview ? "?filter=ToReview" : ""
