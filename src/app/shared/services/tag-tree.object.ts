@@ -344,6 +344,7 @@ export class TagTreeNode {
     tag_type: TagType;
     is_group: boolean;
     children: string[] = [];
+    private group_path: string[] = [];
 
 
     constructor(tag_id: string,
@@ -358,8 +359,39 @@ export class TagTreeNode {
     isGroup(): boolean {
         return this.is_group;
     }
+
+    setGroupPath(groupPath: string[]) {
+        this.group_path = groupPath;
+    }
+
+    getGroupPath(): string[] {
+        return this.group_path;
+    }
 }
 
+export class TagTreeStructure {
+    tag_id: string;
+    name: string;
+    parent_id: string;
+    private group_path: string[] = [];
+
+
+    constructor(tag_id: string,
+                name: string,
+                parent_id: string) {
+        this.tag_id = tag_id;
+        this.name = name;
+        this.parent_id = parent_id;
+    }
+
+    setGroupPath(groupPath: string[]) {
+        this.group_path = groupPath;
+    }
+
+    getGroupPath(): string[] {
+        return this.group_path;
+    }
+}
 export enum ContentType {
     All,
     Direct
