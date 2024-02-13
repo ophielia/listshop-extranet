@@ -7,7 +7,6 @@ import {UserService} from "../../shared/services/user.service";
 import {Subscription} from "rxjs";
 import {ITag} from "../../model/tag";
 import {TagService} from "../../shared/services/tag.service";
-import {ContentType, GroupType, TagTree} from "../../shared/services/tag-tree.object";
 import {TagTreeService} from "../../shared/services/tag-tree.service";
 import TagType from "../../model/tag-type";
 
@@ -51,7 +50,7 @@ export class EditUserComponent implements OnInit {
             this.user = p;
           });
       this.unsubscribe.push($sub);
-      this.tagTreeService.refreshTagTree(this.userId);
+      //   this.tagTreeService.refreshTagTree(this.userId);
 
     });
   }
@@ -100,13 +99,13 @@ export class EditUserComponent implements OnInit {
   }
 
   private refreshTagsForGrid() {
-    this.tagTreeService.filterByUserId(this.userId);
+    /*this.tagTreeService.filterByUserId(this.userId);
     let $sub = this.tagTreeService.allContentList(this.userId, TagTree.BASE_GROUP,
         ContentType.Direct, false, GroupType.All, this.gridTypes)
         .subscribe(data => {
           this.logger.debug("in subscribe in tag-select. data: " + data.length)
           this.tagListForGrid = data;
         });
-    this.unsubscribe.push($sub);
+    this.unsubscribe.push($sub);*/
   }
 }

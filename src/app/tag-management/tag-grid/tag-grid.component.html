@@ -72,10 +72,12 @@
                 <div *ngIf="tagList.length == 0 " class="loading-text">no results...</div>
                 <ng-container *ngIf="tagList.length > 0 ">
                     <div *ngFor="let result of tagList" class="result-text">
-                        <app-single-tag-node [tag]="result"
-                                             [userId]="userId"
-                                             (select)="selectTag($event)">
-                        </app-single-tag-node>
+                        <!--
+                               <app-single-tag-node [tag]="result"
+                                                    [userId]="userId"
+                                                    (select)="selectTag($event)">
+                               </app-single-tag-node>
+                        -->
                     </div>
                 </ng-container>
             </div>

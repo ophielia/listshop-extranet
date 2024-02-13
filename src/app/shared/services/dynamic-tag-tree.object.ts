@@ -34,10 +34,10 @@ export class DynamicTagTree {
             this._lookupDisplay.set(parent_id, parentTag);
             return parentTag;
         }
-        let grandparent = this.navigateToParent(parentTag.tag_id, relations);
+        let grandparent = this.navigateToParent(parentTag.parent_id, relations);
         let exists = grandparent.tagGroups
             .filter(t => t.tag_id = parent_id);
-        if (!exists) {
+        if (exists.length == 0) {
             grandparent.tagGroups.push(parentTag);
         }
 
@@ -83,7 +83,7 @@ export class DynamicTagTree {
         }
         let tagAsTreeTag = this.tagAsTreeTag(relations.get(parent_id));
         this._lookupDisplay.set(parent_id, tagAsTreeTag);
-        return null;
+        return tagAsTreeTag;
     }
 }
 

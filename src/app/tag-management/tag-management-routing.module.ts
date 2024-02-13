@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuardHandler} from "../shared/handlers/auth-guard-handler";
 import {TagReviewComponent} from "./tag-review/tag-review.component";
 import {TagListComponent} from "./tag-list/tag-list.component";
-import {TagGridComponent} from "./tag-grid/tag-grid.component";
 import {TagToolComponent} from "./tag-tool/tag-tool.component";
 
 const routes: Routes = [
@@ -14,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'overview',
-    component: TagGridComponent,
+    component: TagToolComponent,
     data: {
       title: 'The List Shop - Admin Console | Tag Overview',
       content: 'The List Shop - Admin Console | Tag Overview'

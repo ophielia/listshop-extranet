@@ -16,7 +16,6 @@ import {DishService} from "./services/dish.service";
 import {DishSelectComponent} from "./components/dish-select/dish-select.component";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {FormsModule} from "@angular/forms";
-import {TagSelectComponent} from "./components/tag-select/tag-select.component";
 import {TagService} from "./services/tag.service";
 import {ListSelectComponent} from "./components/list-select/list-select.component";
 import {MealPlanService} from "./services/meal-plan.service";
@@ -39,7 +38,6 @@ import {UserService} from "./services/user.service";
         UserHeaderComponent,
         ListShopHeaderComponent,
         DishSelectComponent,
-        TagSelectComponent,
         ListSelectComponent,
         GenerateListComponent,
         ModalComponent,
@@ -63,7 +61,6 @@ import {UserService} from "./services/user.service";
         UserHeaderComponent,
         ListShopHeaderComponent,
         DishSelectComponent,
-        TagSelectComponent,
         GenerateListComponent,
         ListSelectComponent,
         ModalComponent,

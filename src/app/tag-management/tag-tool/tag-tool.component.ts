@@ -104,13 +104,10 @@ export class TagToolComponent implements OnInit, OnDestroy {
     this.unsubscribe.push($sub);
   }
 
-  refreshGrid() {
-    this.tagTreeService.refreshTagTree(this.userId);
-  }
 
   expandOrCollapseGrid(expand: boolean) {
     this.searchFragment = "";
-    this.tagTreeService.setExpansionForAllNodes(expand);
+      //this.tagTreeService.setExpansionForAllNodes(expand);
   }
 
   searchTags() {
@@ -138,7 +135,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagToUser(tagIds, userId).subscribe(r => {
-      this.refreshGrid();
+        this.retrieveTagList();
       this.selectedTags = [];
       this.showAddToUser = false;
     });
@@ -152,7 +149,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
-      this.refreshGrid();
+        this.retrieveTagList();
       this.selectedTags = [];
       this.showChangeParent = false;
       this.assignTag = null;
@@ -173,7 +170,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
         this.tagTypes[0], this.addAsGroup, false)
         .subscribe(data => {
-          this.refreshGrid();
           this.retrieveTagList();
           this.assignTag = null;
           this.tagNameEntry = "";
@@ -190,7 +186,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
       }
       let $sub = this.tagService.moveGroupToBase(updatedTag.tag_id)
           .subscribe(data => {
-            this.refreshGrid();
             this.retrieveTagList();
             this.selectedTags = [];
           });
@@ -207,7 +202,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let updatedTag = this.selectedTags[0];
     let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
         .subscribe(data => {
-          this.refreshGrid();
           this.retrieveTagList();
           this.assignTag = null;
           this.tagNameEntry = "";

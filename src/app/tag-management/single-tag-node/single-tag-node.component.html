@@ -8,24 +8,3 @@
         {{tag.name}} ({{tag.tag_id}}) ({{tag.is_expanded}})
     </span>
 </span>
-<!-- groups -->
-<ul *ngIf="tag.is_expanded">
-    <li *ngFor="let group of tagGroups">
-        <ng-container>
-            <app-single-tag-node [tag]="group"
-                                 [userId]="userId"
-                                 (select)="selectTag($event)"></app-single-tag-node>
-        </ng-container>
-    </li>
-</ul>
-<!-- single tags -->
-<ul *ngIf="tag.is_expanded">
-    <li *ngFor="let child of tagChildren">
-        <ng-container *ngIf="child.is_display">
-        <span (dblclick)="selectTag(child)"
-              [class.user_defined]="child.user_id != null && child.user_id != '0'">    {{child.name}} ({{child.tag_id}})  ({{child.user_id}}
-            )
-        </span>
-        </ng-container>
-    </li>
-</ul>

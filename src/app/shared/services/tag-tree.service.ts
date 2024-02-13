@@ -1,9 +1,9 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import TagType from "../../model/tag-type";
 import {ITag} from "../../model/tag";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
-import {filter, map} from "rxjs/operators";
-import {ContentType, GroupType, TagTree, TagTreeNode, TagTreeStructure} from "./tag-tree.object";
+import {BehaviorSubject, Subscription} from "rxjs";
+import {filter} from "rxjs/operators";
+import {TagTree, TagTreeNode, TagTreeStructure} from "./tag-tree.object";
 import {TagService} from "./tag.service";
 import {NGXLogger} from "ngx-logger";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
@@ -28,7 +28,7 @@ export class TagTreeService implements OnDestroy {
         // (i.e. the class has never been instantiated before)
         // set it to the newly instantiated object of this class
         if (!TagTreeService.instance) {
-            this.createOrRefreshTagTree();
+            this.createOrRefreshTagRelations();
             TagTreeService.instance = this;
         }
 
@@ -43,7 +43,7 @@ export class TagTreeService implements OnDestroy {
         this.unsubscribe.forEach(s => s.unsubscribe());
     }
 
-    private createOrRefreshTagTree() {
+    private createOrRefreshTagRelations() {
         this.isLoadingSubject.next(true);
         let criteria = new TagSearchCriteria();
         criteria.group_include = 'ONLY';
@@ -73,30 +73,32 @@ export class TagTreeService implements OnDestroy {
         // for each tag
 
         // for (let entry of tagHash.entries()) {
+        /*
+                for (let entry of Array.from(this._allTagHash.entries())) {
+                    let tag = entry[1];
+                    //console.log("tag name, id, parent: " + tag.tag_id + "," + tag.name + "," + tag.parent_id);
+                    if (this._groupPaths.has(tag.tag_id)) {
+                        continue;
+                    }
+                    //      make node
+                    let node = new TagTreeStructure(tag.tag_id, tag.name, tag.parent_id);
+                    //      fill in path to base
+                    let groupPath = this.determineGroupPath(node, tag.parent_id, this._allTagHash);
+                    node.setGroupPath(groupPath);
+                    //      insert into group paths
+                    console.log("setting1 in groupPaths: id, path" + tag.tag_id + ", " + node.getGroupPath());
+                    this._groupPaths.set(tag.tag_id, node);
+                }
+                ;
+                console.log("done");
 
-        for (let entry of Array.from(this._allTagHash.entries())) {
-            let tag = entry[1];
-            //console.log("tag name, id, parent: " + tag.tag_id + "," + tag.name + "," + tag.parent_id);
-            if (this._groupPaths.has(tag.tag_id)) {
-                continue;
-            }
-            //      make node
-            let node = new TagTreeStructure(tag.tag_id, tag.name, tag.parent_id);
-            //      fill in path to base
-            let groupPath = this.determineGroupPath(node, tag.parent_id, this._allTagHash);
-            node.setGroupPath(groupPath);
-            //      insert into group paths
-            console.log("setting1 in groupPaths: id, path" + tag.tag_id + ", " + node.getGroupPath());
-            this._groupPaths.set(tag.tag_id, node);
-        }
-        ;
-        console.log("done");
+                for (let entry of Array.from(this._groupPaths.entries())) {
+                    let tag = entry[1];
+                    console.log("RESULT: tag name, id, parent, path: " + tag.tag_id + "," + tag.name + "," + tag.parent_id + " - " + tag.getGroupPath());
+                }
+                console.log("done");
 
-        for (let entry of Array.from(this._groupPaths.entries())) {
-            let tag = entry[1];
-            console.log("RESULT: tag name, id, parent, path: " + tag.tag_id + "," + tag.name + "," + tag.parent_id + " - " + tag.getGroupPath());
-        }
-        console.log("done");
+         */
     }
 
     private determineGroupPath(node: TagTreeStructure, parentId: string, allTags: Map<string, ITag>): string[] {
@@ -140,47 +142,16 @@ export class TagTreeService implements OnDestroy {
         if (!tagList) {
             tagList = [];
         }
-        let shorterTagList = tagList.filter(t => t.tag_id == "88");
+        let shorterTagList = tagList.filter(t => t.tag_id == "31");
 
         return new DynamicTagTree(shorterTagList, this._allTagHash);
     }
-
-    allContentList(userId: string, id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType,
-                   tagTypes: TagType[]): Observable<ITag[]> {
-
-
-        this.refreshTagTreeIfNeeded(userId);
-        let observable = this.finishedLoadingObservable();
-
-        return observable.pipe(map((response: boolean) => {
-            //this.logger.debug("loaded, now returning.");
-
-            return this._tagTree.contentList(id, contentType, isAbbreviated, groupType, tagTypes);
-        }));
-
-
-    }
-
 
     finishedLoadingObservable() {
         return this.isLoadingSubject.asObservable()
             .pipe(filter(value => value == false));
     }
 
-
-
-    refreshTagTreeIfNeeded(userId: string) {
-        var limit = this._lastLoaded + TagTreeService.refreshPeriod;
-        if ((new Date().getTime()) > limit) {
-            this.logger.debug("refreshing TagTree");
-            // this.createOrRefreshTagTree(userId);
-        }
-        ;
-    }
-
-    refreshTagTree(userId: string) {
-        // this.createOrRefreshTagTree(userId);
-    }
 
 
     setTagExpansion(tag_id: string, expanded: boolean) {

@@ -8,7 +8,6 @@ import {TagReviewComponent} from './tag-review/tag-review.component';
 import {RouterModule} from "@angular/router";
 import {TagHeaderComponent} from "./tag-header/tag-header.component";
 import {TagListComponent} from './tag-list/tag-list.component';
-import {TagGridComponent} from './tag-grid/tag-grid.component';
 import {FormsModule} from "@angular/forms";
 import {SingleTagNodeComponent} from './single-tag-node/single-tag-node.component';
 import {InputSwitchModule} from "primeng/inputswitch";
@@ -20,7 +19,7 @@ import {SingleTreeNodeComponent} from './single-tree-node/single-tree-node.compo
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent, SingleTreeNodeComponent],
+        TagReviewComponent, TagHeaderComponent, TagListComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent, SingleTreeNodeComponent],
     exports: [
         SingleTagNodeComponent
     ],
