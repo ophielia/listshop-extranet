@@ -22,9 +22,9 @@ export class TagToolComponent implements OnInit, OnDestroy {
   public displayType: DisplayType = DisplayType.List;
   tagSearchCriteria: TagSearchCriteria;
   tagList: ITag[] = [];
-
-  groupType: GroupType = GroupType.All;
   selectGroupType: GroupType = GroupType.GroupsOnly;
+
+    groupType: GroupType = GroupType.All;
   tagTypes: TagType[] = [TagType.Ingredient]
   allTagTypes: TagType[];
   searchFragment: string;
@@ -71,7 +71,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tagTreeService.refreshTagTree(this.userId);
+      //this.tagTreeService.refreshTagTree(this.userId);
     this.tagSearchCriteria = new TagSearchCriteria();
     //this.retrieveTagList();
     this.retrieveTagList();
@@ -282,4 +282,8 @@ export class TagToolComponent implements OnInit, OnDestroy {
     this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
     this.retrieveTagList();
   }
+
+    isExcludeGroups() {
+        return !this.includeGroups;
+    }
 }

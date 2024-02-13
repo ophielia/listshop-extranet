@@ -15,11 +15,12 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import {TagToolComponent} from './tag-tool/tag-tool.component';
 import {TagsAsListComponentComponent} from './tags-as-list-component/tags-as-list-component.component';
 import {TagsAsGridComponentComponent} from './tags-as-grid-component/tags-as-grid-component.component';
+import {SingleTreeNodeComponent} from './single-tree-node/single-tree-node.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent],
+        TagReviewComponent, TagHeaderComponent, TagListComponent, TagGridComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent, SingleTreeNodeComponent],
     exports: [
         SingleTagNodeComponent
     ],

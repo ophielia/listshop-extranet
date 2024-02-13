@@ -3,10 +3,11 @@ import TagType from "../../model/tag-type";
 import {ITag} from "../../model/tag";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {filter, map} from "rxjs/operators";
-import {ContentType, GroupType, TagTree, TagTreeStructure} from "./tag-tree.object";
+import {ContentType, GroupType, TagTree, TagTreeNode, TagTreeStructure} from "./tag-tree.object";
 import {TagService} from "./tag.service";
 import {NGXLogger} from "ngx-logger";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
+import {DynamicTagTree} from "./dynamic-tag-tree.object";
 
 @Injectable({providedIn: 'root'})
 export class TagTreeService implements OnDestroy {
@@ -19,6 +20,7 @@ export class TagTreeService implements OnDestroy {
     private _tagTree: TagTree;
     private _groupPaths: Map<string, TagTreeStructure> = new Map<string, TagTreeStructure>();
     private _lastLoaded: number;
+    private _allTagHash: Map<string, ITag>;
 
     constructor(private tagService: TagService,
                 private logger: NGXLogger) {
@@ -65,14 +67,14 @@ export class TagTreeService implements OnDestroy {
         //   let filtered = ["373","371","88","9"];
         //  let  newdata = data.filter(t=> filtered.includes(t.tag_id))
 
-        let tagHash = new Map<string, ITag>();
-        data.forEach(v => tagHash.set(v.tag_id, v));
+        this._allTagHash = new Map<string, ITag>();
+        data.forEach(v => this._allTagHash.set(v.tag_id, v));
 
         // for each tag
 
         // for (let entry of tagHash.entries()) {
 
-        for (let entry of Array.from(tagHash.entries())) {
+        for (let entry of Array.from(this._allTagHash.entries())) {
             let tag = entry[1];
             //console.log("tag name, id, parent: " + tag.tag_id + "," + tag.name + "," + tag.parent_id);
             if (this._groupPaths.has(tag.tag_id)) {
@@ -81,7 +83,7 @@ export class TagTreeService implements OnDestroy {
             //      make node
             let node = new TagTreeStructure(tag.tag_id, tag.name, tag.parent_id);
             //      fill in path to base
-            let groupPath = this.determineGroupPath(node, tag.parent_id, tagHash);
+            let groupPath = this.determineGroupPath(node, tag.parent_id, this._allTagHash);
             node.setGroupPath(groupPath);
             //      insert into group paths
             console.log("setting1 in groupPaths: id, path" + tag.tag_id + ", " + node.getGroupPath());
@@ -129,17 +131,19 @@ export class TagTreeService implements OnDestroy {
         return returnArray;
     }
 
-    navigationList(tagId: string): Observable<ITag[]> {
-        let observable = this.finishedLoadingObservable();
+    createTagTree(tagList: ITag[]) {
+        let relations = new Map<string, TagTreeNode>();
+        // target - constructor(displays: ITag[], relations: Map<string, TagTreeNode>) {
+        // target - constructor(displays: ITag[], groupPaths: Map<string, TagTreeStructure>) {
+        // for each tag, find immediate parent, and insert as child
+        // filter to tag 88 (has multi heirarchy
+        if (!tagList) {
+            tagList = [];
+        }
+        let shorterTagList = tagList.filter(t => t.tag_id == "88");
 
-        return observable.pipe(map((response: boolean) => {
-            this.logger.debug("tag tree loaded, now returning.");
-            return this._tagTree.navigationList(tagId);
-        }));
-
-
+        return new DynamicTagTree(shorterTagList, this._allTagHash);
     }
-
 
     allContentList(userId: string, id: string, contentType: ContentType, isAbbreviated: boolean, groupType: GroupType,
                    tagTypes: TagType[]): Observable<ITag[]> {

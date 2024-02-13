@@ -1,6 +1,5 @@
 import {Routes} from '@angular/router';
 import {ListsComponent} from "./lists/lists.component";
-import {DishesComponent} from "./dishes/dishes.component";
 import {UserComponent} from "./user/user.component";
 import {MealPlansComponent} from "./meal-plans/meal-plans.component";
 import {HomeComponent} from "./landing/home.component";
@@ -33,11 +32,6 @@ export const rootRouterConfig: Routes = [
         path: 'manage/tags',
         component: TagManagementComponent,
         loadChildren: () => import('./tag-management/tag-management.module').then(m => m.TagManagementModule)
-    },
-    {
-        path: 'dishes',
-        component: DishesComponent,
-        loadChildren: () => import('./dishes/dishes.module').then(m => m.DishesModule)
     },
     {
         path: 'lists',

@@ -1,1 +1,11 @@
 <p>tags-as-grid-component works!</p>
+<div *ngIf="treeList.length == 0 " class="loading-text">no results...</div>
+<ng-container *ngIf="treeList.length > 0 ">
+    <div *ngFor="let result of treeList" class="result-text">
+        <app-single-tree-node [tag]="result"
+                              [userId]="userId"
+                              (select)="selectTag($event)">
+        </app-single-tree-node>
+    </div>
+</ng-container>
+

@@ -48,15 +48,6 @@ const routes: Routes = [
         },
         canActivate: [AuthGuardHandler]
   },
-  {
-    path: 'grid',
-    component: TagGridComponent,
-    data: {
-      title: 'The List Shop - Admin Console | Tag Grid',
-      content: 'The List Shop - Admin Console | Tag Grid'
-    },
-    canActivate: [AuthGuardHandler]
-  },
 ];
 
 @NgModule({

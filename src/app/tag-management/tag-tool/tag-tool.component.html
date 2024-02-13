@@ -47,12 +47,6 @@
                         <div class="expand-collapse-link" (click)="changeTagType(rating)">Ratings</div>
                     </div>
                 </div>
-                <div *ngIf="showUserFilter" class="  link-box">
-                    <div style="display:inline-block" class="center-side">
-                        <div class="expand-collapse-link" (click)="applyUserFilter(true)">User Filter</div>
-                        <div class="expand-collapse-link" (click)="applyUserFilter(false)">Standard</div>
-                    </div>
-                </div>
                 <div *ngIf="isGridDisplay()" class="link-box">
                     <div style="display:inline-block" class="center-side">
                         <div class="expand-collapse-link" (click)="expandOrCollapseGrid(true)">Expand All</div>
@@ -61,10 +55,12 @@
                 </div>
                 <div *ngIf="isListDisplay()" class="link-box">
                     <div style="display:inline-block" class="center-side">
-                        <label class="checkbox-container expand-collapse-link" (click)="toggleGroups()">Include Groups
-                            <input type="checkbox" [(ngModel)]="includeGroups">
-                            <span class="checkmark"></span>
-                        </label>
+                        <div *ngIf="isExcludeGroups()" class="expand-collapse-link" (click)="toggleGroups()">Include
+                            Groups
+                        </div>
+                        <div *ngIf="!isExcludeGroups()" class="expand-collapse-link" (click)="toggleGroups()">Exclude
+                            Groups
+                        </div>
                     </div>
 
 
@@ -87,7 +83,11 @@
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
                 ></app-tags-as-list-component>
-                <app-tags-as-grid-component *ngIf="isGridDisplay()"></app-tags-as-grid-component>
+                <app-tags-as-grid-component *ngIf="isGridDisplay()"
+                                            [tagList]="tagList"
+                                            [userId]="tagSearchCriteria.user_id">
+
+                </app-tags-as-grid-component>
             </div>
             <div class="col-md-4 col-lg-4">
                 <div class="ls-admin-sidebar-dark">
