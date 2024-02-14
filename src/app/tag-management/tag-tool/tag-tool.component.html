@@ -202,7 +202,7 @@
                             <li *ngIf="!showCreateTag" (click)="toggleShowCreateTag()">Create Tag</li>
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
-                            <li *ngIf="showUserFilter" (click)="createStandard()">Create Standard For Selected</li>
+                            <li (click)="createStandard()">Create Standard For Selected</li>
                         </ul>
 
 

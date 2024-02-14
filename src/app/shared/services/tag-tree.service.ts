@@ -1,7 +1,6 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {ITag} from "../../model/tag";
 import {BehaviorSubject, Subscription} from "rxjs";
-import {filter} from "rxjs/operators";
 import {TagTree, TagTreeNode, TagTreeStructure} from "./tag-tree.object";
 import {TagService} from "./tag.service";
 import {NGXLogger} from "ngx-logger";
@@ -11,7 +10,6 @@ import {DynamicTagTree} from "./dynamic-tag-tree.object";
 @Injectable({providedIn: 'root'})
 export class TagTreeService implements OnDestroy {
     static instance: TagTreeService;
-    static refreshPeriod = 5 * 60 * 1000;
 
     isLoadingSubject: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(true);
 
@@ -99,37 +97,6 @@ export class TagTreeService implements OnDestroy {
          */
     }
 
-    private determineGroupPath(node: TagTreeStructure, parentId: string, allTags: Map<string, ITag>): string[] {
-        // if 0 (base) return array with one value - 0
-        if (!parentId || parentId == "0") {
-            return ["0"];
-        }
-
-        if (this._groupPaths.has(parentId)) {
-            let returnArray = [parentId];
-            this._groupPaths.get(parentId).getGroupPath().forEach(id => returnArray.push(id));
-            // path.unshift(parentId);
-            return returnArray;
-        }
-
-        // otherwise
-        // make node for parent
-        // find parent tag in allTags to access parent id
-        let parentTag = allTags.get(parentId);
-        let parentNode = new TagTreeStructure(parentTag.tag_id, parentTag.name, parentTag.parent_id);
-        // call determineGroupPath to get group paths
-
-        let path = this.determineGroupPath(parentNode, parentTag.parent_id, allTags);
-        // set group path in node, and save in master groupPaths
-        parentNode.setGroupPath(path);
-        console.log("setting2 in groupPaths: id, path" + parentTag.tag_id + ", " + parentNode.getGroupPath());
-        this._groupPaths.set(parentId, parentNode);
-        // add parentId at first position in group path, and return
-        let returnArray = [parentId];
-        path.forEach(id => returnArray.push(id));
-        // path.unshift(parentId);
-        return returnArray;
-    }
 
     createTagTree(tagList: ITag[]) {
         let relations = new Map<string, TagTreeNode>();
@@ -145,28 +112,11 @@ export class TagTreeService implements OnDestroy {
         return new DynamicTagTree(tagList, this._allTagHash);
     }
 
-    finishedLoadingObservable() {
-        return this.isLoadingSubject.asObservable()
-            .pipe(filter(value => value == false));
-    }
-
-
-
     setTagExpansion(tag_id: string, expanded: boolean) {
         this._tagTree.setTagExpansion(tag_id, expanded);
     }
 
-    setExpansionForAllNodes(expand: boolean) {
-        this._tagTree.setTagExpansionForAll(expand);
+    refreshGroups() {
+        this.createOrRefreshTagRelations();
     }
-
-    findByFragment(searchFragment: string) {
-        this._tagTree.filterForFragment(searchFragment);
-    }
-
-    filterByUserId(userId: string) {
-        this._tagTree.filterForUserId(userId);
-    }
-
-
 }

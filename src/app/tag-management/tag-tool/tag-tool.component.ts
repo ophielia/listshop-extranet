@@ -150,7 +150,8 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
-        this.retrieveTagList();
+      this.tagTreeService.refreshGroups();
+      this.retrieveTagList();
       this.selectedTags = [];
       this.showChangeParent = false;
       this.assignTag = null;
@@ -189,6 +190,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
       let $sub = this.tagService.moveGroupToBase(updatedTag.tag_id)
           .subscribe(data => {
             this.retrieveTagList();
+            this.tagTreeService.refreshGroups();
             this.selectedTags = [];
           });
       this.unsubscribe.push($sub);
@@ -206,6 +208,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.retrieveTagList();
           this.assignTag = null;
+          this.selectedTags = [];
           this.tagNameEntry = "";
           this.showChangeTagName = false;
         });
@@ -248,10 +251,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     this.showCreateTag = !this.showCreateTag;
   }
 
-
-  setDisplayStyle(style: string) {
-    this.displayType = style;
-  }
 
   isListDisplay() {
     return this.displayType == DisplayType.List;
