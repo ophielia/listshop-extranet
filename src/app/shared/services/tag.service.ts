@@ -74,6 +74,10 @@ export class TagService {
 
     getTagListForCriteria(searchCriteria: TagSearchCriteria): Promise<ITag[]> {
         this.logger.debug("Retrieving tags for tag tool");
+        // replace "all" user criteria with null
+        if (searchCriteria.user_id == "-1") {
+            searchCriteria.user_id = null;
+        }
         var url = `${this.adminTagUrl}/search`;
 
         return this.httpClient
