@@ -8,16 +8,25 @@ import {TagTreeTag} from "../../model/tag-tree-tag";
   styleUrls: ['./tags-as-list-component.component.scss']
 })
 export class TagsAsListComponentComponent implements OnInit {
-  @Input() tagList: ITag[];
+    @Input() set tagList(value: ITag[]) {
+        this._tagList = value;
+        this.sortTagList();
+    }
+
+    get tagList(): ITag[] {
+        return this._tagList;
+    }
+
   @Input() userId: string;
   @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
+
+    private _tagList: ITag[];
 
   constructor() {
   }
 
   ngOnInit(): void {
   }
-
 
   selectTag(tag: ITag) {
     this.select.emit(this.quickTagTree(tag));
@@ -29,4 +38,10 @@ export class TagsAsListComponentComponent implements OnInit {
     tTree.name = tag.name;
     return tTree;
   }
+
+    private sortTagList() {
+        this._tagList = this._tagList.sort((a, b) => {
+            return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());
+        });
+    }
 }

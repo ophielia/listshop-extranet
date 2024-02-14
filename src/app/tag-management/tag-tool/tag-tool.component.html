@@ -87,6 +87,7 @@
                 <app-tags-as-grid-component *ngIf="isGridDisplay()"
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
+                                            [expandAll]="expandAll"
                                             (select)="selectTag($event)">
 
                 </app-tags-as-grid-component>

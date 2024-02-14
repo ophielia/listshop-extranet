@@ -10,13 +10,24 @@ import {TagTreeTag} from "../../model/tag-tree-tag";
     styleUrls: ['./tags-as-grid-component.component.scss']
 })
 export class TagsAsGridComponentComponent implements OnInit {
-    @Input() tagList: ITag[];
+
+    @Input() set tagList(value: ITag[]) {
+        this._tagList = value;
+        this.createTagTree();
+    };
+
+    @Input() set expandAll(value: boolean) {
+        this._expandAll = value;
+        this.expandOrCollapseGroups();
+    };
     @Input() userId: string;
     @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
 
     treeList: TagTreeTag[];
     tagTree: DynamicTagTree;
 
+    private _tagList;
+    private _expandAll = false;
     constructor(private tagTreeService: TagTreeService,) {
     }
 
@@ -25,7 +36,7 @@ export class TagsAsGridComponentComponent implements OnInit {
     }
 
     createTagTree() {
-        this.tagTree = this.tagTreeService.createTagTree(this.tagList);
+        this.tagTree = this.tagTreeService.createTagTree(this._tagList);
         console.log("tag tree created");
         this.treeList = this.tagTree.content();
         console.log("tree list content call done");
@@ -38,5 +49,9 @@ export class TagsAsGridComponentComponent implements OnInit {
     expandTag(tag: TagTreeTag) {
         console.log("found expand");
         this.tagTree.toggleExpand(tag);
+    }
+
+    private expandOrCollapseGroups() {
+        this.tagTree.expandOrCollapseAll(this._expandAll);
     }
 }

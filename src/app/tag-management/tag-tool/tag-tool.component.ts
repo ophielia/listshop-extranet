@@ -46,6 +46,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
   addAsGroup: boolean;
   userId: string = null;
   userName: string = null;
+  expandAll: boolean = false;
 
   showAddToUser = false;
   loaded: boolean = false;
@@ -78,7 +79,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     this.selectTagCriteria = new TagSearchCriteria();
     this.selectTagCriteria.group_include = 'ONLY';
     this.selectTagCriteria.tag_types = TagType.listAll();
-    //this.retrieveTagList();
     this.retrieveTagList();
     this.retrieveUserList();
   }
@@ -89,7 +89,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
 
   retrieveTagList() {
-    this.tagSearchCriteria.group_include = 'EXCLUDE';
     const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
     promise.then((data) => {
       this.logger.debug("tag data retrieved making list");
@@ -117,7 +116,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   expandOrCollapseGrid(expand: boolean) {
     this.searchFragment = "";
-      //this.tagTreeService.setExpansionForAllNodes(expand);
+    this.expandAll = expand;
   }
 
   searchTags() {
@@ -271,10 +270,14 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   setListDisplayStyle() {
     this.displayType = DisplayType.List;
+    this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
+    this.retrieveTagList();
   }
 
   setGridDisplayStyle() {
     this.displayType = DisplayType.Grid;
+    this.tagSearchCriteria.group_include = 'EXCLUDE';
+    this.retrieveTagList();
   }
 
   toggleGroups() {

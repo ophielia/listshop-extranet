@@ -125,6 +125,11 @@ export class DynamicTagTree {
 
 
     }
+
+    expandOrCollapseAll(expandAll: boolean) {
+        this._baseStructure.forEach((v, k) => v.is_expanded = expandAll);
+
+    }
 }
 
 
