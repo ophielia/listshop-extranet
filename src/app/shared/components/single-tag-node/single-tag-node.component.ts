@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subscription} from "rxjs";
-import {ITag} from "../../model/tag";
 import {NGXLogger} from "ngx-logger";
-import {TagTreeService} from "../../shared/services/tag-tree.service";
+import {ITag} from "../../../model/tag";
+import {TagTreeService} from "../../services/tag-tree.service";
 
 @Component({
     selector: 'app-single-tag-node',

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ITag} from "../../model/tag";
-import {TagTreeService} from "../../shared/services/tag-tree.service";
-import {DynamicTagTree} from "../../shared/services/dynamic-tag-tree.object";
-import {TagTreeTag} from "../../model/tag-tree-tag";
+import {ITag} from "../../../model/tag";
+import {TagTreeTag} from "../../../model/tag-tree-tag";
+import {DynamicTagTree} from "../../services/dynamic-tag-tree.object";
+import {TagTreeService} from "../../services/tag-tree.service";
 
 @Component({
     selector: 'app-tags-as-grid-component',

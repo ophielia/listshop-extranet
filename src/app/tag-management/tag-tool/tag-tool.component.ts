@@ -87,7 +87,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     this.unsubscribe.forEach(s => s.unsubscribe());
   }
 
-
   retrieveTagList() {
     const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
     promise.then((data) => {
@@ -97,7 +96,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
       console.log("Promise rejected with " + JSON.stringify(error));
     });
   }
-
 
   selectTag(tagTreeTag: TagTreeTag) {
     this.selectedTags.push(tagTreeTag);
@@ -112,7 +110,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
         });
     this.unsubscribe.push($sub);
   }
-
 
   expandOrCollapseGrid(expand: boolean) {
     this.searchFragment = "";
@@ -130,11 +127,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     this.tagSearchCriteria.user_id = this.tagUserIdFilter;
     this.retrieveTagList();
-  }
-
-  applyUserFilter(apply: boolean) {
-    var filter = apply ? this.userId : null;
-    this.tagTreeService.filterByUserId(filter);
   }
 
   assignSelectedToUser(userId: string) {
@@ -167,6 +159,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   changeTagType(type: TagType) {
     this.tagSearchCriteria.tag_types = [type];
+    this.tagSearchCriteria.text_fragment = null;
     this.searchFragment = null;
 
     this.retrieveTagList();

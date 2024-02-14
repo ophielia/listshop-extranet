@@ -9,6 +9,7 @@ import {ITag} from "../../model/tag";
 import {TagService} from "../../shared/services/tag.service";
 import {TagTreeService} from "../../shared/services/tag-tree.service";
 import TagType from "../../model/tag-type";
+import {TagSearchCriteria} from "../../model/tag-search-criteria";
 
 @Component({
   selector: 'app-edit-user',
@@ -50,25 +51,32 @@ export class EditUserComponent implements OnInit {
             this.user = p;
           });
       this.unsubscribe.push($sub);
-      //   this.tagTreeService.refreshTagTree(this.userId);
+      this.findTags(this.userId);
 
+    });
+  }
+
+
+  findTags(userId: string) {
+    let tagSearchCriteria = new TagSearchCriteria();
+    tagSearchCriteria.user_id = userId;
+    const promise = this.tagService.getTagListForCriteria(tagSearchCriteria);
+    promise.then((data) => {
+      this.logger.debug("tag data retrieved making list");
+      this.tagList = data;
+    }).catch((error) => {
+      console.log("Promise rejected with " + JSON.stringify(error));
     });
   }
 
   toggleShowUserTags() {
     this.showUserTags = !this.showUserTags;
-    this.showUserTagGrid = false;
-    if (this.showUserTags) {
-      this.refreshTags();
-    }
+    this.showUserTagGrid = !this.showUserTags;
   }
 
   toggleShowUserTagGrid() {
     this.showUserTagGrid = !this.showUserTagGrid;
-    this.showUserTags = false;
-    if (this.showUserTagGrid) {
-      this.refreshTagsForGrid();
-    }
+    this.showUserTags = !this.showUserTagGrid;
   }
 
   goToEditGrid() {
@@ -82,30 +90,8 @@ export class EditUserComponent implements OnInit {
     };
 
 
-    this.router.navigate(['manage/tags/grid'], navigationExtras);
+    this.router.navigate(['manage/tags/tool'], navigationExtras);
 
   }
 
-  private refreshTags() {
-    const promise = this.tagService.getTagList(this.userId, false);
-    console.log(promise);
-    promise.then((data) => {
-      this.logger.debug("tag data retrieved.");
-      this.tagList = data;
-
-    }).catch((error) => {
-      console.log("Promise rejected with " + JSON.stringify(error));
-    });
-  }
-
-  private refreshTagsForGrid() {
-    /*this.tagTreeService.filterByUserId(this.userId);
-    let $sub = this.tagTreeService.allContentList(this.userId, TagTree.BASE_GROUP,
-        ContentType.Direct, false, GroupType.All, this.gridTypes)
-        .subscribe(data => {
-          this.logger.debug("in subscribe in tag-select. data: " + data.length)
-          this.tagListForGrid = data;
-        });
-    this.unsubscribe.push($sub);*/
-  }
 }

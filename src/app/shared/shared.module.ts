@@ -29,6 +29,10 @@ import {ConfirmDialogService} from "./services/confirm-dialog.service";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {UserService} from "./services/user.service";
 import {TagSelectComponent} from "./components/tag-select/tag-select.component";
+import {TagsAsGridComponentComponent} from "./components/tags-as-grid-component/tags-as-grid-component.component";
+import {TagsAsListComponentComponent} from "./components/tags-as-list-component/tags-as-list-component.component";
+import {SingleTagNodeComponent} from "./components/single-tag-node/single-tag-node.component";
+import {SingleTreeNodeComponent} from "./components/single-tree-node/single-tree-node.component";
 
 @NgModule({
     exports: [
@@ -45,7 +49,11 @@ import {TagSelectComponent} from "./components/tag-select/tag-select.component";
         ModalComponent,
         AlertComponent,
         SingleDishElementComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        TagsAsGridComponentComponent,
+        TagsAsListComponentComponent,
+        SingleTagNodeComponent,
+        SingleTreeNodeComponent
     ],
     imports: [
         CommonModule,
@@ -68,7 +76,11 @@ import {TagSelectComponent} from "./components/tag-select/tag-select.component";
         ListSelectComponent,
         ModalComponent,
         SingleDishElementComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        TagsAsGridComponentComponent,
+        TagsAsListComponentComponent,
+        SingleTagNodeComponent,
+        SingleTreeNodeComponent
     ],
     providers: [
         WINDOW_PROVIDERS,

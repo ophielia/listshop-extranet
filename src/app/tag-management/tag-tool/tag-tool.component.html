@@ -160,8 +160,7 @@
                             <div *ngIf="!assignTag" class="ls-add-tag">
 
                                 <app-tag-select class="at-tag-select-style"
-                                                [tagTypes]=tagTypes[0].toString()
-                                                [groupType]=selectGroupType
+                                                [tagCriteria]=selectTagCriteria
                                                 [allowAdd]="false"
                                                 [showCancelButton]="false"
                                                 [placeholderText]="'Add ' + tagTypes[0].toString()"
@@ -193,7 +192,7 @@
                                 />
                             </div>
                             <div class="panel-action" (click)="changeTagName()">
-                                Create Tag
+                                Change Name
                             </div>
 
                         </div>

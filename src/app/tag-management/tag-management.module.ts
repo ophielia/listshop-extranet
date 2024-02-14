@@ -7,21 +7,15 @@ import {SharedModule} from "../shared/shared.module";
 import {TagReviewComponent} from './tag-review/tag-review.component';
 import {RouterModule} from "@angular/router";
 import {TagHeaderComponent} from "./tag-header/tag-header.component";
-import {TagListComponent} from './tag-list/tag-list.component';
 import {FormsModule} from "@angular/forms";
-import {SingleTagNodeComponent} from './single-tag-node/single-tag-node.component';
 import {InputSwitchModule} from "primeng/inputswitch";
 import {TagToolComponent} from './tag-tool/tag-tool.component';
-import {TagsAsListComponentComponent} from './tags-as-list-component/tags-as-list-component.component';
-import {TagsAsGridComponentComponent} from './tags-as-grid-component/tags-as-grid-component.component';
-import {SingleTreeNodeComponent} from './single-tree-node/single-tree-node.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagListComponent, SingleTagNodeComponent, TagToolComponent, TagsAsListComponentComponent, TagsAsGridComponentComponent, SingleTreeNodeComponent],
+        TagReviewComponent, TagHeaderComponent, TagToolComponent],
     exports: [
-        SingleTagNodeComponent
     ],
     imports: [
         CommonModule,

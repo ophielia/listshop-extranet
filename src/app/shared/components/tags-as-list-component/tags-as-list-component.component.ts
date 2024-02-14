@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ITag} from "../../model/tag";
-import {TagTreeTag} from "../../model/tag-tree-tag";
+import {ITag} from "../../../model/tag";
+import {TagTreeTag} from "../../../model/tag-tree-tag";
 
 @Component({
   selector: 'app-tags-as-list-component',

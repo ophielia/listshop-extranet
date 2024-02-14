@@ -55,23 +55,19 @@
         <div class="row ">
             <!-- results -->
             <div *ngIf="showUserTags" class="col-md-12 col-lg-12 loading-box">
-                <ng-container *ngIf="tagList.length > 0 ">
-                    <div *ngFor="let result of tagList" class="result-text">
-                        <span>{{result.name}} ({{result.tag_id}})</span>
-                    </div>
-                </ng-container>
+                <app-tags-as-list-component [tagList]="tagList"
+                                            [userId]="userId"
+                ></app-tags-as-list-component>
             </div>
             <div *ngIf="showUserTagGrid" class="col-md-12 col-lg-12 loading-box">
                 <div class="edit-row"><span class="edit-button" (click)="goToEditGrid()">
                          edit
             </span></div>
-                <div *ngIf="tagListForGrid.length > 0 ">
-                    <div *ngFor="let result of tagListForGrid" class="result-text">
-                        <app-single-tag-node [tag]="result"
-                                             [userId]="userId">
-                        </app-single-tag-node>
-                    </div>
-                </div>
+                <app-tags-as-grid-component [tagList]="tagList"
+                                            [userId]="userId"
+                                            [expandAll]="true">
+
+                </app-tags-as-grid-component>
 
             </div>
         </div>
