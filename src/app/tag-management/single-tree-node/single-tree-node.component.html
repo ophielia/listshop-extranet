@@ -1,0 +1,33 @@
+<span>
+
+    <span (click)="toggleExpanded(tag )">
+        <img class="sm-button" src="../../../assets/images/listshop/icons/orangeround/orangeadd.png"
+             alt="add">
+    </span>
+    <span (dblclick)="selectTag(tag)">
+        {{tag.name}} ({{tag.tag_id}}) ({{tag.is_expanded}})
+    </span>
+</span>
+<!-- groups -->
+<ul *ngIf="tag.is_expanded">
+    <li *ngFor="let group of tag.tagGroups">
+        <ng-container>
+            <app-single-tree-node [tag]="group"
+                                  [userId]="userId"
+                                  (select)="selectTag($event)"
+                                  (expand)="toggleExpanded($event)"
+            ></app-single-tree-node>
+        </ng-container>
+    </li>
+</ul>
+<!-- single tags -->
+<ul *ngIf="tag.is_expanded">
+    <li *ngFor="let child of tag.tagChildren">
+        <ng-container *ngIf="child.is_display">
+        <span (dblclick)="selectTag(child)"
+              [class.user_defined]="child.user_id != null && child.user_id != '0'">    {{child.name}} ({{child.tag_id}})  ({{child.user_id}}
+            )
+        </span>
+        </ng-container>
+    </li>
+</ul>
