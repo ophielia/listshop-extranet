@@ -10,6 +10,7 @@ import {ITagOperationPut} from "../../model/tag-operation-put";
 import TagOperationType from "../../model/tag-operation-type";
 import TagType from "../../model/tag-type";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
+import {TagTreeTag} from "../../model/tag-tree-tag";
 
 
 @Injectable()
@@ -179,7 +180,7 @@ export class TagService {
                 JSON.stringify(newTag), {observe: 'response'});
     }
 
-    changeTagName(newName: string, tag: Tag) {
+    changeTagName(newName: string, tag: TagTreeTag) {
         var newTag: Tag = <Tag>({
             name: newName,
             is_group: tag.is_group,

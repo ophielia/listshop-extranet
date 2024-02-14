@@ -13,16 +13,28 @@ export class DynamicTagTree {
 
     constructor(displays: ITag[], relations: Map<string, ITag>) {
         for (let tag of displays) {
+            if (tag.is_group == true) {
+                console.log("skipping group");
+                continue;
+            }
+            if (!tag.tag_id) {
+                console.log("skipping undefined tag id");
+                continue;
+            }
             // insert into lookup display
             let tagAsTreeTag = this.tagAsTreeTag(tag);
             this._lookupDisplay.set(tag.tag_id, tagAsTreeTag);
+            if (!tag.parent_id || !relations.has(tag.parent_id)) {
+                continue;
+            }
             // navigate to parent
             let parentNode = this.navigateToParent(tag.parent_id, relations);
             // add tag as child of parent
             this.addChildToParent(parentNode, tagAsTreeTag);
         }
 
-        //MM will add sorting of tree here.
+        this._baseStructure.forEach((v, k) => this.sortTag(v));
+
     }
 
 
@@ -36,7 +48,7 @@ export class DynamicTagTree {
         }
         let grandparent = this.navigateToParent(parentTag.parent_id, relations);
         let exists = grandparent.tagGroups
-            .filter(t => t.tag_id = parent_id);
+            .filter(t => t.tag_id == parent_id);
         if (exists.length == 0) {
             grandparent.tagGroups.push(parentTag);
         }
@@ -48,7 +60,9 @@ export class DynamicTagTree {
     content(): TagTreeTag[] {
         let tagTreeArray = [];
         this._baseStructure.forEach((v, k) => tagTreeArray.push(v));
-        return tagTreeArray;
+        return tagTreeArray.sort((a, b) => {
+            return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());
+        });
     }
 
     private tagAsTreeTag(tag: ITag): TagTreeTag {
@@ -62,7 +76,7 @@ export class DynamicTagTree {
         tagTreeTag.is_group = tag.is_group;
         tagTreeTag.user_id = tag.user_id;
         tagTreeTag.is_expanded = tag.is_expanded;
-        tagTreeTag.is_display = tag.is_display;
+        tagTreeTag.is_display = true;
         tagTreeTag.tagGroups = [];
         tagTreeTag.tagChildren = [];
         return tagTreeTag;
@@ -84,6 +98,32 @@ export class DynamicTagTree {
         let tagAsTreeTag = this.tagAsTreeTag(relations.get(parent_id));
         this._lookupDisplay.set(parent_id, tagAsTreeTag);
         return tagAsTreeTag;
+    }
+
+    toggleExpand(tag: TagTreeTag) {
+        if (!this._lookupDisplay.has(tag.tag_id)) {
+            return;
+        }
+        let toExpand = this._lookupDisplay.get(tag.tag_id);
+        toExpand.is_expanded = !toExpand.is_expanded;
+    }
+
+    private sortTag(tag: TagTreeTag) {
+        // sort group list
+        if (tag.tagGroups.length > 0) {
+            tag.tagGroups = tag.tagGroups.sort((a, b) => {
+                return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());
+            });
+            tag.tagGroups.forEach(g => this.sortTag(g));
+        }
+        // sort children
+        if (tag.tagChildren.length > 0) {
+            tag.tagChildren = tag.tagChildren.sort((a, b) => {
+                return a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase());
+            });
+        }
+
+
     }
 }
 

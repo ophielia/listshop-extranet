@@ -4,7 +4,9 @@
     <div *ngFor="let result of treeList" class="result-text">
         <app-single-tree-node [tag]="result"
                               [userId]="userId"
-                              (select)="selectTag($event)">
+                              (select)="selectTag($event)"
+                              (expand)="expandTag($event)"
+        >
         </app-single-tree-node>
     </div>
 </ng-container>

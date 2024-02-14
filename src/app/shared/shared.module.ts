@@ -28,6 +28,7 @@ import {AlertComponent} from "./alert/alert.component";
 import {ConfirmDialogService} from "./services/confirm-dialog.service";
 import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
 import {UserService} from "./services/user.service";
+import {TagSelectComponent} from "./components/tag-select/tag-select.component";
 
 @NgModule({
     exports: [
@@ -39,6 +40,7 @@ import {UserService} from "./services/user.service";
         ListShopHeaderComponent,
         DishSelectComponent,
         ListSelectComponent,
+        TagSelectComponent,
         GenerateListComponent,
         ModalComponent,
         AlertComponent,
@@ -62,6 +64,7 @@ import {UserService} from "./services/user.service";
         ListShopHeaderComponent,
         DishSelectComponent,
         GenerateListComponent,
+        TagSelectComponent,
         ListSelectComponent,
         ModalComponent,
         SingleDishElementComponent,

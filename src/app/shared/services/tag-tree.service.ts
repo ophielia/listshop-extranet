@@ -1,5 +1,4 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import TagType from "../../model/tag-type";
 import {ITag} from "../../model/tag";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {filter} from "rxjs/operators";
@@ -47,7 +46,6 @@ export class TagTreeService implements OnDestroy {
         this.isLoadingSubject.next(true);
         let criteria = new TagSearchCriteria();
         criteria.group_include = 'ONLY';
-        criteria.tag_types = [TagType.Ingredient];
         const promise = this.tagService.getTagListForCriteria(criteria);
         console.log(promise);
 
@@ -142,9 +140,9 @@ export class TagTreeService implements OnDestroy {
         if (!tagList) {
             tagList = [];
         }
-        let shorterTagList = tagList.filter(t => t.tag_id == "31");
+        //let shorterTagList = tagList.filter(t => t.tag_id == "31");
 
-        return new DynamicTagTree(shorterTagList, this._allTagHash);
+        return new DynamicTagTree(tagList, this._allTagHash);
     }
 
     finishedLoadingObservable() {

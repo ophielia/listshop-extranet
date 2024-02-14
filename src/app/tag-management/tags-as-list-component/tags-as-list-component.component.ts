@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ITag} from "../../model/tag";
+import {TagTreeTag} from "../../model/tag-tree-tag";
 
 @Component({
   selector: 'app-tags-as-list-component',
@@ -9,6 +10,7 @@ import {ITag} from "../../model/tag";
 export class TagsAsListComponentComponent implements OnInit {
   @Input() tagList: ITag[];
   @Input() userId: string;
+  @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
 
   constructor() {
   }
@@ -18,6 +20,13 @@ export class TagsAsListComponentComponent implements OnInit {
 
 
   selectTag(tag: ITag) {
-    window.alert("tag is " + tag.name);
+    this.select.emit(this.quickTagTree(tag));
+  }
+
+  quickTagTree(tag: ITag) {
+    let tTree = new TagTreeTag();
+    tTree.tag_id = tag.tag_id;
+    tTree.name = tag.name;
+    return tTree;
   }
 }

@@ -1,6 +1,6 @@
 <span>
 
-    <span (click)="toggleExpanded()">
+    <span *ngIf="canExpand" (click)="toggleExpanded()">
         <img class="sm-button" src="../../../assets/images/listshop/icons/orangeround/orangeadd.png"
              alt="add">
     </span>

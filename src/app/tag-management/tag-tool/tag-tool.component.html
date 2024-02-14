@@ -82,10 +82,12 @@
                 <app-tags-as-list-component *ngIf="isListDisplay()"
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
+                                            (select)="selectTag($event)"
                 ></app-tags-as-list-component>
                 <app-tags-as-grid-component *ngIf="isGridDisplay()"
                                             [tagList]="tagList"
-                                            [userId]="tagSearchCriteria.user_id">
+                                            [userId]="tagSearchCriteria.user_id"
+                                            (select)="selectTag($event)">
 
                 </app-tags-as-grid-component>
             </div>
@@ -123,8 +125,7 @@
                             <div *ngIf="!assignTag" class="ls-add-tag">
 
                                 <app-tag-select class="at-tag-select-style"
-                                                [tagTypes]=tagTypes[0].toString()
-                                                [groupType]=selectGroupType
+                                                [tagCriteria]=selectTagCriteria
                                                 [allowAdd]="false"
                                                 [showCancelButton]="false"
                                                 [placeholderText]="'Add ' + tagTypes[0].toString()"

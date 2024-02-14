@@ -11,6 +11,7 @@ import {TagTreeService} from "../../shared/services/tag-tree.service";
 import {UserService} from "../../shared/services/user.service";
 import DisplayType from "../../model/display-type";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
+import {TagTreeTag} from "../../model/tag-tree-tag";
 
 @Component({
   selector: 'app-tag-tool',
@@ -32,7 +33,8 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
 
   usersWithTags: IAdminUser[] = [];
-  selectedTags: ITag[] = [];
+  selectedTags: TagTreeTag[] = [];
+  selectTagCriteria: TagSearchCriteria;
 
   tagUserIdFilter: string;
   userIdForAssign: string;
@@ -73,6 +75,9 @@ export class TagToolComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       //this.tagTreeService.refreshTagTree(this.userId);
     this.tagSearchCriteria = new TagSearchCriteria();
+    this.selectTagCriteria = new TagSearchCriteria();
+    this.selectTagCriteria.group_include = 'ONLY';
+    this.selectTagCriteria.tag_types = TagType.listAll();
     //this.retrieveTagList();
     this.retrieveTagList();
     this.retrieveUserList();
@@ -84,6 +89,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
 
   retrieveTagList() {
+    this.tagSearchCriteria.group_include = 'EXCLUDE';
     const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
     promise.then((data) => {
       this.logger.debug("tag data retrieved making list");
@@ -93,6 +99,10 @@ export class TagToolComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  selectTag(tagTreeTag: TagTreeTag) {
+    this.selectedTags.push(tagTreeTag);
+  }
   retrieveUserList() {
     this.groupType = GroupType.All;
 
@@ -218,10 +228,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectTag(tag: ITag) {
-    console.log("tag selected in grid:" + tag.tag_id);
-    this.selectedTags.push(tag);
-  }
 
   unSelectTag(tagid: string) {
     this.selectedTags = this.selectedTags.filter(t => t.tag_id != tagid);

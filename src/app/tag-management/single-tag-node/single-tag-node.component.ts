@@ -13,6 +13,7 @@ export class SingleTagNodeComponent implements OnInit {
     unsubscribe: Subscription[] = [];
     @Input() tag: ITag;
     @Input() userId: string;
+    @Input() canExpand: boolean = true;
     @Output() select: EventEmitter<ITag> = new EventEmitter<ITag>();
 
     constructor(private logger: NGXLogger,
