@@ -71,11 +71,26 @@
         </div>
         <div class="row">
             <div class=" col-sm-12 col-md-12 col-lg-12 " style="text-align:right">
-                <app-tag-status-select></app-tag-status-select>
-                <app-tag-status-select></app-tag-status-select>
-                <app-tag-status-select></app-tag-status-select>
-                <app-tag-status-select></app-tag-status-select>
-                <app-tag-status-select></app-tag-status-select>
+                <app-tag-status-select
+                        [displayName]="'Verified'"
+                        [startState]="ignoreConstant"
+                        (selectedState)="stateChange(verifyConstant, $event)"></app-tag-status-select>
+                <app-tag-status-select
+                        [displayName]="'Food'"
+                        [startState]="ignoreConstant"
+                        (selectedState)="stateChange(foodConstant, $event)"></app-tag-status-select>
+                <app-tag-status-select
+                        [displayName]="'Food Verified'"
+                        [startState]="ignoreConstant"
+                        (selectedState)="stateChange(foodVerifiedConstant, $event)"></app-tag-status-select>
+                <app-tag-status-select
+                        [displayName]="'Liquid'"
+                        [startState]="ignoreConstant"
+                        (selectedState)="stateChange(liquidConstant, $event)"></app-tag-status-select>
+                <app-tag-status-select
+                        [displayName]="'Category'"
+                        [startState]="ignoreConstant"
+                        (selectedState)="stateChange(categoryConstant, $event)"></app-tag-status-select>
 
             </div>
 

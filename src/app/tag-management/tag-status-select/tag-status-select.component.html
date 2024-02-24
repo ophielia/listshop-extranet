@@ -1,0 +1,12 @@
+<div class=" status-box">
+    <div style="display:inline-block">
+        <span class="title">{{displayName}}</span>
+        <div>
+            <span *ngIf="!includeIsActive()" (click)="toggleInclude()" class="action-link">Include</span>
+            <span *ngIf="includeIsActive()" (click)="toggleInclude()" class="action-link-active">Include</span>
+            <span *ngIf="!excludeIsActive()" (click)="toggleExclude()" class="action-link">Exclude</span>
+            <span *ngIf="excludeIsActive()" (click)="toggleExclude()" class="action-link-active">Exclude</span>
+
+        </div>
+    </div>
+</div>

@@ -12,6 +12,8 @@ import {UserService} from "../../shared/services/user.service";
 import DisplayType from "../../model/display-type";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import {TagTreeTag} from "../../model/tag-tree-tag";
+import IncludeType from "../../model/include-type";
+import TagStatusType from "../../model/tag-status-type";
 
 @Component({
   selector: 'app-tag-tool',
@@ -30,7 +32,14 @@ export class TagToolComponent implements OnInit, OnDestroy {
   allTagTypes: TagType[];
   searchFragment: string;
   includeGroups: boolean = false;
+  includeConstant: IncludeType = IncludeType.Include;
+  ignoreConstant: IncludeType = IncludeType.Ignore;
 
+  verifyConstant: string = TagStatusType.Checked;
+  foodConstant: string = TagStatusType.Food;
+  liquidConstant: string = TagStatusType.Liquid;
+  categoryConstant: string = TagStatusType.Category;
+  foodVerifiedConstant: string = TagStatusType.FoodVerified;
 
   usersWithTags: IAdminUser[] = [];
   selectedTags: TagTreeTag[] = [];
@@ -119,7 +128,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   searchTags() {
     this.tagSearchCriteria.text_fragment = this.searchFragment;
-      //this.retrieveTagList();
+    this.retrieveTagList();
   }
 
   filterTagsForUser() {
@@ -127,7 +136,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
       this.tagSearchCriteria.user_id = null;
     }
     this.tagSearchCriteria.user_id = this.tagUserIdFilter;
-      //this.retrieveTagList();
+    this.retrieveTagList();
   }
 
   assignSelectedToUser(userId: string) {
@@ -137,7 +146,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagToUser(tagIds, userId).subscribe(r => {
-        //this.retrieveTagList();
+      this.retrieveTagList();
       this.selectedTags = [];
       this.showAddToUser = false;
     });
@@ -152,7 +161,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
       this.tagTreeService.refreshGroups();
-        //this.retrieveTagList();
+      this.retrieveTagList();
       this.selectedTags = [];
       this.showChangeParent = false;
       this.assignTag = null;
@@ -162,7 +171,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     markSelectedAsReviewed() {
         let tagIds = this.selectedTags.map(t => t.tag_id);
         this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
-            //this.retrieveTagList();
+          this.retrieveTagList();
             this.selectedTags = [];
         });
     }
@@ -182,7 +191,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
         this.tagTypes[0], this.addAsGroup, false)
         .subscribe(data => {
-            //this.retrieveTagList();
+          this.retrieveTagList();
           this.assignTag = null;
           this.tagNameEntry = "";
           this.showCreateTag = false;
@@ -198,7 +207,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
       }
       let $sub = this.tagService.moveGroupToBase(updatedTag.tag_id)
           .subscribe(data => {
-              //this.retrieveTagList();
+            this.retrieveTagList();
             this.tagTreeService.refreshGroups();
             this.selectedTags = [];
           });
@@ -215,7 +224,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let updatedTag = this.selectedTags[0];
     let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
         .subscribe(data => {
-            //this.retrieveTagList();
+          this.retrieveTagList();
           this.assignTag = null;
           this.selectedTags = [];
           this.tagNameEntry = "";
@@ -228,7 +237,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
       this.selectedTags = [];
-        //this.retrieveTagList();
+      this.retrieveTagList();
     });
   }
 
@@ -272,22 +281,86 @@ export class TagToolComponent implements OnInit, OnDestroy {
   setListDisplayStyle() {
     this.displayType = DisplayType.List;
     this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
-      //this.retrieveTagList();
+    this.retrieveTagList();
   }
 
   setGridDisplayStyle() {
     this.displayType = DisplayType.Grid;
     this.tagSearchCriteria.group_include = 'EXCLUDE';
-      //this.retrieveTagList();
+    this.retrieveTagList();
   }
 
   toggleGroups() {
     this.includeGroups = !this.includeGroups;
     this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
-      //this.retrieveTagList();
+    this.retrieveTagList();
   }
 
     isExcludeGroups() {
         return !this.includeGroups;
     }
+
+  stateChange(statusType: string, includeType: IncludeType) {
+
+
+    if (includeType == IncludeType.Ignore) {
+      this.removeStatusFromInclude(statusType);
+      this.removeStatusFromExclude(statusType);
+    } else if (includeType == IncludeType.Exclude) {
+      this.removeStatusFromInclude(statusType);
+      this.addStatusToExclude(statusType);
+    } else if (includeType == IncludeType.Include) {
+      this.removeStatusFromExclude(statusType);
+      this.addStatusToInclude(statusType);
+    }
+    console.log("status type: " + statusType + ", include: " + includeType);
+    this.retrieveTagList();
+
+  }
+
+  private addStatusToInclude(status: string) {
+    let list = this.tagSearchCriteria.included_statuses;
+    let resultList = this.addStatusToList(status, list);
+    this.tagSearchCriteria.included_statuses = resultList;
+  }
+
+  private removeStatusFromExclude(status: string) {
+    let list = this.tagSearchCriteria.excluded_statuses;
+    let resultList = this.removeStatusFromList(status, list);
+    this.tagSearchCriteria.excluded_statuses = resultList;
+  }
+
+  private addStatusToExclude(status: string) {
+    let list = this.tagSearchCriteria.excluded_statuses;
+    let resultList = this.addStatusToList(status, list);
+    this.tagSearchCriteria.excluded_statuses = resultList;
+  }
+
+  private removeStatusFromInclude(status: string) {
+    let list = this.tagSearchCriteria.included_statuses;
+    let resultList = this.removeStatusFromList(status, list);
+    this.tagSearchCriteria.included_statuses = resultList;
+  }
+
+  private addStatusToList(status: string, list: string[]) {
+    if (!list) {
+      return [status];
+    }
+    if (list.indexOf(status) < 0) {
+      list.push(status);
+    }
+
+    return list;
+  }
+
+  private removeStatusFromList(status: string, list: string[]) {
+    if (!list) {
+      return [];
+    }
+    if (list.indexOf(status) >= 0) {
+      list = list.filter((st) => st != status);
+    }
+
+    return list;
+  }
 }

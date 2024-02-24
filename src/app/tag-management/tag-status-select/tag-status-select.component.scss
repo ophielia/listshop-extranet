@@ -1,0 +1,36 @@
+.status-box {
+  width: 200px;
+  display: inline-block;
+  margin: 5px;
+  background-color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  border-radius: 10px;
+  margins: auto;
+  border-color: #777777;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+
+
+  .title {
+    text-transform: uppercase;
+
+    font-weight: bold;
+  }
+
+  .action-link {
+    text-transform: uppercase;
+    color: #e67d21;
+    display: inline
+
+  }
+
+  .action-link-active {
+    text-transform: uppercase;
+    color: #e67d21;
+    font-weight: bolder;
+    display: inline
+  }
+}
