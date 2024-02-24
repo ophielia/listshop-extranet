@@ -69,6 +69,18 @@
 
 
         </div>
+        <div class="row">
+            <div class=" col-sm-12 col-md-12 col-lg-12 " style="text-align:right">
+                <app-tag-status-select></app-tag-status-select>
+                <app-tag-status-select></app-tag-status-select>
+                <app-tag-status-select></app-tag-status-select>
+                <app-tag-status-select></app-tag-status-select>
+                <app-tag-status-select></app-tag-status-select>
+
+            </div>
+
+
+        </div>
     </div>
 
 </div>
@@ -203,6 +215,7 @@
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
                             <li (click)="createStandard()">Create Standard For Selected</li>
+                            <li (click)="markSelectedAsReviewed()">Verify Tags</li>
                         </ul>
 
 

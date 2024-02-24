@@ -88,6 +88,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
   }
 
   retrieveTagList() {
+      console.log("tag search criteria - " + this.tagSearchCriteria);
     const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
     promise.then((data) => {
       this.logger.debug("tag data retrieved making list");
@@ -118,7 +119,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
   searchTags() {
     this.tagSearchCriteria.text_fragment = this.searchFragment;
-    this.retrieveTagList();
+      //this.retrieveTagList();
   }
 
   filterTagsForUser() {
@@ -126,7 +127,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
       this.tagSearchCriteria.user_id = null;
     }
     this.tagSearchCriteria.user_id = this.tagUserIdFilter;
-    this.retrieveTagList();
+      //this.retrieveTagList();
   }
 
   assignSelectedToUser(userId: string) {
@@ -136,7 +137,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagToUser(tagIds, userId).subscribe(r => {
-        this.retrieveTagList();
+        //this.retrieveTagList();
       this.selectedTags = [];
       this.showAddToUser = false;
     });
@@ -151,12 +152,20 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
       this.tagTreeService.refreshGroups();
-      this.retrieveTagList();
+        //this.retrieveTagList();
       this.selectedTags = [];
       this.showChangeParent = false;
       this.assignTag = null;
     });
   }
+
+    markSelectedAsReviewed() {
+        let tagIds = this.selectedTags.map(t => t.tag_id);
+        this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
+            //this.retrieveTagList();
+            this.selectedTags = [];
+        });
+    }
 
   changeTagType(type: TagType) {
     this.tagSearchCriteria.tag_types = [type];
@@ -173,7 +182,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
         this.tagTypes[0], this.addAsGroup, false)
         .subscribe(data => {
-          this.retrieveTagList();
+            //this.retrieveTagList();
           this.assignTag = null;
           this.tagNameEntry = "";
           this.showCreateTag = false;
@@ -189,7 +198,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
       }
       let $sub = this.tagService.moveGroupToBase(updatedTag.tag_id)
           .subscribe(data => {
-            this.retrieveTagList();
+              //this.retrieveTagList();
             this.tagTreeService.refreshGroups();
             this.selectedTags = [];
           });
@@ -206,7 +215,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let updatedTag = this.selectedTags[0];
     let $sub = this.tagService.changeTagName(this.tagNameEntry, updatedTag)
         .subscribe(data => {
-          this.retrieveTagList();
+            //this.retrieveTagList();
           this.assignTag = null;
           this.selectedTags = [];
           this.tagNameEntry = "";
@@ -219,7 +228,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     let tagIds = this.selectedTags.map(t => t.tag_id);
     this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
       this.selectedTags = [];
-      this.retrieveTagList();
+        //this.retrieveTagList();
     });
   }
 
@@ -263,19 +272,19 @@ export class TagToolComponent implements OnInit, OnDestroy {
   setListDisplayStyle() {
     this.displayType = DisplayType.List;
     this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
-    this.retrieveTagList();
+      //this.retrieveTagList();
   }
 
   setGridDisplayStyle() {
     this.displayType = DisplayType.Grid;
     this.tagSearchCriteria.group_include = 'EXCLUDE';
-    this.retrieveTagList();
+      //this.retrieveTagList();
   }
 
   toggleGroups() {
     this.includeGroups = !this.includeGroups;
     this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
-    this.retrieveTagList();
+      //this.retrieveTagList();
   }
 
     isExcludeGroups() {

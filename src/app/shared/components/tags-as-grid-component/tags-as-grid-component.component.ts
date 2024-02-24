@@ -39,7 +39,7 @@ export class TagsAsGridComponentComponent implements OnInit {
         this.tagTree = this.tagTreeService.createTagTree(this._tagList);
         console.log("tag tree created");
         this.treeList = this.tagTree.content();
-        console.log("tree list content call done");
+        console.log("tree list content call done - size - " + this.treeList.length);
     }
 
     selectTag(tag: TagTreeTag) {

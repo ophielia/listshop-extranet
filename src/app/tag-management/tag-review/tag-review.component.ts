@@ -5,6 +5,7 @@ import {NGXLogger} from "ngx-logger";
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {TagService} from "../../shared/services/tag.service";
+import {TagSearchCriteria} from "../../model/tag-search-criteria";
 
 @Component({
     selector: 'app-tag-review',
@@ -38,7 +39,9 @@ export class TagReviewComponent implements OnInit {
     }
 
     private getTags() {
-        const promise = this.tagService.getTagList(this.userId, true);
+        let searchCriteria = new TagSearchCriteria();
+        searchCriteria.user_id = this.userId;
+        const promise = this.tagService.getTagListForCriteria(searchCriteria);
         console.log(promise);
         promise.then((data) => {
             this.logger.debug("tag data retrieved.");
