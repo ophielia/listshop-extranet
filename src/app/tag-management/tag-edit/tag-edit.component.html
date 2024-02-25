@@ -1,0 +1,126 @@
+<app-tag-header></app-tag-header>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
+                <h2 class="title">
+                    <span>Edit Tag - {{tag.name}}</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+
+
+<!--content start-->
+<section class="admin-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-8 col-lg-8">
+                <!--toolbar start-->
+                <div class="info-box">
+
+                    <div class="container dish-toolbar">
+                        <div class="row">
+                            <div class="status-block">
+                                <div class="status-line">id: <span>{{tag.tag_id}}</span></div>
+                                <div class="status-line">user id: <span>{{nullOrValue(tag.user_id)}}</span></div>
+                            </div>
+
+                            <div class="status-block">
+                                <div class="status-line">Tag Type: <span>{{tag.tag_type}}</span></div>
+                                <div class="status-line">parent id: <span>{{nullOrValue(tag.parent_id)}}</span></div>
+                                <div class="status-line">parent name: <span>{{nullOrValue(tag.parent_name)}}</span>
+                                </div>
+                            </div>
+                            <div class="status-block">
+                                <div class="status-line">Group Tag: <span>{{nullOrBooleanValue(tag.is_group)}}</span>
+                                </div>
+                                <div class="status-line">Liquid Tag: <span>{{nullOrBooleanValue(tag.is_liquid)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="status-block" style="text-align:right; width: 100%">
+                                <div class="status-line">status: <span>{{nullOrValue(tag.status)}}</span></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--toolbar end -->
+                <!-- content -->
+                <div class="loading-box">content</div>
+                <!-- end content -->
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <div class="ls-admin-sidebar-dark">
+                    <div>
+                        <div class="sidebar-dark-title">Actions</div>
+                        <div class="ls-panel" *ngIf="showChangeParent">
+                            <div (click)="toggleShowChangeParent()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                <app-tag-select class="at-tag-select-style"
+                                                [tagCriteria]=selectGroupCriteria
+                                                [allowAdd]="false"
+                                                [showCancelButton]="false"
+                                                [placeholderText]="'Add ' + tagTypes[0].toString()"
+                                                (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+
+                            </div>
+                            <div *ngIf="assignTag">
+                                {{assignTag.name}}
+                            </div>
+                            <div *ngIf="assignTag" class="panel-action" (click)="assignToParent()">
+                                Assign Selected to Parent
+                            </div>
+
+                        </div>
+                        <div class="ls-panel" *ngIf="showChangeTagName">
+                            <div (click)="toggleShowChangeName()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div class="panel-title">
+                                Change Tag Name
+                            </div>
+                            <div>Tag Name</div>
+                            <div class="ls-add-tag">
+                                <input type="text" class="form-control ls-inline-input"
+                                       [(ngModel)]="tagNameEntry"
+                                />
+                            </div>
+                            <div class="panel-action" (click)="changeTagName()">
+                                Change Name
+                            </div>
+
+                        </div>
+                        <ul>
+                            <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
+                            <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
+                            <li (click)="createStandard()">Create Standard For Selected</li>
+                            <li (click)="setToSolid()">Set Selected To Solid</li>
+                            <li (click)="setToLiquid()">Set Selected To Liquid</li>
+                            <li>Assign Food</li>
+                            <li (click)="setToVerified()">Verify Tags</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--content End-->
