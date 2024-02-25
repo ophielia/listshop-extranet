@@ -110,12 +110,14 @@
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
                                             (select)="selectTag($event)"
+                                            (toEdit)="editTag($event)"
                 ></app-tags-as-list-component>
                 <app-tags-as-grid-component *ngIf="isGridDisplay()"
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
                                             [expandAll]="expandAll"
-                                            (select)="selectTag($event)">
+                                            (select)="selectTag($event)"
+                                            (toEdit)="editTag($event)">
 
                 </app-tags-as-grid-component>
             </div>

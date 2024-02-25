@@ -4,6 +4,7 @@
         <app-single-tree-node [tag]="result"
                               [userId]="userId"
                               (select)="selectTag($event)"
+                              (toEdit)="editTag($event)"
                               (expand)="expandTag($event)"
         >
         </app-single-tree-node>

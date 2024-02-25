@@ -14,6 +14,7 @@ export class SingleTreeNodeComponent implements OnInit {
   @Input() tag: TagTreeTag;
   @Input() userId: string;
   @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
+    @Output() toEdit: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
   @Output() expand: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
 
   constructor(private logger: NGXLogger,
@@ -40,4 +41,8 @@ export class SingleTreeNodeComponent implements OnInit {
   selectTag(tag: TagTreeTag) {
     this.select.emit(tag);
   }
+
+    editTag(tag: TagTreeTag) {
+        this.toEdit.emit(tag);
+    }
 }

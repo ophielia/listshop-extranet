@@ -11,6 +11,7 @@ import TagOperationType from "../../model/tag-operation-type";
 import TagType from "../../model/tag-type";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import {TagTreeTag} from "../../model/tag-tree-tag";
+import {ITagFullInfo} from "../../model/tag-fullinfo";
 
 
 @Injectable()
@@ -33,6 +34,17 @@ export class TagService {
             .get(url)
             .pipe(map((response: HttpResponse<any>) => {
                     return TagService.mapTagClient(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+    }
+
+    getFullTagInfo(tagId: string) {
+        let url = this.adminTagUrl + "/" + tagId + "/fullinfo";
+        return this.httpClient
+            .get(url)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapTagFullInfoClient(response);
                 }),
                 catchError(TagService.handleError))
             .toPromise();
@@ -76,6 +88,10 @@ export class TagService {
 
     static mapTagClient(object: Object): ITag {
         return MappingUtils.toTag(object);
+    }
+
+    static mapTagFullInfoClient(object: Object): ITagFullInfo {
+        return MappingUtils.toTagFullInfo(object);
     }
 
     static handleError(error: any) {
@@ -182,6 +198,8 @@ export class TagService {
             .httpClient
             .put(url, {observe: 'response'});
     }
+
+
 }
 
 

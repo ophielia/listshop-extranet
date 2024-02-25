@@ -19,6 +19,7 @@ export class TagsAsListComponentComponent implements OnInit {
 
   @Input() userId: string;
   @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
+    @Output() toEdit: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
 
     private _tagList: ITag[];
 
@@ -31,6 +32,10 @@ export class TagsAsListComponentComponent implements OnInit {
   selectTag(tag: ITag) {
     this.select.emit(this.quickTagTree(tag));
   }
+
+    editTag(tag: ITag) {
+        this.toEdit.emit(this.quickTagTree(tag));
+    }
 
   quickTagTree(tag: ITag) {
     let tTree = new TagTreeTag();

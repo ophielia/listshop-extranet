@@ -15,6 +15,7 @@
             <app-single-tree-node [tag]="group"
                                   [userId]="userId"
                                   (select)="selectTag($event)"
+                                  (toEdit)="editTag($event)"
                                   (expand)="toggleExpanded($event)"
             ></app-single-tree-node>
         </ng-container>
@@ -24,7 +25,7 @@
 <ul *ngIf="tag.is_expanded">
     <li *ngFor="let child of tag.tagChildren">
         <ng-container *ngIf="child.is_display">
-        <span (dblclick)="selectTag(child)"
+        <span (click)="selectTag(child)" (dblclick)="editTag(child)"
               [class.user_defined]="child.user_id != null && child.user_id != '0'">    {{child.name}} ({{child.tag_id}})  ({{child.user_id}}
             )
         </span>

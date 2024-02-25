@@ -22,6 +22,7 @@ export class TagsAsGridComponentComponent implements OnInit {
     };
     @Input() userId: string;
     @Output() select: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
+    @Output() toEdit: EventEmitter<TagTreeTag> = new EventEmitter<TagTreeTag>();
 
     treeList: TagTreeTag[];
     tagTree: DynamicTagTree;
@@ -46,6 +47,9 @@ export class TagsAsGridComponentComponent implements OnInit {
         this.select.emit(tag);
     }
 
+    editTag(tag: TagTreeTag) {
+        this.toEdit.emit(tag);
+    }
     expandTag(tag: TagTreeTag) {
         console.log("found expand");
         this.tagTree.toggleExpand(tag);

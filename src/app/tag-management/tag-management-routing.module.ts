@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuardHandler} from "../shared/handlers/auth-guard-handler";
 import {TagReviewComponent} from "./tag-review/tag-review.component";
 import {TagToolComponent} from "./tag-tool/tag-tool.component";
+import {TagEditComponent} from "./tag-edit/tag-edit.component";
 
 const routes: Routes = [
   {
@@ -36,7 +37,16 @@ const routes: Routes = [
             content: 'The List Shop - Admin Console | Tag List'
         },
         canActivate: [AuthGuardHandler]
-  },
+    },
+    {
+        path: 'edit/:id',
+        component: TagEditComponent,
+        data: {
+            title: 'The List Shop - Admin Console | Tag List',
+            content: 'The List Shop - Admin Console | Tag List'
+        },
+        canActivate: [AuthGuardHandler]
+    },
 ];
 
 @NgModule({

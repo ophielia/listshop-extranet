@@ -11,6 +11,7 @@ import {RatingUpdateInfo} from "./rating-update-info";
 import {IRatingInfo, RatingInfo} from "./rating-info";
 import {DishRatingInfo, IDishRatingInfo} from "./dish-rating-info";
 import {AdminUser} from "./admin-user";
+import {ITagFullInfo} from "./tag-fullinfo";
 
 
 export default class MappingUtils {
@@ -75,6 +76,10 @@ export default class MappingUtils {
 
     static toTag(r: any): ITag {
         return MappingUtils._toTag(r.tag);
+    }
+
+    static toTagFullInfo(r: any): ITagFullInfo {
+        return MappingUtils._toTagFullInfo(r.tag);
     }
 
     static toMealPlan(r: any): MealPlan {
@@ -193,6 +198,25 @@ export default class MappingUtils {
             is_expanded: false,
             search_select: jsonResult.search_select,
             assign_select: jsonResult.assign_select
+        })
+    }
+
+    private static _toTagFullInfo(jsonResult: any): ITagFullInfo {
+        return <ITagFullInfo>({
+            tag_id: jsonResult.tag_id,
+            name: jsonResult.name,
+            description: jsonResult.description,
+            tag_type: jsonResult.tag_type,
+            power: jsonResult.power,
+            parent_id: jsonResult.parent_id,
+            parent_name: jsonResult.parent_name,
+            is_group: jsonResult.is_group,
+            is_liquid: jsonResult.is_liquid,
+            food_id: jsonResult.food_id,
+            food_name: jsonResult.food_name,
+            user_id: jsonResult.user_id,
+            status: jsonResult.status_display
+
         })
     }
 

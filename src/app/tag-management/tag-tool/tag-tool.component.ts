@@ -110,6 +110,11 @@ export class TagToolComponent implements OnInit, OnDestroy {
   selectTag(tagTreeTag: TagTreeTag) {
     this.selectedTags.push(tagTreeTag);
   }
+
+  editTag(tagTreeTag: TagTreeTag) {
+    let id = tagTreeTag.tag_id;
+    this.router.navigate(['/manage/tags/edit', id]);
+  }
   retrieveUserList() {
     this.groupType = GroupType.All;
 

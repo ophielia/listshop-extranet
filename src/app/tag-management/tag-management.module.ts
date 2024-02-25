@@ -11,11 +11,12 @@ import {FormsModule} from "@angular/forms";
 import {InputSwitchModule} from "primeng/inputswitch";
 import {TagToolComponent} from './tag-tool/tag-tool.component';
 import {TagStatusSelectComponent} from './tag-status-select/tag-status-select.component';
+import {TagEditComponent} from './tag-edit/tag-edit.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent],
+        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent],
     exports: [
     ],
     imports: [

@@ -15,6 +15,7 @@ export class SingleTagNodeComponent implements OnInit {
     @Input() userId: string;
     @Input() canExpand: boolean = true;
     @Output() select: EventEmitter<ITag> = new EventEmitter<ITag>();
+    @Output() toEdit: EventEmitter<ITag> = new EventEmitter<ITag>();
 
     constructor(private logger: NGXLogger,
                 private tagTreeService: TagTreeService) {
@@ -35,5 +36,9 @@ export class SingleTagNodeComponent implements OnInit {
 
     selectTag(tag: ITag) {
         this.select.emit(tag);
+    }
+
+    editTag(tag: ITag) {
+        this.toEdit.emit(tag);
     }
 }
