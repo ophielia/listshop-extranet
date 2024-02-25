@@ -101,6 +101,19 @@ export class TagService {
                 JSON.stringify(tagOperationPut), {observe: 'response'});
     }
 
+    markSelectedAsLiquidOrSolid(tagIds: string[], isLiquid: boolean) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.SetLiquid,
+            is_liquid: isLiquid
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+    }
+
     assignTagToUser(tagIds: string[], userId: string) {
         var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
             tag_ids: tagIds,

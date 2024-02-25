@@ -176,6 +176,22 @@ export class TagToolComponent implements OnInit, OnDestroy {
         });
     }
 
+  markSelectedAsLiquid() {
+    let tagIds = this.selectedTags.map(t => t.tag_id);
+    this.tagService.markSelectedAsLiquidOrSolid(tagIds, true).subscribe(r => {
+      this.retrieveTagList();
+      this.selectedTags = [];
+    });
+  }
+
+  markSelectedAsSolid() {
+    let tagIds = this.selectedTags.map(t => t.tag_id);
+    this.tagService.markSelectedAsLiquidOrSolid(tagIds, false).subscribe(r => {
+      this.retrieveTagList();
+      this.selectedTags = [];
+    });
+  }
+
   changeTagType(type: TagType) {
     this.tagSearchCriteria.tag_types = [type];
     this.tagSearchCriteria.text_fragment = null;

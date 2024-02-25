@@ -230,6 +230,8 @@
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
                             <li (click)="createStandard()">Create Standard For Selected</li>
+                            <li (click)="markSelectedAsSolid()">Set Selected To Solid</li>
+                            <li (click)="markSelectedAsLiquid()">Set Selected To Liquid</li>
                             <li (click)="markSelectedAsReviewed()">Verify Tags</li>
                         </ul>
 
