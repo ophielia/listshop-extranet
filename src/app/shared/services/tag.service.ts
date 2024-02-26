@@ -12,6 +12,7 @@ import TagType from "../../model/tag-type";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import {TagTreeTag} from "../../model/tag-tree-tag";
 import {ITagFullInfo} from "../../model/tag-fullinfo";
+import {ICategoryMapping} from "../../model/category-mapping";
 
 
 @Injectable()
@@ -84,6 +85,11 @@ export class TagService {
     static mapTagsClient(object: Object): ITag[] {
         let embeddedObj = object["_embedded"];
         return embeddedObj["tagResourceList"].map(MappingUtils.toTag);
+    }
+
+    static mapCategoryMappingsClient(object: Object): ICategoryMapping[] {
+        let embeddedObj = object["_embedded"];
+        return embeddedObj["category_mapping_resource_list"].map(MappingUtils.toCategoryMapping);
     }
 
     static mapTagClient(object: Object): ITag {
@@ -200,6 +206,16 @@ export class TagService {
     }
 
 
+    getFoodCategoryMappings(): Promise<ICategoryMapping[]> {
+        var url = `${this.adminTagUrl}/food/category/mappings`;
+        return this.httpClient
+            .get(`${url}`)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapCategoryMappingsClient(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+    }
 }
 
 

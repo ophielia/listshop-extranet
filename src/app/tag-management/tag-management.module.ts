@@ -12,11 +12,12 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import {TagToolComponent} from './tag-tool/tag-tool.component';
 import {TagStatusSelectComponent} from './tag-status-select/tag-status-select.component';
 import {TagEditComponent} from './tag-edit/tag-edit.component';
+import {CategoryReviewComponent} from './category-review/category-review.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent],
+        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent],
     exports: [
     ],
     imports: [

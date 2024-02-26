@@ -4,7 +4,7 @@
         <img class="sm-button" src="../../../assets/images/listshop/icons/orangeround/orangeadd.png"
              alt="add">
     </span>
-    <span (dblclick)="selectTag(tag)">
+    <span (click)="selectTag(tag)" (dblclick)="editTag(tag)">
         {{tag.name}} ({{tag.tag_id}}) ({{tag.is_expanded}})
     </span>
 </span>

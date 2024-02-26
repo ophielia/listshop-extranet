@@ -1,0 +1,123 @@
+<app-tag-header></app-tag-header>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
+                <h2 class="title">
+                    <span>Category Review</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+
+<!--content start-->
+<section class="admin-section">
+    <div class="container">
+        <div class="row ">
+            <!-- results -->
+            <div class="col-md-8 col-lg-8 loading-box" style="padding-top:20px;">
+                <table class="mapping-table">
+                    <tr>
+                        <th>Listshop Category</th>
+                        <th>Food Category</th>
+                    </tr>
+                    <ng-container *ngFor="let m of currentMappingList">
+                        <tr>
+                            <td><span (click)="selectMapping(m)">{{m.tag_name}}</span></td>
+                            <td>{{nameOrDashes(m.food_category_name)}}</td>
+                        </tr>
+                    </ng-container>
+                </table>
+
+            </div>
+            <!-- end results -->
+            <!-- start actions -->
+            <div class="col-md-4 col-lg-4">
+                <div style="padding-bottom: 10px">
+                    <div *ngIf="isSortByListshop()" class="toggle-box"><span (click)="toggleSortBy()"
+                                                                             class="toggle-text-active">Sort by Listshop</span>
+                    </div>
+                    <div *ngIf="!isSortByListshop()" class="toggle-box"><span (click)="toggleSortBy()"
+                                                                              class="toggle-text">Sort by Listshop</span>
+                    </div>
+                    <div *ngIf="!isSortByListshop()" class="toggle-box"><span (click)="toggleSortBy()"
+                                                                              class="toggle-text-active">Sort by Food</span>
+                    </div>
+                    <div *ngIf="isSortByListshop()" class="toggle-box"><span (click)="toggleSortBy()"
+                                                                             class="toggle-text">Sort by Food</span>
+                    </div>
+                </div>
+                <div>
+                    <div *ngIf="doIncludeAssigned()" class="toggle-box"><span (click)="toggleAssigned()"
+                                                                              class="toggle-text-active">Assigned</span>
+                    </div>
+                    <div *ngIf="!doIncludeAssigned()" class="toggle-box"><span (click)="toggleAssigned()"
+                                                                               class="toggle-text">Assigned</span></div>
+                    <div *ngIf="doUnassignedOnly()" class="toggle-box"><span (click)="toggleUnassigned()"
+                                                                             class="toggle-text-active">Unassigned</span>
+                    </div>
+                    <div *ngIf="!doUnassignedOnly()" class="toggle-box"><span (click)="toggleUnassigned()"
+                                                                              class="toggle-text">Unassigned</span>
+                    </div>
+
+                </div>
+                <div class="ls-admin-sidebar-dark">
+                    <div>
+                        <div class="sidebar-dark-title">Actions</div>
+                        <!--
+                         <div class="ls-panel" *ngIf="showChangeParent">
+                             <div (click)="toggleShowChangeParent()" class="cancel-link">
+                                 <img class="sm-button"
+                                      src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                      alt="add">
+                             </div>
+                             <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                 <app-tag-select class="at-tag-select-style"
+                                                 [tagCriteria]=selectTagCriteria
+                                                 [allowAdd]="false"
+                                                 [showCancelButton]="false"
+                                                 [placeholderText]="'Add ' + tagTypes[0].toString()"
+                                                 (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+
+                             </div>
+                             <div *ngIf="assignTag">
+                                 {{assignTag.name}}
+                             </div>
+                             <div *ngIf="assignTag" class="panel-action" (click)="assignSelectedToParent()">
+                                 Assign Selected to Parent
+                             </div>
+
+                         </div>
+                        -->
+
+                        <ul>
+                            <li>Assign Category to Selected</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="ls-admin-sidebar-light">
+                    <div>
+                        <div class="sidebar-title">SELECTED</div>
+
+                        <ul>
+                            <li *ngFor="let result of selectedMappings" class="result-text">
+                                <span (dblclick)="unselectMapping(result.tag_id);">{{result.tag_name}}
+                                    ({{result.tag_id}}
+                                    )</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end actions -->
+        </div>
+    </div>
+</section>
+<!--content End-->

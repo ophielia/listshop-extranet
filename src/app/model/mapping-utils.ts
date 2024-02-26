@@ -12,6 +12,7 @@ import {IRatingInfo, RatingInfo} from "./rating-info";
 import {DishRatingInfo, IDishRatingInfo} from "./dish-rating-info";
 import {AdminUser} from "./admin-user";
 import {ITagFullInfo} from "./tag-fullinfo";
+import {ICategoryMapping} from "./category-mapping";
 
 
 export default class MappingUtils {
@@ -76,6 +77,10 @@ export default class MappingUtils {
 
     static toTag(r: any): ITag {
         return MappingUtils._toTag(r.tag);
+    }
+
+    static toCategoryMapping(r: any): ICategoryMapping {
+        return MappingUtils._toCategoryMapping(r.food_category_mapping);
     }
 
     static toTagFullInfo(r: any): ITagFullInfo {
@@ -198,6 +203,19 @@ export default class MappingUtils {
             is_expanded: false,
             search_select: jsonResult.search_select,
             assign_select: jsonResult.assign_select
+        })
+    }
+
+    private static _toCategoryMapping(jsonResult: any): ICategoryMapping {
+        let foodName = "---";
+        if (jsonResult.food_category_name) {
+            foodName = jsonResult.food_category_name
+        }
+        return <ICategoryMapping>({
+            tag_id: jsonResult.tag_id,
+            tag_name: jsonResult.tag_name,
+            food_category_id: jsonResult.food_category_id,
+            food_category_name: foodName
         })
     }
 
