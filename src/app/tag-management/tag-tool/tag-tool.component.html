@@ -205,6 +205,46 @@
                             </div>
 
                         </div>
+                        <div class="ls-panel" *ngIf="showCategoryList">
+                            <div class="cancel-link">
+                                <div (click)="toggleShowCategoryList()" class="cancel-link">
+                                    <img class="sm-button"
+                                         src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                         alt="add">
+                                </div>
+                            </div>
+                            <div *ngIf="!assignCategory" class="ls-add-tag">
+
+                                <app-category-select class="at-tag-select-style"
+                                                     [tagCriteria]=selectTagCriteria
+                                                     [allowAdd]="false"
+                                                     [showCancelButton]="false"
+                                                     [placeholderText]="'Add whatever'"
+                                                     (categorySelected)="selectCategoryForAssign($event)"></app-category-select>
+
+
+                            </div>
+                            <div *ngIf="assignCategory">
+                                {{assignCategory.food_category_name}}
+                            </div>
+                            <div *ngIf="!assignCategory" style="width:100%; text-align:right"
+                                 (click)="toggleBrowseCategories()">Browse
+                            </div>
+                            <div *ngIf="assignCategory" class="panel-action" (click)="assignSelectedToCategory()">
+                                Assign Selected to Category
+                            </div>
+
+                            <div *ngIf="browseAllCategories">
+                                <ul>
+                                    <ng-container *ngFor="let result of allCategoryList" class="result-text">
+                                        <li (click)="selectCategoryForAssign(result)">{{result.food_category_name}}
+
+                                        </li>
+                                    </ng-container>
+                                </ul>
+
+                            </div>
+                        </div>
                         <div class="ls-panel" *ngIf="showChangeTagName">
                             <div (click)="toggleShowChangeName()" class="cancel-link">
                                 <img class="sm-button"
@@ -231,6 +271,7 @@
                             <li *ngIf="!showCreateTag" (click)="toggleShowCreateTag()">Create Tag</li>
                             <li *ngIf="!showAddToUser" (click)="toggleShowAssign()">Assign Tag To User</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
+                            <li *ngIf="!showCategoryList" (click)="toggleShowCategory()">Assign Catagories</li>
                             <li (click)="createStandard()">Create Standard For Selected</li>
                             <li (click)="markSelectedAsSolid()">Set Selected To Solid</li>
                             <li (click)="markSelectedAsLiquid()">Set Selected To Liquid</li>

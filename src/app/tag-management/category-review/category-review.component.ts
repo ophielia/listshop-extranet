@@ -24,6 +24,8 @@ export class CategoryReviewComponent implements OnInit {
     assignCategory: FoodCategory;
 
     selectTagCriteria: TagSearchCriteria;
+    allCategoryList: IFoodCategory[];
+    browseAllCategories: boolean = false;
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
@@ -32,6 +34,7 @@ export class CategoryReviewComponent implements OnInit {
 
     ngOnInit(): void {
         this.refreshMappings();
+        this.retrieveAllCategories();
         this.sortBy = this.sortByListshop;
         this.selectTagCriteria = new TagSearchCriteria();
         this.selectTagCriteria.group_include = 'ONLY'
@@ -49,6 +52,15 @@ export class CategoryReviewComponent implements OnInit {
         });
     }
 
+    private retrieveAllCategories() {
+        const promise = this.tagService.getFoodCategories();
+        promise.then((data) => {
+            this.logger.debug("tag group data retrieved");
+            this.allCategoryList = data;
+        }).catch((error) => {
+            console.log("Promise rejected with " + JSON.stringify(error));
+        });
+    }
     toggleShowCategoryList() {
         this.showCategoryList = !this.showCategoryList;
     }
@@ -131,11 +143,10 @@ export class CategoryReviewComponent implements OnInit {
 
     selectCategoryForAssign(category: IFoodCategory) {
         this.assignCategory = category
-
+        this.browseAllCategories = false;
     }
 
     assignSelectedToCategory() {
-        console.log("ASSIGNING THE SELECTED TO THE CATEGORY");
         if (!this.selectedMappings || this.selectedMappings.length == 0) {
             this.showCategoryList = false;
             return;
@@ -148,4 +159,9 @@ export class CategoryReviewComponent implements OnInit {
         });
         this.showCategoryList = false;
     }
+
+    toggleBrowseCategories() {
+        this.browseAllCategories = !this.browseAllCategories;
+    }
+
 }

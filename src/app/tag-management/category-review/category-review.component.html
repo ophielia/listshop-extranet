@@ -71,29 +71,43 @@
                         <div class="ls-panel" *ngIf="showCategoryList">
                             <div class="cancel-link">
                                 <div (click)="toggleShowCategoryList()" class="cancel-link">
-                                 <img class="sm-button"
-                                      src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
-                                      alt="add">
-                             </div>
+                                    <img class="sm-button"
+                                         src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                         alt="add">
+                                </div>
                             </div>
                             <div *ngIf="!assignCategory" class="ls-add-tag">
 
                                 <app-category-select class="at-tag-select-style"
-                                                 [tagCriteria]=selectTagCriteria
-                                                 [allowAdd]="false"
-                                                 [showCancelButton]="false"
+                                                     [tagCriteria]=selectTagCriteria
+                                                     [allowAdd]="false"
+                                                     [showCancelButton]="false"
                                                      [placeholderText]="'Add whatever'"
                                                      (categorySelected)="selectCategoryForAssign($event)"></app-category-select>
 
 
-                             </div>
+                            </div>
                             <div *ngIf="assignCategory">
                                 {{assignCategory.food_category_name}}
-                             </div>
+                            </div>
+                            <div *ngIf="!assignCategory" style="width:100%; text-align:right"
+                                 (click)="toggleBrowseCategories()">Browse
+                            </div>
                             <div *ngIf="assignCategory" class="panel-action" (click)="assignSelectedToCategory()">
                                 Assign Selected to Category
-                             </div>
-                         </div>
+                            </div>
+
+                            <div *ngIf="browseAllCategories">
+                                <ul>
+                                    <ng-container *ngFor="let result of allCategoryList" class="result-text">
+                                        <li (dblclick)="selectCategoryForAssign(result)">{{result.food_category_name}}
+
+                                        </li>
+                                    </ng-container>
+                                </ul>
+
+                            </div>
+                        </div>
 
                         <ul>
                             <li *ngIf="!showCategoryList" (click)="toggleShowCategoryList()">Assign Category to
