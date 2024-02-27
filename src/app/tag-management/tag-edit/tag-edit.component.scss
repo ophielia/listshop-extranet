@@ -151,6 +151,46 @@
   }
 }
 
+.food-search-input {
+  width: 100%;
+}
+
+.search-link {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  float: left;
+  text-align: left;
+  background-color: #f7f7f7;
+  font-size: large;
+}
+
+.quick-pick-span {
+  background-color: lightgray;
+  padding: 5px;
+  padding-left: 15px;
+  margin: 5px;
+  border-radius: 10px;
+  padding-right: 15px;
+}
+
+.food-search-block {
+  text-transform: capitalize;
+  min-width: 175px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+
+  span {
+    float: right;
+    font-weight: normal;
+  }
+
+  .status-line {
+    font-weight: bold;
+  }
+}
+
 .ls-admin-sidebar-dark {
   background-color: $color_basic_orange;
   border-top-left-radius: 10px;

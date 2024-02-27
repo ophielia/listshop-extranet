@@ -25,6 +25,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     selectGroupCriteria: TagSearchCriteria;
     tagTypes: TagType[] = [TagType.Ingredient]
     tagNameEntry: string;
+    foodNameEntry: string;
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
@@ -133,5 +134,9 @@ export class TagEditComponent implements OnInit, OnDestroy {
                 this.showChangeTagName = false;
             });
         this.unsubscribe.push($sub);
+    }
+
+    hasAssignedFood() {
+        return this.tag.food_id != null;
     }
 }
