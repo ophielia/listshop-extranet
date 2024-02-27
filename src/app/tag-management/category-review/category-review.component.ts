@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {TagService} from "../../shared/services/tag.service";
 import {ICategoryMapping} from "../../model/category-mapping";
 import IncludeType from "../../model/include-type";
+import {FoodCategory, IFoodCategory} from "../../model/food-category";
+import {TagSearchCriteria} from "../../model/tag-search-criteria";
 
 @Component({
     selector: 'app-category-review',
@@ -11,13 +13,17 @@ import IncludeType from "../../model/include-type";
     styleUrls: ['./category-review.component.scss']
 })
 export class CategoryReviewComponent implements OnInit {
-    currentMappingList: ICategoryMapping[];
-    allMappingList: ICategoryMapping[];
+    currentMappingList: ICategoryMapping[] = [];
+    allMappingList: ICategoryMapping[] = [];
     private includeAssigned: IncludeType = IncludeType.Ignore
+    showCategoryList = false;
     private sortBy;
     private sortByListshop = "LS";
     private sortByFood = "FOOD";
-    private selectedMappings: ICategoryMapping[] = [];
+    selectedMappings: ICategoryMapping[] = [];
+    assignCategory: FoodCategory;
+
+    selectTagCriteria: TagSearchCriteria;
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
@@ -25,8 +31,10 @@ export class CategoryReviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.refreshMappings()
+        this.refreshMappings();
         this.sortBy = this.sortByListshop;
+        this.selectTagCriteria = new TagSearchCriteria();
+        this.selectTagCriteria.group_include = 'ONLY'
     }
 
     private refreshMappings() {
@@ -41,8 +49,8 @@ export class CategoryReviewComponent implements OnInit {
         });
     }
 
-    nameOrDashes(name: string) {
-        return name;
+    toggleShowCategoryList() {
+        this.showCategoryList = !this.showCategoryList;
     }
 
     isSortByListshop() {
@@ -121,4 +129,23 @@ export class CategoryReviewComponent implements OnInit {
         }
     }
 
+    selectCategoryForAssign(category: IFoodCategory) {
+        this.assignCategory = category
+
+    }
+
+    assignSelectedToCategory() {
+        console.log("ASSIGNING THE SELECTED TO THE CATEGORY");
+        if (!this.selectedMappings || this.selectedMappings.length == 0) {
+            this.showCategoryList = false;
+            return;
+        }
+        let category_id = this.assignCategory.food_category_id;
+        let tagIds = this.selectedMappings.map(t => t.tag_id);
+        this.tagService.applyCatagoryMapping(tagIds, category_id).subscribe(r => {
+            this.refreshMappings();
+            this.assignCategory = null;
+        });
+        this.showCategoryList = false;
+    }
 }

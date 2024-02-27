@@ -27,7 +27,7 @@
                     <ng-container *ngFor="let m of currentMappingList">
                         <tr>
                             <td><span (click)="selectMapping(m)">{{m.tag_name}}</span></td>
-                            <td>{{nameOrDashes(m.food_category_name)}}</td>
+                            <td>{{m.food_category_name}}</td>
                         </tr>
                     </ng-container>
                 </table>
@@ -67,35 +67,38 @@
                 <div class="ls-admin-sidebar-dark">
                     <div>
                         <div class="sidebar-dark-title">Actions</div>
-                        <!--
-                         <div class="ls-panel" *ngIf="showChangeParent">
-                             <div (click)="toggleShowChangeParent()" class="cancel-link">
+
+                        <div class="ls-panel" *ngIf="showCategoryList">
+                            <div class="cancel-link">
+                                <div (click)="toggleShowCategoryList()" class="cancel-link">
                                  <img class="sm-button"
                                       src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
                                       alt="add">
                              </div>
-                             <div *ngIf="!assignTag" class="ls-add-tag">
+                            </div>
+                            <div *ngIf="!assignCategory" class="ls-add-tag">
 
-                                 <app-tag-select class="at-tag-select-style"
+                                <app-category-select class="at-tag-select-style"
                                                  [tagCriteria]=selectTagCriteria
                                                  [allowAdd]="false"
                                                  [showCancelButton]="false"
-                                                 [placeholderText]="'Add ' + tagTypes[0].toString()"
-                                                 (tagSelected)="selectTagForAssign($event)"></app-tag-select>
+                                                     [placeholderText]="'Add whatever'"
+                                                     (categorySelected)="selectCategoryForAssign($event)"></app-category-select>
+
 
                              </div>
-                             <div *ngIf="assignTag">
-                                 {{assignTag.name}}
+                            <div *ngIf="assignCategory">
+                                {{assignCategory.food_category_name}}
                              </div>
-                             <div *ngIf="assignTag" class="panel-action" (click)="assignSelectedToParent()">
-                                 Assign Selected to Parent
+                            <div *ngIf="assignCategory" class="panel-action" (click)="assignSelectedToCategory()">
+                                Assign Selected to Category
                              </div>
-
                          </div>
-                        -->
 
                         <ul>
-                            <li>Assign Category to Selected</li>
+                            <li *ngIf="!showCategoryList" (click)="toggleShowCategoryList()">Assign Category to
+                                Selected
+                            </li>
                         </ul>
 
 

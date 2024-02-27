@@ -13,6 +13,7 @@ import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import {TagTreeTag} from "../../model/tag-tree-tag";
 import {ITagFullInfo} from "../../model/tag-fullinfo";
 import {ICategoryMapping} from "../../model/category-mapping";
+import {IFoodCategory} from "../../model/food-category";
 
 
 @Injectable()
@@ -90,6 +91,11 @@ export class TagService {
     static mapCategoryMappingsClient(object: Object): ICategoryMapping[] {
         let embeddedObj = object["_embedded"];
         return embeddedObj["category_mapping_resource_list"].map(MappingUtils.toCategoryMapping);
+    }
+
+    static mapFoodCategoriesClient(object: Object): IFoodCategory[] {
+        let embeddedObj = object["_embedded"];
+        return embeddedObj["category_resource_list"].map(MappingUtils.toFoodCategory);
     }
 
     static mapTagClient(object: Object): ITag {
@@ -215,6 +221,32 @@ export class TagService {
                 }),
                 catchError(TagService.handleError))
             .toPromise();
+    }
+
+    getFoodCategories() {
+        var url = `${this.adminTagUrl}/food/category`;
+        return this.httpClient
+            .get(`${url}`)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapFoodCategoriesClient(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+
+    }
+
+    applyCatagoryMapping(tagIds: string[], foodCategoryId: string) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.AssignFoodCategory,
+            assign_id: foodCategoryId
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+
     }
 }
 

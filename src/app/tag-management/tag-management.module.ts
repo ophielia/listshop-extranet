@@ -13,11 +13,13 @@ import {TagToolComponent} from './tag-tool/tag-tool.component';
 import {TagStatusSelectComponent} from './tag-status-select/tag-status-select.component';
 import {TagEditComponent} from './tag-edit/tag-edit.component';
 import {CategoryReviewComponent} from './category-review/category-review.component';
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {CategorySelectComponent} from './category-select/category-select.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent],
+        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent, CategorySelectComponent],
     exports: [
     ],
     imports: [
@@ -26,7 +28,8 @@ import {CategoryReviewComponent} from './category-review/category-review.compone
         RouterModule,
         TagManagementRoutingModule,
         FormsModule,
-        InputSwitchModule
+        InputSwitchModule,
+        AutoCompleteModule
     ]
 })
 export class TagManagementModule {
