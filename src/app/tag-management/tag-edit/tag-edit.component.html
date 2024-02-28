@@ -55,8 +55,11 @@
                 <!--main toolbar end -->
                 <!--add food toolbar start-->
                 <div class="info-box" *ngIf="!hasAssignedFood()">
+                    <app-search-term-select [startTag]="tag.name"
+                                            (searchTermSelected)="doFoodSearch($event)">
 
-                    <div class="container dish-toolbar">
+                    </app-search-term-select>
+                    <!-- <div class="container dish-toolbar">
                         <div class="row">
                             <div class="food-search-block">
                                 <div class="ls-add-tag">
@@ -81,12 +84,18 @@
                         </div>
 
 
-                    </div>
+                    </div>-->
 
                 </div>
                 <!--add food toolbar end -->
                 <!-- content -->
-                <div class="loading-box">content</div>
+                <div class="loading-box">
+                    <ul>
+                        <ng-container *ngFor="let food of foodSuggestions">
+                            <li>{{food.name}}</li>
+                        </ng-container>
+                    </ul>
+                </div>
                 <!-- end content -->
             </div>
             <div class="col-md-4 col-lg-4">

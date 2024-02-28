@@ -8,6 +8,7 @@ import {ITagFullInfo, TagFullInfo} from "../../model/tag-fullinfo";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import TagType from "../../model/tag-type";
 import {TagTreeTag} from "../../model/tag-tree-tag";
+import {IFood} from "../../model/food";
 
 @Component({
     selector: 'app-tag-edit',
@@ -26,6 +27,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     tagTypes: TagType[] = [TagType.Ingredient]
     tagNameEntry: string;
     foodNameEntry: string;
+    private foodSuggestions: IFood[];
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
@@ -138,5 +140,15 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     hasAssignedFood() {
         return this.tag.food_id != null;
+    }
+
+    doFoodSearch(searchTerm: string) {
+        /*
+        @GetMapping(value = "/{tagId}/food/suggestions")*/
+        let promise = this.tagService.getFoodSuggestionsForTag(this.tag, searchTerm);
+        promise.then(data => {
+            this.foodSuggestions = data;
+        });
+        console.log("ready to search " + searchTerm);
     }
 }

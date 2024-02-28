@@ -14,6 +14,7 @@ import {TagTreeTag} from "../../model/tag-tree-tag";
 import {ITagFullInfo} from "../../model/tag-fullinfo";
 import {ICategoryMapping} from "../../model/category-mapping";
 import {IFoodCategory} from "../../model/food-category";
+import {IFood} from "../../model/food";
 
 
 @Injectable()
@@ -96,6 +97,11 @@ export class TagService {
     static mapFoodCategoriesClient(object: Object): IFoodCategory[] {
         let embeddedObj = object["_embedded"];
         return embeddedObj["category_resource_list"].map(MappingUtils.toFoodCategory);
+    }
+
+    static mapFoodSuggestions(object: Object): IFood[] {
+        let embeddedObj = object["_embedded"];
+        return embeddedObj["food_resource_list"].map(MappingUtils.toFood);
     }
 
     static mapTagClient(object: Object): ITag {
@@ -247,6 +253,21 @@ export class TagService {
             .put(this.adminTagUrl,
                 JSON.stringify(tagOperationPut), {observe: 'response'});
 
+    }
+
+    getFoodSuggestionsForTag(tag: ITagFullInfo, searchTerm: string) {
+        var searchParam = "";
+        if (tag.name != searchTerm) {
+            searchParam = `?searchTerm=${encodeURIComponent(searchTerm)}`;
+        }
+        var url = `${this.adminTagUrl}/${tag.tag_id}/food/suggestions${searchParam}`;
+        return this.httpClient
+            .get(`${url}`)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapFoodSuggestions(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
     }
 }
 

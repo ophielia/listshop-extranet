@@ -15,11 +15,12 @@ import {TagEditComponent} from './tag-edit/tag-edit.component';
 import {CategoryReviewComponent} from './category-review/category-review.component';
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {CategorySelectComponent} from './category-select/category-select.component';
+import {SearchTermSelectComponent} from './search-term-select/search-term-select.component';
 
 
 @NgModule({
     declarations: [TagManagementComponent,
-        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent, CategorySelectComponent],
+        TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent, CategorySelectComponent, SearchTermSelectComponent],
     exports: [
     ],
     imports: [
