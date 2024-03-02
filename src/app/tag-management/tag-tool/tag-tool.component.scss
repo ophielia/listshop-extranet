@@ -212,6 +212,32 @@
   }
 }
 
+.cancel-button {
+  text-align: center;
+  background-color: #e67d21;
+  color: white;
+  width: 40px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.cancel-button-spacer {
+  width: 90%;
+  display: inline-block;
+}
+
+.submit-button {
+  text-align: center;
+  float: right;
+  background-color: $color_basic_orange;
+  border-radius: 4px;
+  color: white;
+  padding: 8px;
+  display: inline-block;
+  float: right;
+  margin-left: 8px;
+}
+
 .ls-panel {
   background-color: #ffffff8f;
   border-width: 1px;
@@ -285,4 +311,10 @@
     display: block;
     padding: 0.5rem 1rem;
   }
+}
+
+.search-result-info {
+  background-color: #f7f7f7;
+  padding: 15px 30px 15px 30px;
+  margin: 5px 20px 30px 20px;
 }

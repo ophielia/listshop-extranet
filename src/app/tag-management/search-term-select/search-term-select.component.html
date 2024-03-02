@@ -1,0 +1,28 @@
+<div class="container dish-toolbar">
+    <div class="row">
+        <div class="food-search-block">
+            <div class="ls-add-tag">
+                <input type="text" class="form-control ls-inline-input food-search-input"
+                       [(ngModel)]="foodNameEntry"
+                       (keyup.enter)="readyToSearch()"
+                />
+                <ng-container *ngFor="let suggestion of suggestions">
+                <span class="quick-pick-span" (click)="addOrRemoveFromTerm(suggestion)"
+                      (dblclick)="replaceTerm(suggestion)">{{suggestion}}</span></ng-container>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="food-search-block">
+            <span class="search-link" style="float:left" (click)="readyToSearch()">
+                                Search
+                            </span>
+        </div>
+
+    </div>
+
+
+</div>

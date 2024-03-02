@@ -15,6 +15,7 @@ import {TagTreeTag} from "../../model/tag-tree-tag";
 import IncludeType from "../../model/include-type";
 import TagStatusType from "../../model/tag-status-type";
 import {IFoodCategory} from "../../model/food-category";
+import {IFood} from "../../model/food";
 
 @Component({
     selector: 'app-tag-tool',
@@ -69,6 +70,9 @@ export class TagToolComponent implements OnInit, OnDestroy {
     assignCategory: IFoodCategory;
     browseAllCategories: boolean;
     allCategoryList: IFoodCategory[];
+    isFoodSearch: boolean;
+    foodSuggestions: IFood[] = [];
+    foodToAssign: IFood;
 
 
     constructor(private logger: NGXLogger,
@@ -426,5 +430,50 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
     toggleShowCategory() {
         this.showCategoryList = !this.showCategoryList;
+    }
+
+    showFoodSearch(show: boolean) {
+        if (this.selectedTags.length == 0) {
+            return;
+        }
+        this.isFoodSearch = show;
+    }
+
+    doFoodSearch(searchTerm: string) {
+        if (!searchTerm || searchTerm.trim().length == 0) {
+            return;
+        }
+        let promise = this.tagService.getFoodSuggestionsForTerm(searchTerm);
+        promise.then(data => {
+            this.foodSuggestions = data;
+        });
+        console.log("ready to search " + searchTerm);
+    }
+
+    cancelAssignFood() {
+        this.isFoodSearch = false;
+    }
+
+    selectFoodAssignment(food: IFood) {
+        this.foodToAssign = food;
+    }
+
+    clearFood() {
+        this.foodToAssign = null;
+    }
+
+    doAssignFoodToTag() {
+        if (!this.selectedTags || this.selectedTags.length == 0) {
+            return;
+        }
+        let tagIds = this.selectedTags.map(t => t.tag_id);
+        this.tagService.assignFoodToTags(tagIds, this.foodToAssign.food_id).subscribe(r => {
+            this.retrieveTagList();
+            this.foodToAssign = null;
+            this.selectedTags = [];
+            this.isFoodSearch = false;
+        });
+        this.showCategoryList = false;
+        this.selectedTags = [];
     }
 }

@@ -255,6 +255,7 @@ export class TagService {
 
     }
 
+
     getFoodSuggestionsForTag(tag: ITagFullInfo, searchTerm: string) {
         var searchParam = "";
         if (tag.name != searchTerm) {
@@ -270,12 +271,39 @@ export class TagService {
             .toPromise();
     }
 
+    getFoodSuggestionsForTerm(searchTerm: string) {
+        var searchParam = `?searchTerm=${encodeURIComponent(searchTerm)}`;
+        var url = `${this.adminTagUrl}/food/suggestions${searchParam}`;
+        return this.httpClient
+            .get(`${url}`)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return TagService.mapFoodSuggestions(response);
+                }),
+                catchError(TagService.handleError))
+            .toPromise();
+    }
+
     assignFoodToTag(food: IFood, tagId: string) {
         var url = `${this.adminTagUrl}/${tagId}/food/${food.food_id}`;
         return this.httpClient
             .post(`${url}`, null)
             .toPromise();
     }
+
+    assignFoodToTags(tagIds: string[], foodId: string) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.AssignFood,
+            assign_id: foodId
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+
+    }
+
 }
 
 

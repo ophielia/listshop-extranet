@@ -103,9 +103,55 @@
 <!--content start-->
 <section class="admin-section">
     <div class="container">
-        <div class="row ">
-            <!-- results -->
-            <div class="col-md-8 col-lg-8 loading-box">
+        <div class="row">
+            <!-- food search results -->
+            <div *ngIf="isFoodSearch" class="col-md-8 col-lg-8 loading-box">
+                <div>
+                    <div class="cancel-button-spacer"></div>
+                    <div (click)="cancelAssignFood()" class="cancel-button">X</div>
+                </div>
+                <div class="info-box" *ngIf="isFoodSearch">
+                    <app-search-term-select [startTag]=""
+                                            (searchTermSelected)="doFoodSearch($event)">
+
+                    </app-search-term-select>
+
+
+                </div>
+                <div *ngIf="foodToAssign != null"> <!--  class="info-box" -->
+                    <div>
+                        <div class="search-result-info">
+                            <div>{{foodToAssign.name}}</div>
+                            <ng-container *ngIf="foodToAssign.factors != null">
+                                <div *ngFor="let sample of foodToAssign.factors.sample">>
+                                    {{sample.fromAmount}}
+                                    {{sample.fromUnit}}
+                                    {{sample.toAmount}}
+                                    {{sample.toUnit}}
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="submit-button" (click)="clearFood()">Clear</div>
+                        <div class="submit-button" (click)="doAssignFoodToTag()">Assign Food to Selected</div>
+                    </div>
+
+                </div>
+                <div *ngIf="foodSuggestions.length == 0">
+                    no results
+                </div>
+                <div *ngIf="foodSuggestions.length > 0">
+                    <ul>
+                        <ng-container *ngFor="let food of foodSuggestions">
+                            <li (click)="selectFoodAssignment(food)">{{food.name}}</li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- food search  -->
+            <!-- tag search results -->
+            <div *ngIf="!isFoodSearch" class="col-md-8 col-lg-8 loading-box">
                 <app-tags-as-list-component *ngIf="isListDisplay()"
                                             [tagList]="tagList"
                                             [userId]="tagSearchCriteria.user_id"
@@ -121,6 +167,8 @@
 
                 </app-tags-as-grid-component>
             </div>
+            <!-- tag search  -->
+            <!-- admin bar -->
             <div class="col-md-4 col-lg-4">
                 <div class="ls-admin-sidebar-dark">
                     <div>
@@ -275,6 +323,7 @@
                             <li (click)="createStandard()">Create Standard For Selected</li>
                             <li (click)="markSelectedAsSolid()">Set Selected To Solid</li>
                             <li (click)="markSelectedAsLiquid()">Set Selected To Liquid</li>
+                            <li (click)="showFoodSearch(true)">Assign Food To Selected</li>
                             <li (click)="markSelectedAsReviewed()">Verify Tags</li>
                         </ul>
 
@@ -295,7 +344,7 @@
                     </div>
                 </div>
             </div>
-            <!-- results -->
+            <!-- admin bar -->
         </div>
     </div>
 </section>
