@@ -269,6 +269,13 @@ export class TagService {
                 catchError(TagService.handleError))
             .toPromise();
     }
+
+    assignFoodToTag(food: IFood, tagId: string) {
+        var url = `${this.adminTagUrl}/${tagId}/food/${food.food_id}`;
+        return this.httpClient
+            .post(`${url}`, null)
+            .toPromise();
+    }
 }
 
 

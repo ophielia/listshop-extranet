@@ -26,8 +26,10 @@ export class TagEditComponent implements OnInit, OnDestroy {
     selectGroupCriteria: TagSearchCriteria;
     tagTypes: TagType[] = [TagType.Ingredient]
     tagNameEntry: string;
-    foodNameEntry: string;
-    private foodSuggestions: IFood[];
+    foodSuggestions: IFood[];
+    selectedTags: any;
+    foodToAssign: IFood;
+    private isEditFood: boolean = false;
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
@@ -143,12 +145,47 @@ export class TagEditComponent implements OnInit, OnDestroy {
     }
 
     doFoodSearch(searchTerm: string) {
-        /*
-        @GetMapping(value = "/{tagId}/food/suggestions")*/
         let promise = this.tagService.getFoodSuggestionsForTag(this.tag, searchTerm);
         promise.then(data => {
             this.foodSuggestions = data;
         });
         console.log("ready to search " + searchTerm);
     }
+
+    unSelectTag(tagid: any) {
+        this.selectedTags = this.selectedTags.filter(t => t.tag_id != tagid);
+    }
+
+
+    selectFoodAssignment(food: IFood) {
+        this.foodToAssign = food;
+    }
+
+    showFoodSearch() {
+        return this.foodToAssign == null && (this.isEditFood || !this.hasAssignedFood());
+    }
+
+    showAssignedFood() {
+        return !this.isEditFood && this.hasAssignedFood();
+    }
+
+    doAssignFoodToTag() {
+        let promise = this.tagService.assignFoodToTag(this.foodToAssign, this.tagId);
+        promise.then(data => {
+            this.refreshTag();
+            this.foodToAssign = null;
+            this.isEditFood = false;
+        });
+    }
+
+    clearFood() {
+        this.foodToAssign = null;
+        this.isEditFood = false;
+        this.foodSuggestions = [];
+    }
+
+    editFood() {
+        this.isEditFood = true;
+    }
 }
+

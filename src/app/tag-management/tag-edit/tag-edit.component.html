@@ -51,50 +51,65 @@
 
                     </div>
 
+
                 </div>
                 <!--main toolbar end -->
                 <!--add food toolbar start-->
-                <div class="info-box" *ngIf="!hasAssignedFood()">
+                <div class="info-box" *ngIf="showFoodSearch()">
                     <app-search-term-select [startTag]="tag.name"
                                             (searchTermSelected)="doFoodSearch($event)">
 
                     </app-search-term-select>
-                    <!-- <div class="container dish-toolbar">
-                        <div class="row">
-                            <div class="food-search-block">
-                                <div class="ls-add-tag">
-                                    <input type="text" class="form-control ls-inline-input food-search-input"
-                                           [(ngModel)]="foodNameEntry"
-                                    />
-                                    <span class="quick-pick-span">suggestion1</span>
-                                    <span class="quick-pick-span">suggestion2</span>
-                                    <span class="quick-pick-span">suggestion3</span>
+
+
+                </div>
+                <div class="info-box" *ngIf="foodToAssign != null">
+                    <div>
+                        <div class="search-result-info">
+                            <div>{{foodToAssign.name}}</div>
+                            <ng-container *ngIf="foodToAssign.factors != null">
+                                <div *ngFor="let sample of foodToAssign.factors.sample">>
+                                    {{sample.fromAmount}}
+                                    {{sample.fromUnit}}
+                                    {{sample.toAmount}}
+                                    {{sample.toUnit}}
                                 </div>
-
-
-                            </div>
-
+                            </ng-container>
                         </div>
-                        <div class="row">
-                            <div class="food-search-block"><span class="search-link" style="float:left">
-                                Search
-                            </span>
-                            </div>
+                        <div class="submit-button" (click)="clearFood()">Clear</div>
+                        <div class="submit-button" (click)="doAssignFoodToTag()">Assign Food</div>
+                    </div>
+                </div>
+                <div *ngIf="showAssignedFood()" class="info-box" style="min-height:70px">
+                    <div><span>{{tag.food_name}}</span>
+                        <div class="submit-button" (click)="editFood()">Change</div>
+                    </div>
 
-                        </div>
-
-
-                    </div>-->
 
                 </div>
                 <!--add food toolbar end -->
                 <!-- content -->
-                <div class="loading-box">
+                <div *ngIf="!showAssignedFood()" class="loading-box">
                     <ul>
                         <ng-container *ngFor="let food of foodSuggestions">
-                            <li>{{food.name}}</li>
+                            <li (click)="selectFoodAssignment(food)">{{food.name}}</li>
                         </ng-container>
                     </ul>
+                </div>
+                <div *ngIf="showAssignedFood()" class="loading-box">
+                    <div>
+                        <table class="conversion-grid">
+
+
+                            <tr *ngFor="let sample of tag.samples.sample">
+                                <td>{{sample.fromAmount}}</td>
+                                <td>{{sample.fromUnit}}</td>
+                                <td>=></td>
+                                <td>{{sample.toAmount}}</td>
+                                <td>{{sample.toUnit}}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <!-- end content -->
             </div>
@@ -150,12 +165,24 @@
                             <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
                             <li (click)="createStandard()">Create Standard For Selected</li>
-                            <li (click)="setToSolid()">Set Selected To Solid</li>
-                            <li (click)="setToLiquid()">Set Selected To Liquid</li>
-                            <li>Assign Food</li>
-                            <li (click)="setToVerified()">Verify Tags</li>
+                            <li (click)="setToSolid()">Set Tag To Solid</li>
+                            <li (click)="setToLiquid()">Set Tag To Liquid</li>
+                            <li (click)="setToVerified()">Verify Tag</li>
                         </ul>
 
+
+                    </div>
+                </div>
+                <div class="ls-admin-sidebar-light">
+                    <div>
+                        <div class="sidebar-title">SELECTED</div>
+
+                        <ul>
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (dblclick)="unSelectTag(result.tag_id);">{{result.name}} ({{result.tag_id}}
+                                    )</span>
+                            </li>
+                        </ul>
 
                     </div>
                 </div>

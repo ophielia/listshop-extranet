@@ -15,6 +15,8 @@ import {ITagFullInfo} from "./tag-fullinfo";
 import {ICategoryMapping} from "./category-mapping";
 import {IFoodCategory} from "./food-category";
 import {IFood} from "./food";
+import {IConversionSample} from "./conversion-sample";
+import {ConversionGrid, IConversionGrid} from "./conversion-grid";
 
 
 export default class MappingUtils {
@@ -238,15 +240,40 @@ export default class MappingUtils {
     }
 
     private static _toFood(jsonResult: any): IFood {
-
+        let grid: ConversionGrid = null;
+        if (jsonResult.conversion_grid != null) {
+            grid = this._toConversionGrid(jsonResult.conversion_grid);
+        }
         return <IFood>({
-            food_id: jsonResult.food_id,
+            food_id: jsonResult.id,
             category_id: jsonResult.category_id,
-            name: jsonResult.name
+            name: jsonResult.name,
+            factors: grid
+        })
+    }
+
+    private static _toConversionGrid(jsonResult: any): IConversionGrid {
+
+        return <IConversionGrid>({
+            sample: jsonResult.samples.map(MappingUtils._toConversionSample)
+        })
+    }
+
+    private static _toConversionSample(jsonResult: any): IConversionSample {
+
+        return <IConversionSample>({
+            fromAmount: jsonResult.from_amount,
+            fromUnit: jsonResult.from_unit,
+            toAmount: jsonResult.to_amount,
+            toUnit: jsonResult.to_unit
         })
     }
 
     private static _toTagFullInfo(jsonResult: any): ITagFullInfo {
+        let grid: ConversionGrid = null;
+        if (jsonResult.conversion_grid != null) {
+            grid = this._toConversionGrid(jsonResult.conversion_grid);
+        }
         return <ITagFullInfo>({
             tag_id: jsonResult.tag_id,
             name: jsonResult.name,
@@ -260,8 +287,8 @@ export default class MappingUtils {
             food_id: jsonResult.food_id,
             food_name: jsonResult.food_name,
             user_id: jsonResult.user_id,
-            status: jsonResult.status_display
-
+            status: jsonResult.status_display,
+            samples: grid
         })
     }
 

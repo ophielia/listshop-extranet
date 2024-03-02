@@ -1,3 +1,5 @@
+import {ConversionGrid} from "./conversion-grid";
+
 export interface ITagFullInfo {
     tag_id: string;
     name: string;
@@ -12,7 +14,7 @@ export interface ITagFullInfo {
     food_name: string;
     user_id: string;
     status: string;
-    // conversionGrid
+    samples: ConversionGrid;
 }
 
 export class TagFullInfo implements ITagFullInfo {
@@ -32,6 +34,6 @@ export class TagFullInfo implements ITagFullInfo {
     food_name: string;
     user_id: string;
     status: string;
-    // conversionGrid
+    samples: ConversionGrid;
 
 }
