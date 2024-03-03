@@ -462,7 +462,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
         this.foodToAssign = null;
     }
 
-    doAssignFoodToTag() {
+    doAssignFoodToSelectedTags() {
         if (!this.selectedTags || this.selectedTags.length == 0) {
             return;
         }

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {NGXLogger} from "ngx-logger";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TagService} from "../../shared/services/tag.service";
 import {ITag} from "../../model/tag";
 import {ITagFullInfo, TagFullInfo} from "../../model/tag-fullinfo";
@@ -23,8 +23,8 @@ export class TagEditComponent implements OnInit, OnDestroy {
     showChangeParent: boolean;
     showChangeTagName: boolean;
     assignTag: ITag;
-    selectGroupCriteria: TagSearchCriteria;
     tagTypes: TagType[] = [TagType.Ingredient]
+    selectGroupCriteria: TagSearchCriteria;
     tagNameEntry: string;
     foodSuggestions: IFood[];
     selectedTags: any;
@@ -33,6 +33,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
+                private router: Router,
                 private tagService: TagService
     ) {
     }
@@ -65,6 +66,11 @@ export class TagEditComponent implements OnInit, OnDestroy {
             return false;
         }
         return value;
+    }
+
+    goToCopyTag() {
+        let id = this.tag.tag_id;
+        this.router.navigate(['/manage/tags/copy', id]);
     }
 
     toggleShowChangeParent() {

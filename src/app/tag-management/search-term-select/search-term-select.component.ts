@@ -26,7 +26,7 @@ export class SearchTermSelectComponent implements OnInit {
   }
 
   fillSuggestionsFromStartTag(text: string) {
-    if (text.indexOf(" ") >= 0) {
+    if (text && text.indexOf(" ") >= 0) {
       this.suggestions = [].concat([text], text.split(" "));
     }
   }

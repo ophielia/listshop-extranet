@@ -1,0 +1,122 @@
+<app-tag-header></app-tag-header>
+<!--title start-->
+<div class="titlebar-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-text-center d-align-left">
+                <h2 class="title">
+                    <span>Copy Tag - {{tag.name}}</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!--title end -->
+
+
+<!--content start-->
+<section class="admin-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-8 col-lg-8">
+                <!--main toolbar start-->
+                <div class="info-box">
+
+                    <div class="container dish-toolbar">
+                        <div class="row">
+                            <div class="status-block">
+                                <div class="status-line">id: <span>{{tag.tag_id}}</span></div>
+                                <div class="status-line">user id: <span>{{nullOrValue(tag.user_id)}}</span></div>
+                            </div>
+
+                            <div class="status-block">
+                                <div class="status-line">Tag Type: <span>{{tag.tag_type}}</span></div>
+                                <div class="status-line">parent id: <span>{{nullOrValue(tag.parent_id)}}</span></div>
+                                <div class="status-line">parent name: <span>{{nullOrValue(tag.parent_name)}}</span>
+                                </div>
+                            </div>
+                            <div class="status-block">
+                                <div class="status-line">Group Tag: <span>{{nullOrBooleanValue(tag.is_group)}}</span>
+                                </div>
+                                <div class="status-line">Liquid Tag: <span>{{nullOrBooleanValue(tag.is_liquid)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="status-block" style="text-align:right; width: 100%">
+                                <div class="status-line">status: <span>{{nullOrValue(tag.status)}}</span></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <!--main toolbar end -->
+
+                <!-- food display -->
+                <div class="info-box" *ngIf="tag.food_name != null">
+                    <div>
+                        <div class="search-result-info">
+                            <div>{{tag.food_name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- food display end-->
+
+                <!--add food toolbar start-->
+                <div class="info-box">
+                    <app-search-term-select [startTag]="tag.name"
+                                            (searchTermSelected)="doTagSearch($event)">
+
+                    </app-search-term-select>
+
+
+                </div>
+                <!--add food toolbar end -->
+
+                <!-- content -->
+                <div class="loading-box">
+                    <ul>
+                        <ng-container *ngFor="let result of tagList">
+                            <li (dblclick)="selectTag(result)">{{result.name}}</li>
+                        </ng-container>
+                    </ul>
+                </div>
+                <!-- end content -->
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <div class="ls-admin-sidebar-dark">
+                    <div>
+                        <div class="sidebar-dark-title">Actions</div>
+
+                        <ul>
+                            <li (click)="goToEditTag()">Back to Edit Tag</li>
+                            <li (click)="copyLiquidForSelected()">Copy Liquid/Solid</li>
+                            <li (click)="copyFoodForSelected()">Copy Food</li>
+
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="ls-admin-sidebar-light">
+                    <div>
+                        <div class="sidebar-title">SELECTED</div>
+
+                        <ul>
+                            <li *ngFor="let result of selectedTags" class="result-text">
+                                <span (dblclick)="unSelectTag(result.tag_id);">{{result.name}} ({{result.tag_id}}
+                                    )</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--content End-->
