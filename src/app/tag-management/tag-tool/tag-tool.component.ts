@@ -16,6 +16,7 @@ import IncludeType from "../../model/include-type";
 import TagStatusType from "../../model/tag-status-type";
 import {IFoodCategory} from "../../model/food-category";
 import {IFood} from "../../model/food";
+import {TagSearchContext} from "../tag-search-context/tag-search-context";
 
 @Component({
     selector: 'app-tag-tool',
@@ -24,8 +25,6 @@ import {IFood} from "../../model/food";
 })
 export class TagToolComponent implements OnInit, OnDestroy {
     unsubscribe: Subscription[] = [];
-    public displayType: DisplayType = DisplayType.List;
-    tagSearchCriteria: TagSearchCriteria;
     tagList: ITag[] = [];
     selectGroupType: GroupType = GroupType.GroupsOnly;
 
@@ -34,8 +33,6 @@ export class TagToolComponent implements OnInit, OnDestroy {
     allTagTypes: TagType[];
     searchFragment: string;
     includeGroups: boolean = false;
-    includeConstant: IncludeType = IncludeType.Include;
-    ignoreConstant: IncludeType = IncludeType.Ignore;
 
     verifyConstant: string = TagStatusType.Checked;
     foodConstant: string = TagStatusType.Food;
@@ -78,6 +75,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     constructor(private logger: NGXLogger,
                 private tagService: TagService,
                 private router: Router,
+                private context: TagSearchContext,
                 private tagTreeService: TagTreeService,
                 private userService: UserService
     ) {
@@ -91,11 +89,11 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        //this.tagTreeService.refreshTagTree(this.userId);
-        this.tagSearchCriteria = new TagSearchCriteria();
         this.selectTagCriteria = new TagSearchCriteria();
         this.selectTagCriteria.group_include = 'ONLY';
         this.selectTagCriteria.tag_types = TagType.listAll();
+        this.tagUserIdFilter = this.context.tagSearchCriteria.user_id;
+        this.searchFragment = this.context.tagSearchCriteria.text_fragment;
         this.retrieveTagList();
         this.retrieveUserList();
         this.retrieveAllCategories();
@@ -106,8 +104,8 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
 
     retrieveTagList() {
-        console.log("tag search criteria - " + this.tagSearchCriteria);
-        const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
+        console.log("tag search criteria - " + this.context.tagSearchCriteria);
+        const promise = this.tagService.getTagListForCriteria(this.context.tagSearchCriteria);
         promise.then((data) => {
             this.logger.debug("tag data retrieved making list");
             this.tagList = data;
@@ -151,15 +149,15 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
 
     searchTags() {
-        this.tagSearchCriteria.text_fragment = this.searchFragment;
+        this.context.tagSearchCriteria.text_fragment = this.searchFragment;
         this.retrieveTagList();
     }
 
     filterTagsForUser() {
         if (this.tagUserIdFilter == '-1') {
-            this.tagSearchCriteria.user_id = null;
+            this.context.tagSearchCriteria.user_id = null;
         }
-        this.tagSearchCriteria.user_id = this.tagUserIdFilter;
+        this.context.tagSearchCriteria.user_id = this.tagUserIdFilter;
         this.retrieveTagList();
     }
 
@@ -217,8 +215,8 @@ export class TagToolComponent implements OnInit, OnDestroy {
     }
 
     changeTagType(type: TagType) {
-        this.tagSearchCriteria.tag_types = [type];
-        this.tagSearchCriteria.text_fragment = null;
+        this.context.tagSearchCriteria.tag_types = [type];
+        this.context.tagSearchCriteria.text_fragment = null;
         this.searchFragment = null;
 
         this.retrieveTagList();
@@ -311,28 +309,28 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
 
     isListDisplay() {
-        return this.displayType == DisplayType.List;
+        return this.context.displayType == DisplayType.List;
     }
 
     isGridDisplay() {
-        return this.displayType == DisplayType.Grid;
+        return this.context.displayType == DisplayType.Grid;
     }
 
     setListDisplayStyle() {
-        this.displayType = DisplayType.List;
-        this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
+        this.context.displayType = DisplayType.List;
+        this.context.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
         this.retrieveTagList();
     }
 
     setGridDisplayStyle() {
-        this.displayType = DisplayType.Grid;
-        this.tagSearchCriteria.group_include = 'EXCLUDE';
+        this.context.displayType = DisplayType.Grid;
+        this.context.tagSearchCriteria.group_include = 'EXCLUDE';
         this.retrieveTagList();
     }
 
     toggleGroups() {
         this.includeGroups = !this.includeGroups;
-        this.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
+        this.context.tagSearchCriteria.group_include = this.includeGroups ? 'IGNORE' : 'EXCLUDE';
         this.retrieveTagList();
     }
 
@@ -358,28 +356,59 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
     }
 
+    startState(statusType: string): IncludeType {
+        if (this.statusIsIncluded(statusType)) {
+            return IncludeType.Include;
+        } else if (this.statusIsExcluded(statusType)) {
+            return IncludeType.Exclude;
+
+        }
+        return IncludeType.Ignore;
+
+    }
+
+    private statusIsExcluded(status: string): boolean {
+        if (!this.context.tagSearchCriteria.excluded_statuses) {
+            return false;
+        }
+        if (this.context.tagSearchCriteria.excluded_statuses.indexOf(status) >= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private statusIsIncluded(status: string): boolean {
+        if (!this.context.tagSearchCriteria.included_statuses) {
+            return false;
+        }
+        if (this.context.tagSearchCriteria.included_statuses.indexOf(status) >= 0) {
+            return true;
+        }
+        return false;
+    }
+
     private addStatusToInclude(status: string) {
-        let list = this.tagSearchCriteria.included_statuses;
+        let list = this.context.tagSearchCriteria.included_statuses;
         let resultList = this.addStatusToList(status, list);
-        this.tagSearchCriteria.included_statuses = resultList;
+        this.context.tagSearchCriteria.included_statuses = resultList;
     }
 
     private removeStatusFromExclude(status: string) {
-        let list = this.tagSearchCriteria.excluded_statuses;
+        let list = this.context.tagSearchCriteria.excluded_statuses;
         let resultList = this.removeStatusFromList(status, list);
-        this.tagSearchCriteria.excluded_statuses = resultList;
+        this.context.tagSearchCriteria.excluded_statuses = resultList;
     }
 
     private addStatusToExclude(status: string) {
-        let list = this.tagSearchCriteria.excluded_statuses;
+        let list = this.context.tagSearchCriteria.excluded_statuses;
         let resultList = this.addStatusToList(status, list);
-        this.tagSearchCriteria.excluded_statuses = resultList;
+        this.context.tagSearchCriteria.excluded_statuses = resultList;
     }
 
     private removeStatusFromInclude(status: string) {
-        let list = this.tagSearchCriteria.included_statuses;
+        let list = this.context.tagSearchCriteria.included_statuses;
         let resultList = this.removeStatusFromList(status, list);
-        this.tagSearchCriteria.included_statuses = resultList;
+        this.context.tagSearchCriteria.included_statuses = resultList;
     }
 
     private addStatusToList(status: string, list: string[]) {
@@ -475,5 +504,9 @@ export class TagToolComponent implements OnInit, OnDestroy {
         });
         this.showCategoryList = false;
         this.selectedTags = [];
+    }
+
+    getUserId() {
+        return this.context.tagSearchCriteria.user_id
     }
 }

@@ -17,13 +17,13 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import {CategorySelectComponent} from './category-select/category-select.component';
 import {SearchTermSelectComponent} from './search-term-select/search-term-select.component';
 import {TagCopyComponent} from './tag-copy/tag-copy.component';
+import {TagSearchContext} from "./tag-search-context/tag-search-context";
 
 
 @NgModule({
     declarations: [TagManagementComponent,
         TagReviewComponent, TagHeaderComponent, TagToolComponent, TagStatusSelectComponent, TagEditComponent, CategoryReviewComponent, CategorySelectComponent, SearchTermSelectComponent, TagCopyComponent],
-    exports: [
-    ],
+    exports: [],
     imports: [
         CommonModule,
         SharedModule,
@@ -32,6 +32,9 @@ import {TagCopyComponent} from './tag-copy/tag-copy.component';
         FormsModule,
         InputSwitchModule,
         AutoCompleteModule
+    ],
+    providers: [
+        TagSearchContext
     ]
 })
 export class TagManagementModule {

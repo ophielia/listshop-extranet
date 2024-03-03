@@ -80,7 +80,7 @@
                 <div class="loading-box">
                     <ul>
                         <ng-container *ngFor="let result of tagList">
-                            <li (dblclick)="selectTag(result)">{{result.name}}</li>
+                            <li (dblclick)="selectTag(result)">{{result.name}}({{result.user_id}})</li>
                         </ng-container>
                     </ul>
                 </div>

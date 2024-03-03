@@ -73,23 +73,23 @@
             <div class=" col-sm-12 col-md-12 col-lg-12 " style="text-align:right">
                 <app-tag-status-select
                         [displayName]="'Verified'"
-                        [startState]="ignoreConstant"
+                        [startState]="startState(verifyConstant)"
                         (selectedState)="stateChange(verifyConstant, $event)"></app-tag-status-select>
                 <app-tag-status-select
                         [displayName]="'Food'"
-                        [startState]="ignoreConstant"
+                        [startState]="startState(foodConstant)"
                         (selectedState)="stateChange(foodConstant, $event)"></app-tag-status-select>
                 <app-tag-status-select
                         [displayName]="'Food Verified'"
-                        [startState]="ignoreConstant"
+                        [startState]="startState(foodVerifiedConstant)"
                         (selectedState)="stateChange(foodVerifiedConstant, $event)"></app-tag-status-select>
                 <app-tag-status-select
                         [displayName]="'Liquid'"
-                        [startState]="ignoreConstant"
+                        [startState]="startState(liquidConstant)"
                         (selectedState)="stateChange(liquidConstant, $event)"></app-tag-status-select>
                 <app-tag-status-select
                         [displayName]="'Category'"
-                        [startState]="ignoreConstant"
+                        [startState]="startState(categoryConstant)"
                         (selectedState)="stateChange(categoryConstant, $event)"></app-tag-status-select>
 
             </div>
@@ -154,13 +154,13 @@
             <div *ngIf="!isFoodSearch" class="col-md-8 col-lg-8 loading-box">
                 <app-tags-as-list-component *ngIf="isListDisplay()"
                                             [tagList]="tagList"
-                                            [userId]="tagSearchCriteria.user_id"
+                                            [userId]="getUserId()"
                                             (select)="selectTag($event)"
                                             (toEdit)="editTag($event)"
                 ></app-tags-as-list-component>
                 <app-tags-as-grid-component *ngIf="isGridDisplay()"
                                             [tagList]="tagList"
-                                            [userId]="tagSearchCriteria.user_id"
+                                            [userId]="getUserId()"
                                             [expandAll]="expandAll"
                                             (select)="selectTag($event)"
                                             (toEdit)="editTag($event)">
@@ -255,7 +255,7 @@
                         </div>
                         <div class="ls-panel" *ngIf="showCategoryList">
                             <div class="cancel-link">
-                                <div (click)="toggleShowCategoryList()" class="cancel-link">
+                                <div (click)="toggleShowCategory()" class="cancel-link">
                                     <img class="sm-button"
                                          src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
                                          alt="add">
