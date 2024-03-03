@@ -27,6 +27,8 @@ export class SearchTermSelectComponent implements OnInit {
 
   fillSuggestionsFromStartTag(text: string) {
     if (text && text.indexOf(" ") >= 0) {
+      // remove commas
+      text = text.replace(",", "");
       this.suggestions = [].concat([text], text.split(" "));
     }
   }
