@@ -17,6 +17,7 @@ import TagStatusType from "../../model/tag-status-type";
 import {IFoodCategory} from "../../model/food-category";
 import {IFood} from "../../model/food";
 import {TagSearchContext} from "../tag-search-context/tag-search-context";
+import TagOperationType from "../../model/tag-operation-type";
 
 @Component({
     selector: 'app-tag-tool',
@@ -106,6 +107,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
     retrieveTagList() {
         console.log("tag search criteria - " + this.context.tagSearchCriteria);
         const promise = this.tagService.getTagListForCriteria(this.context.tagSearchCriteria);
+
         promise.then((data) => {
             this.logger.debug("tag data retrieved making list");
             this.tagList = data;
@@ -192,7 +194,15 @@ export class TagToolComponent implements OnInit, OnDestroy {
 
     markSelectedAsReviewed() {
         let tagIds = this.selectedTags.map(t => t.tag_id);
-        this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
+        this.tagService.updateTagStatus(tagIds, TagOperationType.MarkAsReviewed).subscribe(r => {
+            this.retrieveTagList();
+            this.selectedTags = [];
+        });
+    }
+
+    markSelectedAsVerifiedNoTag() {
+        let tagIds = this.selectedTags.map(t => t.tag_id);
+        this.tagService.updateTagStatus(tagIds, TagOperationType.MarkAsNoFoodVerified).subscribe(r => {
             this.retrieveTagList();
             this.selectedTags = [];
         });

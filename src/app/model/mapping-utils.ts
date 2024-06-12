@@ -284,6 +284,7 @@ export default class MappingUtils {
             parent_name: jsonResult.parent_name,
             is_group: jsonResult.is_group,
             is_liquid: jsonResult.is_liquid,
+            conversion_id: jsonResult.conversion_id,
             food_id: jsonResult.food_id,
             food_name: jsonResult.food_name,
             user_id: jsonResult.user_id,

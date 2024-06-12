@@ -135,6 +135,17 @@ export class TagService {
                 JSON.stringify(tagOperationPut), {observe: 'response'});
     }
 
+    updateTagStatus(tagIds: string[], operationType: TagOperationType) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: operationType
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+    }
     markSelectedAsLiquidOrSolid(tagIds: string[], isLiquid: boolean) {
         var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
             tag_ids: tagIds,
@@ -295,6 +306,20 @@ export class TagService {
             tag_ids: tagIds,
             tag_operation_type: TagOperationType.AssignFood,
             assign_id: foodId
+        });
+
+        return this
+            .httpClient
+            .put(this.adminTagUrl,
+                JSON.stringify(tagOperationPut), {observe: 'response'});
+
+    }
+
+    copyFoodFromTag(tagIds: string[], fromTagId: string) {
+        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
+            tag_ids: tagIds,
+            tag_operation_type: TagOperationType.CopyFoodFromTag,
+            from_tag_id: fromTagId
         });
 
         return this

@@ -4,6 +4,7 @@ export interface ITagOperationPut {
     user_id: string;
     is_liquid: boolean;
     assign_id: string;
+    from_tag_id: string;
 }
 
 export class TagOperationPut implements ITagOperationPut {
@@ -15,6 +16,7 @@ export class TagOperationPut implements ITagOperationPut {
     user_id: string;
     is_liquid: boolean;
     assign_id: string;
+    from_tag_id: string;
 }
 
 

@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {TagService} from "../../shared/services/tag.service";
 import {TagSearchCriteria} from "../../model/tag-search-criteria";
+import TagOperationType from "../../model/tag-operation-type";
 
 @Component({
     selector: 'app-tag-review',
@@ -100,7 +101,7 @@ export class TagReviewComponent implements OnInit {
 
     markAsReviewed() {
         let tagIds = this.selectedTags.map(t => t.tag_id);
-        this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
+        this.tagService.updateTagStatus(tagIds, TagOperationType.MarkAsReviewed).subscribe(r => {
             this.getTags();
             this.selectedTags = [];
         });

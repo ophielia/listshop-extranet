@@ -10,6 +10,7 @@ export interface ITagFullInfo {
     parent_name: string;
     is_group: boolean;
     is_liquid: boolean;
+    conversion_id: string;
     food_id: string;
     food_name: string;
     user_id: string;
@@ -30,6 +31,7 @@ export class TagFullInfo implements ITagFullInfo {
     parent_name: string;
     is_group: boolean;
     is_liquid: boolean;
+    conversion_id: string;
     food_id: string;
     food_name: string;
     user_id: string;

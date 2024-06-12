@@ -76,7 +76,7 @@ export class TagCopyComponent implements OnInit {
         const promise = this.tagService.getTagListForCriteria(this.tagSearchCriteria);
         promise.then((data) => {
             this.logger.debug("tag data retrieved making list");
-            this.tagList = data;
+            this.tagList = data.filter(t => t.tag_id != this.tagId);
         }).catch((error) => {
             console.log("Promise rejected with " + JSON.stringify(error));
         });
@@ -102,14 +102,14 @@ export class TagCopyComponent implements OnInit {
     }
 
     copyFoodForSelected() {
-        if (!this.tag.food_id) {
+        if (!this.tag.conversion_id) {
             return;
         }
         if (!this.selectedTags || this.selectedTags.length == 0) {
             return;
         }
         let tagIds = this.selectedTags.map(t => t.tag_id);
-        this.tagService.assignFoodToTags(tagIds, this.tag.food_id).subscribe(r => {
+        this.tagService.copyFoodFromTag(tagIds, this.tag.tag_id).subscribe(r => {
 
         });
 

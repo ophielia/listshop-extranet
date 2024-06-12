@@ -9,6 +9,7 @@ import {TagSearchCriteria} from "../../model/tag-search-criteria";
 import TagType from "../../model/tag-type";
 import {TagTreeTag} from "../../model/tag-tree-tag";
 import {IFood} from "../../model/food";
+import TagOperationType from "../../model/tag-operation-type";
 
 @Component({
     selector: 'app-tag-edit',
@@ -106,7 +107,14 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     setToVerified() {
         let tagIds = [this.tagId];
-        this.tagService.markTagsAsReviewed(tagIds).subscribe(r => {
+        this.tagService.updateTagStatus(tagIds, TagOperationType.MarkAsReviewed).subscribe(r => {
+            this.refreshTag();
+        });
+    }
+
+    setToVerifiedNoFood() {
+        let tagIds = [this.tagId];
+        this.tagService.updateTagStatus(tagIds, TagOperationType.MarkAsReviewed).subscribe(r => {
             this.refreshTag();
         });
     }
@@ -147,7 +155,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     }
 
     hasAssignedFood() {
-        return this.tag.food_id != null;
+        return this.tag.conversion_id != null;
     }
 
     doFoodSearch(searchTerm: string) {
