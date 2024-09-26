@@ -13,6 +13,8 @@ export interface ITagFullInfo {
     conversion_id: string;
     food_id: string;
     food_name: string;
+    layout_category: string;
+    layout_category_id: string;
     user_id: string;
     status: string;
     samples: ConversionGrid;
@@ -37,5 +39,6 @@ export class TagFullInfo implements ITagFullInfo {
     user_id: string;
     status: string;
     samples: ConversionGrid;
-
+    layout_category: string;
+    layout_category_id: string;
 }

@@ -1,6 +1,6 @@
 {
-  "name": "webclient",
-  "version": "1.0.0-SNAPSHOT",
+  "name": "extranet",
+  "version": "2.1.1-SNAPSHOT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

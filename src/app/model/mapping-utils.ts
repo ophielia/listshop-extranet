@@ -287,6 +287,8 @@ export default class MappingUtils {
             conversion_id: jsonResult.conversion_id,
             food_id: jsonResult.food_id,
             food_name: jsonResult.food_name,
+            layout_category: jsonResult.layout_category,
+            layout_category_id: jsonResult.layout_category_id,
             user_id: jsonResult.user_id,
             status: jsonResult.status_display,
             samples: grid
