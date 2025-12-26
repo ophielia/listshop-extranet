@@ -10,29 +10,31 @@ import {FooterComponent} from './footer/footer.component';
 import {WINDOW_PROVIDERS} from './services/windows.service';
 import {LandingFixService} from '../shared/services/landing-fix.service';
 import {LoaderComponent} from './loader/loader.component';
-import {AuthenticationService} from "./services/authentication.service";
-import {ListService} from "./services/list.service";
-import {DishService} from "./services/dish.service";
-import {DishSelectComponent} from "./components/dish-select/dish-select.component";
-import {AutoCompleteModule} from "primeng/autocomplete";
-import {FormsModule} from "@angular/forms";
-import {TagService} from "./services/tag.service";
-import {ListSelectComponent} from "./components/list-select/list-select.component";
-import {MealPlanService} from "./services/meal-plan.service";
-import {GenerateListComponent} from "./components/generate-list/generate-list.component";
-import {ModalComponent} from "./components/modal/modal";
-import {UserHeaderComponent} from "./components/user-header/user-header.component";
-import {ListShopHeaderComponent} from "./components/list-shop-header/list-shop-header.component";
-import {SingleDishElementComponent} from "./components/single-dish-element/single-dish-element.component";
-import {AlertComponent} from "./alert/alert.component";
-import {ConfirmDialogService} from "./services/confirm-dialog.service";
-import {ConfirmDialogComponent} from "./components/confirm-dialog/confirm-dialog.component";
-import {UserService} from "./services/user.service";
-import {TagSelectComponent} from "./components/tag-select/tag-select.component";
-import {TagsAsGridComponentComponent} from "./components/tags-as-grid-component/tags-as-grid-component.component";
-import {TagsAsListComponentComponent} from "./components/tags-as-list-component/tags-as-list-component.component";
-import {SingleTagNodeComponent} from "./components/single-tag-node/single-tag-node.component";
-import {SingleTreeNodeComponent} from "./components/single-tree-node/single-tree-node.component";
+import {AuthenticationService} from './services/authentication.service';
+import {ListService} from './services/list.service';
+import {DishService} from './services/dish.service';
+import {DishSelectComponent} from './components/dish-select/dish-select.component';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {FormsModule} from '@angular/forms';
+import {TagService} from './services/tag.service';
+import {ListSelectComponent} from './components/list-select/list-select.component';
+import {MealPlanService} from './services/meal-plan.service';
+import {GenerateListComponent} from './components/generate-list/generate-list.component';
+import {ModalComponent} from './components/modal/modal';
+import {UserHeaderComponent} from './components/user-header/user-header.component';
+import {ListShopHeaderComponent} from './components/list-shop-header/list-shop-header.component';
+import {SingleDishElementComponent} from './components/single-dish-element/single-dish-element.component';
+import {AlertComponent} from './alert/alert.component';
+import {ConfirmDialogService} from './services/confirm-dialog.service';
+import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
+import {UserService} from './services/user.service';
+import {TagSelectComponent} from './components/tag-select/tag-select.component';
+import {TagsAsGridComponentComponent} from './components/tags-as-grid-component/tags-as-grid-component.component';
+import {TagsAsListComponentComponent} from './components/tags-as-list-component/tags-as-list-component.component';
+import {SingleTagNodeComponent} from './components/single-tag-node/single-tag-node.component';
+import {SingleTreeNodeComponent} from './components/single-tree-node/single-tree-node.component';
+import {CategoryLayoutSelectComponent} from './components/category-select/category-layout-select.component';
+import {LayoutService} from './services/layout.service';
 
 @NgModule({
     exports: [
@@ -53,7 +55,8 @@ import {SingleTreeNodeComponent} from "./components/single-tree-node/single-tree
         TagsAsGridComponentComponent,
         TagsAsListComponentComponent,
         SingleTagNodeComponent,
-        SingleTreeNodeComponent
+        SingleTreeNodeComponent,
+        CategoryLayoutSelectComponent
     ],
     imports: [
         CommonModule,
@@ -80,7 +83,8 @@ import {SingleTreeNodeComponent} from "./components/single-tree-node/single-tree
         TagsAsGridComponentComponent,
         TagsAsListComponentComponent,
         SingleTagNodeComponent,
-        SingleTreeNodeComponent
+        SingleTreeNodeComponent,
+        CategoryLayoutSelectComponent
     ],
     providers: [
         WINDOW_PROVIDERS,
@@ -91,7 +95,8 @@ import {SingleTreeNodeComponent} from "./components/single-tree-node/single-tree
         TagService,
         MealPlanService,
         UserService,
-        ConfirmDialogService
+        ConfirmDialogService,
+        LayoutService
 
     ]
 })

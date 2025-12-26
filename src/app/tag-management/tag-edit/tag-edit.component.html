@@ -144,6 +144,23 @@
                             </div>
 
                         </div>
+
+                        <div class="ls-panel" *ngIf="showChangeLayout">
+                            <div (click)="toggleShowChangeLayout()" class="cancel-link">
+                                <img class="sm-button"
+                                     src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
+                                     alt="add">
+                            </div>
+                            <div *ngIf="!assignTag" class="ls-add-tag">
+
+                                <app-layout-category-select class="at-tag-select-style"
+                                                            [placeholderText]="'Check Categories ' "
+                                                            (categorySelected)="selectCategoryForAssign($event)"
+                                                            (cancel)="toggleShowChangeLayout($event)"
+                                ></app-layout-category-select>
+
+                            </div>
+                        </div>
                         <div class="ls-panel" *ngIf="showChangeTagName">
                             <div (click)="toggleShowChangeName()" class="cancel-link">
                                 <img class="sm-button"
@@ -167,7 +184,12 @@
                         <ul>
                             <li *ngIf="!showChangeParent" (click)="toggleShowChangeParent()">Change Parent Group</li>
                             <li *ngIf="!showChangeTagName" (click)="toggleShowChangeName()">Change Tag Name</li>
-                            <li (click)="createStandard()">Create Standard For Selected</li>
+                            <li *ngIf="shouldShowChangeLayout()" (click)="toggleShowChangeLayout()">Change Layout
+                                Category
+                            </li>
+                            <li *ngIf="shouldShowCreateStandard()" (click)="createStandard()">Create Standard For
+                                Selected
+                            </li>
                             <li (click)="setToSolid()">Set Tag To Solid</li>
                             <li (click)="setToLiquid()">Set Tag To Liquid</li>
                             <li (click)="setToVerified()">Verify Tag</li>

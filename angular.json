@@ -31,7 +31,7 @@
               "node_modules/font-awesome/scss/font-awesome.scss",
               "src/assets/app.scss",
               "src/styles.scss",
-              "src/assets/css/spinner/ball-spin-fade-rotating.css",
+              "src/assets/css/spinner/ball-spin-fade-rotating.css"
             ],
             "scripts": []
           },
@@ -121,9 +121,9 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
-            ,              "optimization": true
-}
+              ],
+              "optimization": true
+            }
           }
         },
         "serve-ssr": {
@@ -182,5 +182,8 @@
       }
     }
   },
-  "defaultProject": "tovo"
+  "defaultProject": "tovo",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,22 +1,23 @@
-import {User} from "./user";
-import {IShoppingList} from "./shoppinglist";
-import {Category} from "./category";
-import {Item} from "./item";
-import {ITag} from "./tag";
-import {Dish} from "./dish";
-import {ILegendSource, LegendSource} from "./legend-source";
-import {MealPlan} from "./mealplan";
-import {Slot} from "./slot";
-import {RatingUpdateInfo} from "./rating-update-info";
-import {IRatingInfo, RatingInfo} from "./rating-info";
-import {DishRatingInfo, IDishRatingInfo} from "./dish-rating-info";
-import {AdminUser} from "./admin-user";
-import {ITagFullInfo} from "./tag-fullinfo";
-import {ICategoryMapping} from "./category-mapping";
-import {IFoodCategory} from "./food-category";
-import {IFood} from "./food";
-import {IConversionSample} from "./conversion-sample";
-import {ConversionGrid, IConversionGrid} from "./conversion-grid";
+import {User} from './user';
+import {IShoppingList} from './shoppinglist';
+import {Category} from './category';
+import {Item} from './item';
+import {ITag} from './tag';
+import {Dish} from './dish';
+import {ILegendSource, LegendSource} from './legend-source';
+import {MealPlan} from './mealplan';
+import {Slot} from './slot';
+import {RatingUpdateInfo} from './rating-update-info';
+import {IRatingInfo, RatingInfo} from './rating-info';
+import {DishRatingInfo, IDishRatingInfo} from './dish-rating-info';
+import {AdminUser} from './admin-user';
+import {ITagFullInfo} from './tag-fullinfo';
+import {ICategoryMapping} from './category-mapping';
+import {IFoodCategory} from './food-category';
+import {IFood} from './food';
+import {IConversionSample} from './conversion-sample';
+import {ConversionGrid, IConversionGrid} from './conversion-grid';
+import {ILayoutCategory} from './layout-category';
 
 
 export default class MappingUtils {
@@ -85,6 +86,10 @@ export default class MappingUtils {
 
     static toCategoryMapping(r: any): ICategoryMapping {
         return MappingUtils._toCategoryMapping(r.food_category_mapping);
+    }
+
+    static toLayoutCategoryMapping(r: any): ILayoutCategory {
+        return MappingUtils._toLayoutCategoryMapping(r.layout_category);
     }
 
     static toFoodCategory(r: any): IFoodCategory {
@@ -229,6 +234,13 @@ export default class MappingUtils {
             food_category_id: jsonResult.food_category_id,
             food_category_name: foodName
         })
+    }
+
+    private static _toLayoutCategoryMapping(jsonResult: any): ILayoutCategory {
+        return <ILayoutCategory>({
+            name: jsonResult.name,
+            category_id: jsonResult.category_id
+        });
     }
 
     private static _toFoodCategory(jsonResult: any): IFoodCategory {

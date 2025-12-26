@@ -1,15 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {NGXLogger} from "ngx-logger";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TagService} from "../../shared/services/tag.service";
-import {ITag} from "../../model/tag";
-import {ITagFullInfo, TagFullInfo} from "../../model/tag-fullinfo";
-import {TagSearchCriteria} from "../../model/tag-search-criteria";
-import TagType from "../../model/tag-type";
-import {TagTreeTag} from "../../model/tag-tree-tag";
-import {IFood} from "../../model/food";
-import TagOperationType from "../../model/tag-operation-type";
+import {Subscription} from 'rxjs';
+import {NGXLogger} from 'ngx-logger';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TagService} from '../../shared/services/tag.service';
+import {ITag} from '../../model/tag';
+import {ITagFullInfo, TagFullInfo} from '../../model/tag-fullinfo';
+import {TagSearchCriteria} from '../../model/tag-search-criteria';
+import TagType from '../../model/tag-type';
+import {TagTreeTag} from '../../model/tag-tree-tag';
+import {IFood} from '../../model/food';
+import TagOperationType from '../../model/tag-operation-type';
+import {ILayoutCategory} from '../../model/layout-category';
 
 @Component({
     selector: 'app-tag-edit',
@@ -23,7 +24,9 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     showChangeParent: boolean;
     showChangeTagName: boolean;
+    showChangeLayout: boolean;
     assignTag: ITag;
+    assignCategory: ILayoutCategory;
     tagTypes: TagType[] = [TagType.Ingredient]
     selectGroupCriteria: TagSearchCriteria;
     tagNameEntry: string;
@@ -84,11 +87,24 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.assignTag = null;
     }
 
+    toggleShowChangeLayout() {
+        this.showChangeLayout = !this.showChangeLayout;
+        this.assignTag = null;
+    }
+
     createStandard() {
         let tagIds = [this.tagId]
         this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
             this.refreshTag();
         });
+    }
+
+    shouldShowChangeLayout() {
+        return !this.showChangeLayout && !this.tag.user_id;
+    }
+
+    shouldShowCreateStandard() {
+        return this.tag.user_id;
     }
 
     setToSolid() {
@@ -128,6 +144,11 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     selectTagForAssign(tag: ITag) {
         this.assignTag = tag;
+    }
+
+    selectCategoryForAssign(tag: ILayoutCategory) {
+        window.alert('Well, I\'ll be....');
+        this.assignCategory = tag;
     }
 
     assignToParent() {
