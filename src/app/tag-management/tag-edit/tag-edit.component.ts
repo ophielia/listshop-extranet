@@ -11,6 +11,7 @@ import {TagTreeTag} from '../../model/tag-tree-tag';
 import {IFood} from '../../model/food';
 import TagOperationType from '../../model/tag-operation-type';
 import {ILayoutCategory} from '../../model/layout-category';
+import {LayoutService} from '../../shared/services/layout.service';
 
 @Component({
     selector: 'app-tag-edit',
@@ -38,6 +39,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     constructor(private logger: NGXLogger,
                 private route: ActivatedRoute,
                 private router: Router,
+                private layoutService: LayoutService,
                 private tagService: TagService
     ) {
     }
@@ -146,9 +148,8 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.assignTag = tag;
     }
 
-    selectCategoryForAssign(tag: ILayoutCategory) {
-        window.alert('Well, I\'ll be....');
-        this.assignCategory = tag;
+    selectCategoryForAssign(category: ILayoutCategory) {
+        this.assignCategory = category;
     }
 
     assignToParent() {
@@ -156,6 +157,19 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.tagService.assignTagsToParent(tagIds, this.assignTag.tag_id).subscribe(r => {
             this.refreshTag();
             this.showChangeParent = false;
+            this.assignTag = null;
+        });
+    }
+
+    assignToCategory() {
+        let tagIds = [this.tagId];
+
+
+        let promise = this.layoutService.moveTagsToCategory(this.assignCategory.category_id, tagIds);
+        promise.then(data => {
+            console.log('all done.');
+            this.refreshTag();
+            this.showChangeLayout = false;
             this.assignTag = null;
         });
     }

@@ -151,7 +151,7 @@
                                      src="../../../assets/images/listshop/icons/orangeround/xmarksthespot.png"
                                      alt="add">
                             </div>
-                            <div *ngIf="!assignTag" class="ls-add-tag">
+                            <div *ngIf="!assignCategory" class="ls-add-tag">
 
                                 <app-layout-category-select class="at-tag-select-style"
                                                             [placeholderText]="'Check Categories ' "
@@ -159,6 +159,12 @@
                                                             (cancel)="toggleShowChangeLayout($event)"
                                 ></app-layout-category-select>
 
+                            </div>
+                            <div *ngIf="assignCategory">
+                                {{ assignCategory.name }}
+                            </div>
+                            <div *ngIf="assignCategory" class="panel-action" (click)="assignToCategory()">
+                                Assign Tag to Selected Category
                             </div>
                         </div>
                         <div class="ls-panel" *ngIf="showChangeTagName">

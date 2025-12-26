@@ -4,24 +4,25 @@ import {NGXLogger} from 'ngx-logger';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {ILayoutCategory} from '../../model/layout-category';
 import MappingUtils from '../../model/mapping-utils';
-import {throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import 'rxjs-compat/add/operator/concat';
 
 
 @Injectable()
 export class LayoutService {
 
-    private adminTagUrl;
+    private layoutAdminUrl;
 
     constructor(
         private httpClient: HttpClient,
         private logger: NGXLogger
     ) {
-        this.adminTagUrl = environment.apiUrl + 'admin/tag';
+        this.layoutAdminUrl = environment.apiUrl + 'admin/layout';
     }
 
     getDefaultCategories(): Promise<ILayoutCategory[]> {
-        const url = this.adminTagUrl + '/layout/category';
+        const url = this.layoutAdminUrl + '/category';
         return this.httpClient
             .get(url)
             .pipe(map((response: HttpResponse<any>) => {
@@ -31,6 +32,24 @@ export class LayoutService {
             .toPromise();
     }
 
+    moveTagsToCategory(categoryId: string, tagIds: string[]): Promise<void> {
+        if (tagIds.length == 1) {
+            return this.moveToCategory(categoryId, tagIds[0]).toPromise();
+        }
+        var firstCall = this.moveToCategory(categoryId, tagIds.pop());
+        tagIds.forEach(t => firstCall.concat(this.moveToCategory(categoryId, t)));
+        return firstCall.toPromise();
+    }
+
+    moveToCategory(categoryId: string, tagId: string): Observable<void> {
+        const url = this.layoutAdminUrl + '/category/' + categoryId + '/tag/' + tagId;
+        return this.httpClient
+            .put(url, null)
+            .pipe(map((response: HttpResponse<any>) => {
+                    return;
+                }),
+                catchError(this.handleError));
+    }
     static mapLayoutCategoryClient(object: Object): ILayoutCategory[] {
         let embeddedObj = object['_embedded'];
         return embeddedObj['layout_category_resource_list'].map(MappingUtils.toLayoutCategoryMapping);
