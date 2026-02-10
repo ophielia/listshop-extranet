@@ -15,6 +15,8 @@ import {ITagFullInfo} from "../../model/tag-fullinfo";
 import {ICategoryMapping} from "../../model/category-mapping";
 import {IFoodCategory} from "../../model/food-category";
 import {IFood} from "../../model/food";
+import {ListGenerateProperties} from "../../model/listgenerateproperties";
+import {PostTagAssign} from "../../model/posttagassign";
 
 
 @Injectable()
@@ -186,11 +188,14 @@ export class TagService {
     }
 
     assignTagsToParent(tagIds: string[], parentId: string) {
+        var posttagids = new PostTagAssign();
+        posttagids.tag_ids  = tagIds;
+
         let tagIdString = tagIds.join(",");
         let url = `${this.adminTagUrl}/${parentId}/children?tagIds=${tagIdString}`
         return this
             .httpClient
-            .post(url, {observe: 'response'});
+            .post(url, JSON.stringify(posttagids), {observe: 'response'});
 
     }
 
