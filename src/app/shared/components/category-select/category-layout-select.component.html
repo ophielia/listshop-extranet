@@ -1,0 +1,29 @@
+<table>
+    <tr>
+        <td>
+            <p-autoComplete
+                    [(ngModel)]="autoSelectedCategory"
+                    [suggestions]="filteredCategories"
+                    (completeMethod)="filterCategories($event)"
+                    field="name"
+                    inputStyleClass="autocomplete-input"
+                    panelStyleClass="autocomplete-panel"
+                    styleClass="ls-autocomplete"
+                    [delay]="200"
+                    (onSelect)="bingo($event)"
+                    (keyup.enter)="checkSearchEnter(focusanchor)"
+                    (keyup.escape)="cancelSelectCategory()"
+                    placeholder="{{placeholderText}}" [minLength]="1" #focusanchor></p-autoComplete>
+
+        </td>
+        <ng-container *ngIf="showCancelButton">
+            <td class="cancel-button" (click)="cancelSelectCategory()">X</td>
+        </ng-container>
+        <ng-container *ngIf="!showCancelButton">
+            <td class="no-cancel-button"></td>
+        </ng-container>
+    <tr>
+</table>
+
+
+

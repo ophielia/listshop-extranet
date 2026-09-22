@@ -1,20 +1,28 @@
-# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM tiangolo/node-frontend:10 as build-stage
+# Stage 1: Build the Angular application
+FROM node:14-slim AS build-stage
 
-WORKDIR /listshop-extranet
+WORKDIR /app
 
-COPY package*.json /listshop-extranet/
-
+# Copy package files and install dependencies
+COPY package*.json ./
 RUN npm install
 
-COPY ./ /listshop-extranet/
-#ARG configuration=production
+# Copy the rest of the application code
+COPY . .
 
-RUN npm run build -- --output-path=./dist/out
+# Build the application
+# We use the same output path as before to keep it consistent
+RUN npm run build -- --prod --output-path=./dist/out
 
-# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1.15
-COPY --from=build-stage /listshop-extranet/dist/out/ /usr/share/nginx/html
+# Stage 2: Serve the application with Nginx
+FROM nginx:stable-alpine
 
-# Copy the default nginx.conf provided by tiangolo/node-frontend
-COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
+# Copy the build output from the build-stage
+COPY --from=build-stage /app/dist/out/ /usr/share/nginx/html
+
+# Copy a custom nginx configuration for SPA routing
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
