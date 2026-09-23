@@ -12,8 +12,6 @@ import {LandingFixService} from '../shared/services/landing-fix.service';
 import {LoaderComponent} from './loader/loader.component';
 import {AuthenticationService} from './services/authentication.service';
 import {ListService} from './services/list.service';
-import {DishService} from './services/dish.service';
-import {DishSelectComponent} from './components/dish-select/dish-select.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {FormsModule} from '@angular/forms';
 import {TagService} from './services/tag.service';
@@ -41,7 +39,6 @@ import {LayoutService} from './services/layout.service';
         LoaderComponent,
         UserHeaderComponent,
         ListShopHeaderComponent,
-        DishSelectComponent,
         TagSelectComponent,
         GenerateListComponent,
         ModalComponent,
@@ -68,7 +65,6 @@ import {LayoutService} from './services/layout.service';
         AlertComponent,
         UserHeaderComponent,
         ListShopHeaderComponent,
-        DishSelectComponent,
         GenerateListComponent,
         TagSelectComponent,
         ModalComponent,
@@ -84,7 +80,6 @@ import {LayoutService} from './services/layout.service';
         LandingFixService,
         AuthenticationService,
         ListService,
-        DishService,
         TagService,
         UserService,
         ConfirmDialogService,
