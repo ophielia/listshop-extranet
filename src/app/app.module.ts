@@ -9,7 +9,6 @@ import {UserModule} from './user/user.module';
 import {rootRouterConfig} from './app.routes';
 import {AppComponent} from './app.component';
 import {UserComponent} from "./user/user.component";
-import {ListsModule} from "./lists/lists.module";
 import {ListShopTokenInterceptor} from "./shared/handlers/list-shop-token-interceptor";
 import {ListShopErrorHandler} from "./shared/handlers/list-shop-error-handler";
 import {AlertComponent} from "./shared/alert/alert.component";
@@ -38,7 +37,6 @@ import {NgxSpinnerModule} from "ngx-spinner";
         BrowserAnimationsModule,
         SharedModule,
         UserModule,
-        ListsModule,
         // tslint:disable-next-line: max-line-length
         RouterModule.forRoot(rootRouterConfig, {
             useHash: false,

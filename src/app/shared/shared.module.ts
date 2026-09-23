@@ -17,13 +17,10 @@ import {DishSelectComponent} from './components/dish-select/dish-select.componen
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {FormsModule} from '@angular/forms';
 import {TagService} from './services/tag.service';
-import {ListSelectComponent} from './components/list-select/list-select.component';
-import {MealPlanService} from './services/meal-plan.service';
 import {GenerateListComponent} from './components/generate-list/generate-list.component';
 import {ModalComponent} from './components/modal/modal';
 import {UserHeaderComponent} from './components/user-header/user-header.component';
 import {ListShopHeaderComponent} from './components/list-shop-header/list-shop-header.component';
-import {SingleDishElementComponent} from './components/single-dish-element/single-dish-element.component';
 import {AlertComponent} from './alert/alert.component';
 import {ConfirmDialogService} from './services/confirm-dialog.service';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
@@ -45,12 +42,10 @@ import {LayoutService} from './services/layout.service';
         UserHeaderComponent,
         ListShopHeaderComponent,
         DishSelectComponent,
-        ListSelectComponent,
         TagSelectComponent,
         GenerateListComponent,
         ModalComponent,
         AlertComponent,
-        SingleDishElementComponent,
         ConfirmDialogComponent,
         TagsAsGridComponentComponent,
         TagsAsListComponentComponent,
@@ -76,9 +71,7 @@ import {LayoutService} from './services/layout.service';
         DishSelectComponent,
         GenerateListComponent,
         TagSelectComponent,
-        ListSelectComponent,
         ModalComponent,
-        SingleDishElementComponent,
         ConfirmDialogComponent,
         TagsAsGridComponentComponent,
         TagsAsListComponentComponent,
@@ -93,7 +86,6 @@ import {LayoutService} from './services/layout.service';
         ListService,
         DishService,
         TagService,
-        MealPlanService,
         UserService,
         ConfirmDialogService,
         LayoutService

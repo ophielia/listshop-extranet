@@ -237,7 +237,7 @@ export class TagToolComponent implements OnInit, OnDestroy {
             return;
         }
         let $sub = this.tagService.createTag(this.tagNameEntry, this.assignTag.tag_id,
-            this.tagTypes[0], this.addAsGroup, false)
+            this.tagTypes[0], this.addAsGroup)
             .subscribe(data => {
                 this.retrieveTagList();
                 this.assignTag = null;

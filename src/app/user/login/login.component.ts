@@ -39,10 +39,10 @@ export class LoginComponent implements OnInit {
         this.title.setTitle(this.route.snapshot.data['title']);
         this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
 
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/manage/tags/overview';
         this.title.setTitle(this.route.snapshot.data['title']);
         this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/manage/tags/overview';
         this.signInForm = this.fb.group({
             email: [""],
             userPassword: [""]

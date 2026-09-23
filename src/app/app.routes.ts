@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {ListsComponent} from "./lists/lists.component";
 import {UserComponent} from "./user/user.component";
 import {HomeComponent} from "./landing/home.component";
 import {UserManagementComponent} from "./user-management/user-management.component";
@@ -31,12 +30,6 @@ export const rootRouterConfig: Routes = [
         path: 'manage/tags',
         component: TagManagementComponent,
         loadChildren: () => import('./tag-management/tag-management.module').then(m => m.TagManagementModule)
-    },
-    {
-        path: 'lists',
-        component: ListsComponent,
-        pathMatch: 'prefix',
-        loadChildren: () => import('./lists/lists.module').then(m => m.ListsModule)
     },
 
 

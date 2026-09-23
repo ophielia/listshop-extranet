@@ -38,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
     ngOnInit() {
         this.title.setTitle(this.route.snapshot.data['title']);
         this.meta.updateTag({name: 'description', content: this.route.snapshot.data['content']});
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/lists/manage';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/manage/tags/overview';
         this.signUpForm = this.fb.group({
             newPassword: [""],
             originalPassword: [""],
@@ -80,7 +80,7 @@ export class ChangePasswordComponent implements OnInit {
         this.authenticationService.changePassword(this.originalPassword.value.trim(),
             this.newPassword.value.trim())
             .subscribe(success => {
-                this.router.navigateByUrl('/lists/manage');
+                this.router.navigateByUrl('/manage/tags/overview');
             }, error => {
                 if (error.status == '401') {
                     this.emailErrors.push(ErrorType.passwordIsBad);

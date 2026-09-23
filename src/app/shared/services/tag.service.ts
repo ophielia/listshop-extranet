@@ -30,7 +30,7 @@ export class TagService {
         private logger: NGXLogger
     ) {
         this.adminTagUrl = environment.apiUrl + "admin/tag";
-        this.standardTagUrl = environment.apiUrl + "tag";
+        this.standardTagUrl = environment.apiUrl + "v2/tag";
     }
 
     getById(tag_id: string): Promise<ITag> {
@@ -125,18 +125,6 @@ export class TagService {
     }
 
 
-    markTagsAsReviewed(tagIds: string[]) {
-        var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
-            tag_ids: tagIds,
-            tag_operation_type: TagOperationType.MarkAsReviewed
-        });
-
-        return this
-            .httpClient
-            .put(this.adminTagUrl,
-                JSON.stringify(tagOperationPut), {observe: 'response'});
-    }
-
     updateTagStatus(tagIds: string[], operationType: TagOperationType) {
         var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
             tag_ids: tagIds,
@@ -148,6 +136,7 @@ export class TagService {
             .put(this.adminTagUrl,
                 JSON.stringify(tagOperationPut), {observe: 'response'});
     }
+
     markSelectedAsLiquidOrSolid(tagIds: string[], isLiquid: boolean) {
         var tagOperationPut: ITagOperationPut = <ITagOperationPut>({
             tag_ids: tagIds,
@@ -199,13 +188,13 @@ export class TagService {
 
     }
 
-    createTag(name: string, parentId: string, tagType: TagType, addAsGroup: boolean, forUser: boolean) {
+    createTag(name: string, parentId: string, tagType: TagType, addAsGroup: boolean) {
         var newTag: ITag = <ITag>({
             name: name,
             tag_type: tagType,
             is_group: addAsGroup
         });
-        let forUserFilter = forUser ? "" : "?asStandard=true";
+        let forUserFilter = "?asStandard=true";
         let url = `${this.standardTagUrl}/${parentId}/child${forUserFilter}`;
         return this
             .httpClient
