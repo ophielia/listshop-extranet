@@ -12,6 +12,7 @@ import {IFood} from '../../model/food';
 import TagOperationType from '../../model/tag-operation-type';
 import {ILayoutCategory} from '../../model/layout-category';
 import {LayoutService} from '../../shared/services/layout.service';
+import {IUnit} from "../../model/unit";
 
 @Component({
     selector: 'app-tag-edit',
@@ -26,6 +27,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     showChangeParent: boolean;
     showChangeTagName: boolean;
     showChangeLayout: boolean;
+    showAddConversion: boolean;
     assignTag: ITag;
     assignCategory: ILayoutCategory;
     tagTypes: TagType[] = [TagType.Ingredient]
@@ -34,6 +36,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     foodSuggestions: IFood[];
     selectedTags: any;
     foodToAssign: IFood;
+    unitList: IUnit[];
     private isEditFood: boolean = false;
 
     constructor(private logger: NGXLogger,
@@ -48,7 +51,8 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.route.params.subscribe(params => {
             this.tagId = params['id'];
             this.logger.debug("tag id is" + this.tagId);
-            this.refreshTag()
+            this.refreshTag();
+            this.fillUnitList();
         });
         this.selectGroupCriteria = new TagSearchCriteria();
         this.selectGroupCriteria.group_include = 'ONLY';
@@ -92,6 +96,10 @@ export class TagEditComponent implements OnInit, OnDestroy {
     toggleShowChangeLayout() {
         this.showChangeLayout = !this.showChangeLayout;
         this.assignTag = null;
+    }
+
+    toggleAddConversion() {
+        this.showAddConversion = !this.showAddConversion;
     }
 
     createStandard() {
@@ -141,6 +149,12 @@ export class TagEditComponent implements OnInit, OnDestroy {
         let promise = this.tagService.getFullTagInfo(this.tagId);
         promise.then(data => {
             this.tag = data;
+        });
+    }
+    private fillUnitList() {
+        let $sub = this.tagService.getAllUnits()
+            .subscribe(data => {
+            this.unitList = data.unit_list;
         });
     }
 

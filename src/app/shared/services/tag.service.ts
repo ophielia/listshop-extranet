@@ -17,12 +17,14 @@ import {IFoodCategory} from "../../model/food-category";
 import {IFood} from "../../model/food";
 import {ListGenerateProperties} from "../../model/listgenerateproperties";
 import {PostTagAssign} from "../../model/posttagassign";
+import {IUnitList} from "../../model/unit";
 
 
 @Injectable()
 export class TagService {
 
     private adminTagUrl;
+    private adminFoodUrl;
     private standardTagUrl;
 
     constructor(
@@ -30,6 +32,7 @@ export class TagService {
         private logger: NGXLogger
     ) {
         this.adminTagUrl = environment.apiUrl + "admin/tag";
+        this.adminFoodUrl = environment.apiUrl + "admin/food";
         this.standardTagUrl = environment.apiUrl + "v2/tag";
     }
 
@@ -224,7 +227,7 @@ export class TagService {
 
 
     getFoodCategoryMappings(): Promise<ICategoryMapping[]> {
-        var url = `${this.adminTagUrl}/food/category/mappings`;
+        var url = `${this.adminFoodUrl}/category/mappings`;
         return this.httpClient
             .get(`${url}`)
             .pipe(map((response: HttpResponse<any>) => {
@@ -235,7 +238,7 @@ export class TagService {
     }
 
     getFoodCategories() {
-        var url = `${this.adminTagUrl}/food/category`;
+        var url = `${this.adminFoodUrl}/category`;
         return this.httpClient
             .get(`${url}`)
             .pipe(map((response: HttpResponse<any>) => {
@@ -243,6 +246,13 @@ export class TagService {
                 }),
                 catchError(TagService.handleError))
             .toPromise();
+
+    }
+
+    getAllUnits() {
+        var url = `${this.adminFoodUrl}/units`;
+        return this.httpClient
+            .get<IUnitList>(`${url}`);
 
     }
 
@@ -278,7 +288,7 @@ export class TagService {
 
     getFoodSuggestionsForTerm(searchTerm: string) {
         var searchParam = `?searchTerm=${encodeURIComponent(searchTerm)}`;
-        var url = `${this.adminTagUrl}/food/suggestions${searchParam}`;
+        var url = `${this.adminFoodUrl}/suggestions${searchParam}`;
         return this.httpClient
             .get(`${url}`)
             .pipe(map((response: HttpResponse<any>) => {

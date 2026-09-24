@@ -91,6 +91,27 @@
 
                 </div>
                 <!--add food toolbar end -->
+                <div class="info-box" *ngIf="showAddConversion">
+                    <div class="accented" style="margin-bottom: 10px;">Conversion Factor</div>
+                    <div>
+                        <input type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
+                        <select class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
+                            <option>cup</option>
+                            <option>gallon</option>
+                            <option>tablespoon</option>
+                        </select>
+                        <input type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
+                        <select class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
+                            <option>cup</option>
+                            <option>gallon</option>
+                            <option>tablespoon</option>
+                        </select>
+                    </div>
+                    <div style="height: 40px; margin-top: 10px;">
+                        <div class="submit-button">Save</div>
+                        <div class="submit-button" (click)="toggleAddConversion()">Cancel</div>
+                    </div>
+                </div>
                 <!-- content -->
                 <div *ngIf="!showAssignedFood()" class="loading-box">
                     <ul>
@@ -201,6 +222,7 @@
                             <li (click)="setToVerified()">Verify Tag</li>
                             <li (click)="setToVerifiedNoFood()">Verify No Food</li>
                             <li (click)="goToCopyTag()">Copy Tag</li>
+                            <li (click)="toggleAddConversion()">Add Conversion Factor</li>
                         </ul>
 
 
