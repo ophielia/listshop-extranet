@@ -18,6 +18,8 @@ import {IFood} from "../../model/food";
 import {ListGenerateProperties} from "../../model/listgenerateproperties";
 import {PostTagAssign} from "../../model/posttagassign";
 import {IUnitList} from "../../model/unit";
+import {FoodFactor} from "../../model/food-factor";
+import {json} from "express";
 
 
 @Injectable()
@@ -333,6 +335,22 @@ export class TagService {
 
     }
 
+    addFoodFactor(tagId: string,fromAmount: string, fromUnitId: string, toAmount: string, toUnitId: string) {
+        var url = `${this.adminFoodUrl}/${tagId}/manual/factor`;
+        var foodFactor = new FoodFactor();
+        foodFactor.from_unit_id = fromUnitId;
+        foodFactor.to_unit_id = toUnitId;
+        foodFactor.from_quantity = fromAmount;
+        foodFactor.to_quantity = toAmount;
+        return this.httpClient
+            .post(url, JSON.stringify(foodFactor));
+    }
+
+    removeUserFoodFactors(tagId: string) {
+        var url = `${this.adminFoodUrl}/${tagId}/manual/factor`;
+        return this.httpClient
+            .delete(url);
+    }
 }
 
 

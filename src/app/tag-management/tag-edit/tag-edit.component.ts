@@ -37,6 +37,7 @@ export class TagEditComponent implements OnInit, OnDestroy {
     selectedTags: any;
     foodToAssign: IFood;
     unitList: IUnit[];
+    hasUserFactor: boolean = false;
     private isEditFood: boolean = false;
 
     constructor(private logger: NGXLogger,
@@ -51,8 +52,10 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.route.params.subscribe(params => {
             this.tagId = params['id'];
             this.logger.debug("tag id is" + this.tagId);
-            this.refreshTag();
+
             this.fillUnitList();
+            this.refreshTag();
+
         });
         this.selectGroupCriteria = new TagSearchCriteria();
         this.selectGroupCriteria.group_include = 'ONLY';
@@ -102,6 +105,17 @@ export class TagEditComponent implements OnInit, OnDestroy {
         this.showAddConversion = !this.showAddConversion;
     }
 
+    saveFactor(fromAmount: any, fromUnit: any, toAmount: any, toUnit: any) {
+        this.logger.debug('Saving factor: ' + fromAmount.value + ' ' + fromUnit.value + ' = ' + toAmount.value + ' ' + toUnit.value);
+        this.tagService.addFoodFactor(this.tagId,fromAmount.value, fromUnit.value, toAmount.value, toUnit.value)
+            .subscribe(
+                () => {
+                    this.showAddConversion = false;
+                    this.refreshTag();
+                }
+            );
+    }
+
     createStandard() {
         let tagIds = [this.tagId]
         this.tagService.createStandardFromUserTags(tagIds).subscribe(r => {
@@ -149,8 +163,16 @@ export class TagEditComponent implements OnInit, OnDestroy {
         let promise = this.tagService.getFullTagInfo(this.tagId);
         promise.then(data => {
             this.tag = data;
+            this.checkUserFactors();
         });
     }
+
+    private checkUserFactors() {
+        let samples = this.tag.samples.sample;
+        let hasUserDefined = samples.some(s => s.userDefined != null && s.userDefined == true);
+        this.hasUserFactor = hasUserDefined;
+    }
+
     private fillUnitList() {
         let $sub = this.tagService.getAllUnits()
             .subscribe(data => {
@@ -230,6 +252,12 @@ export class TagEditComponent implements OnInit, OnDestroy {
 
     showAssignedFood() {
         return !this.isEditFood && this.hasAssignedFood();
+    }
+
+    removeUserFactors() {
+        this.tagService.removeUserFoodFactors(this.tagId).subscribe(data => {
+            this.refreshTag();
+        });
     }
 
     doAssignFoodToTag() {

@@ -94,21 +94,17 @@
                 <div class="info-box" *ngIf="showAddConversion">
                     <div class="accented" style="margin-bottom: 10px;">Conversion Factor</div>
                     <div>
-                        <input type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
-                        <select class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
-                            <option>cup</option>
-                            <option>gallon</option>
-                            <option>tablespoon</option>
+                        <input #fromAmount type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
+                        <select #fromUnit class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
+                            <option *ngFor="let unit of unitList" value="{{unit.unit_id}}">{{ unit.name }}</option>
                         </select>
-                        <input type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
-                        <select class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
-                            <option>cup</option>
-                            <option>gallon</option>
-                            <option>tablespoon</option>
+                        <input #toAmount type="text" class="form-control ls-inline-input add-factor" style="width: 80px; display: inline-block;">
+                        <select #toUnit class="form-control ls-inline-input add-factor" style="width: 120px; display: inline-block;">
+                            <option *ngFor="let unit of unitList" value="{{unit.unit_id}}">{{ unit.name }}</option>
                         </select>
                     </div>
                     <div style="height: 40px; margin-top: 10px;">
-                        <div class="submit-button">Save</div>
+                        <div class="submit-button" (click)="saveFactor(fromAmount, fromUnit, toAmount, toUnit)">Save</div>
                         <div class="submit-button" (click)="toggleAddConversion()">Cancel</div>
                     </div>
                 </div>
@@ -130,10 +126,13 @@
                                 <td>{{sample.fromUnit}}</td>
                                 <td>=></td>
                                 <td>{{sample.toAmount}}</td>
-                                <td>{{sample.toUnit}}</td>
+                                <td>{{sample.toUnit}}
+                                <span *ngIf="sample.userDefined" style="color:orange"> *</span>
+                                </td>
                             </tr>
                         </table>
                     </div>
+                    <div *ngIf="hasUserFactor" class="submit-button" (click)="removeUserFactors()">Remove User Factors</div>
                 </div>
                 <!-- end content -->
             </div>

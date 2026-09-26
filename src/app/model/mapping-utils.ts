@@ -277,7 +277,8 @@ export default class MappingUtils {
             fromAmount: jsonResult.from_amount,
             fromUnit: jsonResult.from_unit,
             toAmount: jsonResult.to_amount,
-            toUnit: jsonResult.to_unit
+            toUnit: jsonResult.to_unit,
+            userDefined: jsonResult.user_defined
         })
     }
 

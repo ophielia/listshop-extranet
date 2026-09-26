@@ -3,6 +3,7 @@ export interface IConversionSample {
   fromUnit: string;
   toAmount: string;
   toUnit: string;
+  userDefined: boolean;
 }
 
 export class ConversionSample implements IConversionSample {
@@ -13,4 +14,5 @@ export class ConversionSample implements IConversionSample {
   fromUnit: string;
   toAmount: string;
   toUnit: string;
+  userDefined: boolean;
 }
